@@ -1,7 +1,7 @@
 <template>
   <header>
     <div class="container h_content">
-      <div class="header_title">W的个人网站</div>
+      <div class="header_title">W的博客</div>
       <div class="login">登陆/注册</div>
     </div>
   </header>

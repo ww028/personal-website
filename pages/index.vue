@@ -22,6 +22,7 @@
             v-for="(item, index) in recently_article"
             :key="index"
             class="item"
+            @click="artilceInfo(item)"
           >
             <div class="info">
               <div>[ {{item.type}} ]</div>
@@ -33,52 +34,20 @@
           </div>
         </div>
 
-        <div class="more_artilce">查看更多...</div>
+        <div class="more_artilce" @click="more">查看更多...</div>
       </div>
 
-      <div class="msg_board">
-        <div class="module_title">
-          留言板 ({{msg_number}}条)
-        </div>
-        <div class="msg_list">
-          <div
-            v-for="(item, index) in msg_list"
-            :key="index"
-            class="item"
-          >
-            <div class="nick_name">#{{index+1}} {{item.nick_name}}:</div>
-            <div class="msg_content">{{item.content}}</div>
-            <div class="create_time">{{item.create_time}}</div>
-          </div>
-        </div>
-
-        <div class="more_msg">
-          <div @click="moreMsg">加载更多留言</div>
-        </div>
-      </div>
-
-      <div class="msg_board_input">
-        <div>留言内容</div>
-        <textarea placeholder="请输入留言内容"></textarea>
-
-<!-- 
-        <div class="email">
-          邮箱(必填)
-        </div>
-        <input type="text" placeholder="请输入邮箱"> -->
-
-        <div class="submit">
-          <button>发布</button>
-        </div>
-      </div>
+      <MsgBoard />
     </main>
   </div>
 </template>
 
 <script>
-
+import MsgBoard from '~/components/MsgBoard'
 export default {
-  
+  components:{
+    MsgBoard
+  },
   data(){
     return{
       content_module: [
@@ -95,15 +64,7 @@ export default {
         { id: 4, type: 'Vue.js', title: '有趣的Vue.js', date: '2020-02-25'  },
         { id: 5, type: 'Vue.js', title: '有趣的Vue.js', date: '2020-02-25'  },
       ],
-      msg_number: 99,
-      msg_list: [
-        { nick_name: '张三', content: '今天是个好日子', create_time: '2020-02-25 14:34' },
-        { nick_name: '张三', content: '今天是个好日子', create_time: '2020-02-25 14:34' },
-        { nick_name: '张三', content: '今天是个好日子', create_time: '2020-02-25 14:34' },
-        { nick_name: '张三', content: '今天是个好日子', create_time: '2020-02-25 14:34' },
-        { nick_name: '张三', content: '今天是个好日子', create_time: '2020-02-25 14:34' },
-        { nick_name: '张三', content: '今天是个好日子', create_time: '2020-02-25 14:34' },
-      ]
+      
     }
   },
 
@@ -112,9 +73,12 @@ export default {
       this.$router.push('/content_module?id=' + val.id)
     },
 
-    moreMsg(){
-      let msg = { nick_name: '张三', content: '今天是个好日子', create_time: '2020-02-25 14:34' };
-      this.msg_list.push(msg)
+    artilceInfo(val){
+      this.$router.push('/article_info?title=' + val.title)
+    },
+
+    more(){
+      this.$router.push('/article')
     }
   }
 }
