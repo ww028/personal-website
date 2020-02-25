@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div>
-      index
+      index 
     </div>
   </div>
 </template>
