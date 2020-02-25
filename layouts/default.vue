@@ -1,8 +1,18 @@
 <template>
   <div>
+    <HeaderBar />
     <nuxt />
   </div>
 </template>
+
+<script>
+import HeaderBar from '~/components/HeaderBar'
+export default {
+  components: {
+    HeaderBar
+  }
+}
+</script>
 
 <style>
 html {
