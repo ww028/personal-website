@@ -1,0 +1,19 @@
+import request from './request'
+
+// 模块列表
+export async function modelsList(data) {
+  return request({
+    url: '/models/list',
+    method: 'get',
+    data
+  })
+}
+
+// 文章列表
+export async function articleList(data) {
+  return request({
+    url: '/article/list',
+    method: 'get',
+    data
+  })
+}
