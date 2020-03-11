@@ -1,38 +1,34 @@
 <template>
   <div>
     <main class="container">
-      <div class="content_module">
-        <div
-          v-for="(item, index) in content_module"
-          :key="index"
-          class="item"
-          @click="moduleClick(item)"
-        >{{ item.name }}</div>
-      </div>
-
-      <div class="recently_article">
-        <div class="module_title">最近的文章</div>
-
-        <div class="list">
+      <div class="main_content">
+        <div class="border_bottom nav_bar">
           <div
-            v-for="(item, index) in article_list"
+            v-for="(item, index) in content_module"
             :key="index"
             class="item"
-          >
-            <div class="info" @click="artilceInfo(item)">
-              <div>[ {{item.name}} ]</div>&emsp;
-              <div class="article_title">{{ item.title }}</div>
-            </div>
+            @click="moduleClick(item)"
+          >{{ item.name }}</div>
+        </div>
 
-            <div>{{ item.publish_time }}</div>
+        <div class="article_list">
+          <div v-for="(item, index) in article_list" :key="index" class="border_bottom item">
+            <div class="item_content">
+              <div class="text info">
+                <span>[ {{item.name}} ]</span>
+                &nbsp;
+                <span>作者</span>
+                &nbsp;
+                <span>{{ item.publish_time }}</span>
+              </div>
+              <div class="text_main title">
+                <nuxt-link to="/">{{ item.title }}</nuxt-link>
+              </div>
+              <div class="text preview">预览内容</div>
+            </div>
           </div>
         </div>
-
-        <div class="more_artilce">
-          <span @click="more">更多文章。。</span>
-        </div>
       </div>
-
       <MsgBoard />
     </main>
   </div>
@@ -68,12 +64,7 @@ export default {
   },
 
   asyncData({ store, error, params }) {
-    return Promise.all(
-      [
-        api.modelsList(),
-        api.articleList(),
-      ]
-    )
+    return Promise.all([api.modelsList(), api.articleList()])
       .then(arr => {
         console.log(arr)
         return {
@@ -84,7 +75,7 @@ export default {
       .catch(error)
   },
 
-  mounted(){
+  mounted() {
     console.log(this.article_list)
   },
 
