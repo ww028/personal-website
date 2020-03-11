@@ -37,12 +37,16 @@
 </template>
 
 <script>
-import {register} from '@/api'
+import { register, login } from '@/api'
 export default {
   data() {
     return {
       status: true, // true:登陆 false:注册,
       input_tips: '',
+      login_info: {
+        username: '',
+        status: false
+      },
       form_data: {
         username: '',
         password: ''
@@ -61,7 +65,6 @@ export default {
     },
 
     login() {
-      console.log(this.form_data.username)
       if (!this.form_data.username) {
         this.input_tips = '请输入用户名'
         return
@@ -74,9 +77,25 @@ export default {
 
       this.input_tips = ''
 
-      if(status){
+      if(this.status){
+        console.log('login')
+        login(this.form_data).then(res =>{
+          if(res.code === 0){
+            this.login_info.status = false;
+            this.input_tips = '账号或密码错误'
+          } else {
+            let login_info = {
+              status: true,
+              username: res.data[0].username
+            }
+            this.$store.commit('loginInfo', login_info)
+            localStorage.setItem('login_info', JSON.stringify(login_info))
+            this.$store.commit('dialogLogin', false)
+          }
+        })
         // 登陆
       } else {
+        console.log('register')
         // 注册
         register(this.form_data).then(res =>{
           console.log(res)
