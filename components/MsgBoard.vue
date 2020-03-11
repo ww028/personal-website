@@ -23,7 +23,8 @@
 
     <div class="msg_board_input">
       <div>留言内容</div>
-      <textarea placeholder="请输入留言内容"></textarea>
+      <textarea placeholder="请输入留言内容" disabled></textarea>
+      <div class="tips">请 <span>登陆</span> 后发布留言</div>
 
 <!-- 
       <div class="email">

@@ -1,0 +1,138 @@
+<template>
+  <div class="dialog_login">
+    <div class="content">
+      <div class="dialog_header">
+        <div class="title">{{ status ? '登陆' : '注册' }}</div>
+        <div class="close" @click="close">X</div>
+      </div>
+
+      <div>
+        <div class="input_box">
+          <input type="text" placeholder="请输入用户名">
+        </div>
+
+        <div class="input_box">
+          <input type="password" placeholder="请输入密码">
+        </div>
+
+        <button class="btn">{{ status ? '登陆' : '注册' }}</button>
+
+        <div class="tips">
+          <div>
+            <span v-show="status">没有账号?</span>
+            <span @click="loginOrRegister">{{ status ? '注册' : '已有账号登陆' }}</span>
+          </div>
+          <div class="forget_pst"><span>忘记密码</span></div>
+        </div>
+
+        <div class="login_way">
+          <div class="title">第三方账号登陆</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  data(){
+    return{
+      status: true, // true:登陆 false:注册
+    }
+  },
+
+  methods:{
+    close(){
+      console.log('close')
+      this.$store.commit('dialogLogin', false)
+    },
+
+    loginOrRegister(){
+      this.status = !this.status
+    }
+  },
+}
+</script>
+
+<style lang="scss" scoped>
+.dialog_login{
+  width: 100%;
+  height: 100%;
+  background-color: rgba($color: #000000, $alpha: 0.5);
+  position: fixed;
+  left: 0;
+  top: 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  font-size: 16px;
+
+  .content{
+    width: 300px;
+    background-color: #fff;
+    border-radius: 2px;
+    padding: 20px;
+
+    .dialog_header{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+
+      .title{
+        font-weight: bold;
+      }
+
+      .close{
+        cursor: pointer;
+      }
+    }
+
+    .input_box{
+      width: 100%;
+      margin-bottom: 10px;
+      input{
+        width: 100%;
+        height: 40px;
+        padding: 5px;
+        outline: none;
+        border: 1px solid #e9e9e9;
+        border-radius: 2px;
+      }
+    }
+
+    .btn{
+      width: 100%;
+      height: 40px;
+      background-color: #007fff;
+      color: #fff;
+      letter-spacing: 5px;
+      font-weight: bold;
+      border: 0;
+      outline: 0;
+      cursor: pointer;
+      // margin-top: 10px;
+    }
+
+    .tips{
+      font-size: 14px;
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+      color: #767676;
+
+      span{
+        color: #007fff;
+        cursor: pointer;
+      }
+    }
+
+    .login_way{
+      font-size: 14px;
+      margin-top: 10px;
+      color: #767676;
+      display: none
+    }
+  }
+}
+</style>

@@ -18,9 +18,8 @@
             v-for="(item, index) in article_list"
             :key="index"
             class="item"
-            @click="artilceInfo(item)"
           >
-            <div class="info">
+            <div class="info" @click="artilceInfo(item)">
               <div>[ {{item.name}} ]</div>&emsp;
               <div class="article_title">{{ item.title }}</div>
             </div>
@@ -29,7 +28,9 @@
           </div>
         </div>
 
-        <div class="more_artilce" @click="more">查看更多...</div>
+        <div class="more_artilce">
+          <span @click="more">更多文章。。</span>
+        </div>
       </div>
 
       <MsgBoard />

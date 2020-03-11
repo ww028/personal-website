@@ -42,7 +42,10 @@
   .more_artilce{
     height: 28px;
     line-height: 28px;
-    cursor: pointer;
+    margin-top: 5px;
+    span{
+      cursor: pointer;
+    }
   }
 }
 
@@ -89,6 +92,13 @@
     padding: 0 10px;
     border: solid 2px #dbdbbc;
     outline: 0;
+  }
+
+  .tips{
+    span{
+      text-decoration: underline;
+      cursor: pointer;
+    }
   }
 
   .submit{
