@@ -8,21 +8,24 @@
 
       <div>
         <div class="input_box">
-          <input type="text" placeholder="请输入用户名">
+          <input type="text" v-model="form_data.username" placeholder="请输入用户名" />
         </div>
 
         <div class="input_box">
-          <input type="password" placeholder="请输入密码">
+          <input type="password" v-model="form_data.password" placeholder="请输入密码" />
         </div>
 
-        <button class="btn">{{ status ? '登陆' : '注册' }}</button>
+        <div class="input_tips">{{input_tips}}</div>
+        <button @click="login" class="btn">{{ status ? '登陆' : '注册' }}</button>
 
         <div class="tips">
           <div>
             <span v-show="status">没有账号?</span>
             <span @click="loginOrRegister">{{ status ? '注册' : '已有账号登陆' }}</span>
           </div>
-          <div class="forget_pst"><span>忘记密码</span></div>
+          <div class="forget_pst">
+            <span>忘记密码</span>
+          </div>
         </div>
 
         <div class="login_way">
@@ -34,28 +37,58 @@
 </template>
 
 <script>
+import {register} from '@/api'
 export default {
-  data(){
-    return{
-      status: true, // true:登陆 false:注册
+  data() {
+    return {
+      status: true, // true:登陆 false:注册,
+      input_tips: '',
+      form_data: {
+        username: '',
+        password: ''
+      }
     }
   },
 
-  methods:{
-    close(){
+  methods: {
+    close() {
       console.log('close')
       this.$store.commit('dialogLogin', false)
     },
 
-    loginOrRegister(){
+    loginOrRegister() {
       this.status = !this.status
+    },
+
+    login() {
+      console.log(this.form_data.username)
+      if (!this.form_data.username) {
+        this.input_tips = '请输入用户名'
+        return
+      }
+
+      if (!this.form_data.password) {
+        this.input_tips = '请输入密码'
+        return
+      }
+
+      this.input_tips = ''
+
+      if(status){
+        // 登陆
+      } else {
+        // 注册
+        register(this.form_data).then(res =>{
+          console.log(res)
+        })
+      }
     }
-  },
+  }
 }
 </script>
 
 <style lang="scss" scoped>
-.dialog_login{
+.dialog_login {
   width: 100%;
   height: 100%;
   background-color: rgba($color: #000000, $alpha: 0.5);
@@ -67,31 +100,31 @@ export default {
   align-items: center;
   font-size: 16px;
 
-  .content{
+  .content {
     width: 300px;
     background-color: #fff;
     border-radius: 2px;
     padding: 20px;
 
-    .dialog_header{
+    .dialog_header {
       display: flex;
       align-items: center;
       justify-content: space-between;
       margin-bottom: 20px;
 
-      .title{
+      .title {
         font-weight: bold;
       }
 
-      .close{
+      .close {
         cursor: pointer;
       }
     }
 
-    .input_box{
+    .input_box {
       width: 100%;
       margin-bottom: 10px;
-      input{
+      input {
         width: 100%;
         height: 40px;
         padding: 5px;
@@ -101,7 +134,7 @@ export default {
       }
     }
 
-    .btn{
+    .btn {
       width: 100%;
       height: 40px;
       background-color: #007fff;
@@ -114,25 +147,32 @@ export default {
       // margin-top: 10px;
     }
 
-    .tips{
+    .tips {
       font-size: 14px;
       display: flex;
       justify-content: space-between;
       margin-top: 10px;
       color: #767676;
 
-      span{
+      span {
         color: #007fff;
         cursor: pointer;
       }
     }
 
-    .login_way{
+    .login_way {
       font-size: 14px;
       margin-top: 10px;
       color: #767676;
-      display: none
+      display: none;
     }
   }
+}
+
+.input_tips {
+  font-size: 14px;
+  color: red;
+  text-align: center;
+  margin-bottom: 5px;
 }
 </style>
