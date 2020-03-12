@@ -37,7 +37,6 @@ export default {
         this.title = item.label
       }
     })
-    console.log(this.$router.currentRoute.query.id)
   }
 }
 </script>

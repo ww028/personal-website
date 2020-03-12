@@ -36,9 +36,21 @@ $text_main: #2e3135;
   .item:hover{
     color: $main_color;
   }
+
+  .act{
+    color: #007fff;
+  }
 }
 
 .article_list{
+  .article_null{
+    padding: 10px 20px;
+    text-align: center;
+    height: 100px;
+    line-height: 60px;
+    font-size: 28px;
+  }
+
   .item_content{
     padding: 10px 20px;
   }
@@ -47,6 +59,18 @@ $text_main: #2e3135;
     font-weight: bold;
     font-size: 16px;
     margin: 5px 0;
+    display: flex;
+    justify-content: space-between;
+
+    a{
+      color: $text_main;
+      text-decoration: none;
+    }
+
+    span{
+      font-weight: 400;
+      font-size: 14px;
+    }
   }
 }
 

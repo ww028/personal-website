@@ -56,11 +56,15 @@ export default {
 
   methods: {
     close() {
-      console.log('close')
       this.$store.commit('dialogLogin', false)
     },
 
     loginOrRegister() {
+      this.form_data = {
+        username: '',
+        password: ''
+      }
+      this.input_tips = ''
       this.status = !this.status
     },
 
@@ -77,29 +81,35 @@ export default {
 
       this.input_tips = ''
 
-      if(this.status){
-        console.log('login')
-        login(this.form_data).then(res =>{
-          if(res.code === 0){
-            this.login_info.status = false;
-            this.input_tips = '账号或密码错误'
-          } else {
-            let login_info = {
-              login: true,
-              username: res.data[0].username
+      if (this.status) {
+        login(this.form_data)
+          .then(res => {
+            if (res.code === 0) {
+              this.login_info.status = false
+              this.input_tips = '账号或密码错误'
+            } else {
+              let login_info = {
+                login: true,
+                username: res.data[0].username
+              }
+              this.$store.commit('login/loginInfo', login_info)
+              this.$store.commit('dialogLogin', false)
             }
-            this.$store.commit('login/loginInfo', login_info)
-            this.$store.commit('dialogLogin', false)
-          }
-        }).catch(e =>{
-          this.input_tips = '请求服务器失败，请刷新页面重试'
-        })
+          })
+          .catch(e => {
+            this.input_tips = '请求服务器失败，请刷新页面重试'
+          })
         // 登陆
       } else {
-        console.log('register')
         // 注册
-        register(this.form_data).then(res =>{
+        register(this.form_data).then(res => {
           console.log(res)
+          this.form_data = {
+            username: res.data.username,
+            password: ''
+          }
+          this.input_tips = '注册成功，请输入密码登陆'
+          this.status = true
         })
       }
     }

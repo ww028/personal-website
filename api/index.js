@@ -20,7 +20,6 @@ export async function exit(data) {
 
 // 注册
 export async function register(data) {
-  console.log(data)
   return request({
     url: '/login/register',
     method: 'post',
@@ -42,7 +41,25 @@ export async function modelsList(data) {
 export async function articleList(data) {
   return request({
     url: '/article/list',
-    method: 'get',
+    method: 'post',
+    data
+  })
+}
+
+// 留言板列表
+export async function messageList(data) {
+  return request({
+    url: '/message/list',
+    method: 'post',
+    data
+  })
+}
+
+// 留言板列表 编辑
+export async function messageEdit(data) {
+  return request({
+    url: '/message/edit',
+    method: 'post',
     data
   })
 }

@@ -7,29 +7,32 @@
             v-for="(item, index) in content_module"
             :key="index"
             class="item"
+            :class="item.class"
             @click="moduleClick(item)"
           >{{ item.name }}</div>
         </div>
 
         <div class="article_list">
-          <div v-for="(item, index) in article_list" :key="index" class="border_bottom item">
-            <div class="item_content">
-              <div class="text info">
-                <span>[ {{item.name}} ]</span>
-                &nbsp;
-                <span>作者</span>
-                &nbsp;
-                <span>{{ item.publish_time }}</span>
+          <div v-if="article_list.length ===0" class="article_null">暂无内容</div>
+          <div v-else>
+            <div v-for="(item, index) in article_list" :key="index" class="border_bottom item">
+              <div class="item_content">
+                <div class="text info">
+                  <span>[ {{item.name}} ]</span>
+                </div>
+                <div class="text_main title">
+                  <nuxt-link :to="{name: 'article_info-id', params: {id: item.id }}">
+                    {{ item.title }}
+                  </nuxt-link>
+                  <span>{{ item.publish_time }}</span>
+                </div>
+                <div class="text preview">{{ item.preview }}</div>
               </div>
-              <div class="text_main title">
-                <nuxt-link to="/">{{ item.title }}</nuxt-link>
-              </div>
-              <div class="text preview">预览内容</div>
             </div>
           </div>
         </div>
       </div>
-      <MsgBoard />
+      <MsgBoard type='1'/>
     </main>
   </div>
 </template>
@@ -43,28 +46,12 @@ export default {
   },
   data() {
     return {
-      article_list: [
-        {
-          id: 1,
-          type: 'JavaScript',
-          title: 'JavaScript 从入门到入土',
-          date: '2020-02-25'
-        },
-        {
-          id: 2,
-          type: 'Node.js',
-          title: '使用express 框架与MySQL 数据库编写接口',
-          date: '2020-02-25'
-        },
-        { id: 3, type: 'Vue.js', title: '有趣的Vue.js', date: '2020-02-25' },
-        { id: 4, type: 'Vue.js', title: '有趣的Vue.js', date: '2020-02-25' },
-        { id: 5, type: 'Vue.js', title: '有趣的Vue.js', date: '2020-02-25' }
-      ]
+      content_module: []
     }
   },
 
   asyncData({ store, error, params }) {
-    return Promise.all([api.modelsList(), api.articleList()])
+    return Promise.all([api.modelsList(), api.articleList({type: 0})])
       .then(arr => {
         return {
           content_module: arr[0].data || [],
@@ -74,13 +61,20 @@ export default {
       .catch(error)
   },
 
-  // mounted() {
-  //   console.log(this.article_list)
+  // mounted(){
+  //   this.content_module.unshift({id: 0, name: '全部', class: 'act'})
   // },
 
   methods: {
     moduleClick(val) {
-      this.$router.push('/content_module?id=' + val.id)
+      this.content_module.map(item => {
+        item.class = ''
+      })
+      val.class = 'act'
+
+      api.articleList({ type: val.id }).then(res => {
+        this.article_list = res.data
+      })
     },
 
     artilceInfo(val) {
