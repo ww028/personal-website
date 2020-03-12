@@ -9,6 +9,15 @@ export async function login(data) {
   })
 }
 
+// 退出
+export async function exit(data) {
+  return request({
+    url: '/login/exit',
+    method: 'post',
+    data
+  })
+}
+
 // 注册
 export async function register(data) {
   console.log(data)

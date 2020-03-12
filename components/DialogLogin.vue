@@ -85,13 +85,14 @@ export default {
             this.input_tips = '账号或密码错误'
           } else {
             let login_info = {
-              status: true,
+              login: true,
               username: res.data[0].username
             }
-            this.$store.commit('loginInfo', login_info)
-            localStorage.setItem('login_info', JSON.stringify(login_info))
+            this.$store.commit('login/loginInfo', login_info)
             this.$store.commit('dialogLogin', false)
           }
+        }).catch(e =>{
+          this.input_tips = '请求服务器失败，请刷新页面重试'
         })
         // 登陆
       } else {

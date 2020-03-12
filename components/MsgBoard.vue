@@ -4,9 +4,10 @@
       <div class="msg_board_input_title">留言</div>
       <textarea placeholder="请输入留言内容"></textarea>
       <div class="tips">
-        <div>
-          请
-          <span>登陆</span> 后发布留言
+        <div >
+          <span v-if="!login_status.login">
+            请<span>登陆</span> 后发布留言
+          </span> 
         </div>
 
         <div>
@@ -40,28 +41,9 @@
 export default {
   data() {
     return {
+      login_info: {},
       msg_number: 99,
       msg_list: [
-        {
-          nick_name: '张三',
-          content: '今天是个好日子',
-          create_time: '2020-02-25 14:34'
-        },
-        {
-          nick_name: '张三',
-          content: '今天是个好日子',
-          create_time: '2020-02-25 14:34'
-        },
-        {
-          nick_name: '张三',
-          content: '今天是个好日子',
-          create_time: '2020-02-25 14:34'
-        },
-        {
-          nick_name: '张三',
-          content: '今天是个好日子',
-          create_time: '2020-02-25 14:34'
-        },
         {
           nick_name: '张三',
           content: '今天是个好日子',
@@ -76,6 +58,12 @@ export default {
     }
   },
 
+  computed:{
+    login_status(){
+      return this.$store.state.login
+    }
+  },
+  
   methods: {
     moreMsg() {
       let msg = {

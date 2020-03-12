@@ -66,7 +66,6 @@ export default {
   asyncData({ store, error, params }) {
     return Promise.all([api.modelsList(), api.articleList()])
       .then(arr => {
-        console.log(arr)
         return {
           content_module: arr[0].data || [],
           article_list: arr[1].data || []
@@ -75,9 +74,9 @@ export default {
       .catch(error)
   },
 
-  mounted() {
-    console.log(this.article_list)
-  },
+  // mounted() {
+  //   console.log(this.article_list)
+  // },
 
   methods: {
     moduleClick(val) {

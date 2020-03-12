@@ -13,6 +13,12 @@ export default {
   components: {
     HeaderBar, DialogLogin
   },
+
+  mounted(){
+    if(localStorage.getItem('login_info')){
+      this.$store.commit('login/loginInfo', JSON.parse(localStorage.getItem('login_info')))
+    }
+  }
 }
 </script>
 
