@@ -27,6 +27,15 @@ export async function register(data) {
   })
 }
 
+// 数据统计
+export async function collectEdit(data) {
+  return request({
+    url: '/collect/edit',
+    method: 'post',
+    data
+  })
+}
+
 
 // 模块列表
 export async function modelsList(data) {

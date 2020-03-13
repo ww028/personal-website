@@ -66,6 +66,7 @@ export default {
   },
 
   mounted(){
+    // api.collectEdit({})
     this.content_module.unshift({id: 0, name: '全部', class: 'act'})
   },
 
