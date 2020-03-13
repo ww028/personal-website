@@ -131,7 +131,7 @@ export default {
 <style lang="scss" scoped>
 .msg_board_input {
   background-color: #fff;
-  margin-top: 20px;
+  margin-top: 10px;
 
   .msg_board_input_title {
     font-weight: bold;
@@ -175,7 +175,7 @@ export default {
 }
 
 .msg_board {
-  margin-top: 20px;
+  margin-top: 10px;
   background-color: #fff;
 
   .msg_title {
@@ -204,7 +204,7 @@ export default {
   }
 
   .more_msg {
-    margin: 20px 0;
+    margin: 10px 0;
     padding-bottom: 20px;
     text-align: center;
     cursor: pointer;

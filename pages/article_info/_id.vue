@@ -1,29 +1,32 @@
 <template>
   <main class="container">
-    <el-breadcrumb separator-class="el-icon-arrow-right">
+    <Breadcrumb />
+    <!-- <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
       <el-breadcrumb-item>{{ article.title }}</el-breadcrumb-item>
-    </el-breadcrumb>
+    </el-breadcrumb> -->
 
-    <div class="a_title">{{article.title}}</div>
-    <div class="info">
-      <span>文章分类：{{ article.name }}</span>
-      <span>发布时间：{{ article.publish_time }} </span>
-    </div>
-    <div>
-      {{ article.content }}
+    <div class="article_content">
+      <div class="title">{{article.title}}</div>
+      <div class="info">
+        <span>文章分类：{{ article.name }}</span>
+        <span>发布时间：{{ article.publish_time }}</span>
+      </div>
+      <div v-html="article.content"></div>
+      <!-- <div>{{ article.content }}</div> -->
     </div>
 
-    <MsgBoard type='2' :article_id="$router.currentRoute.params.id"/>
+    <MsgBoard type="2" :article_id="$router.currentRoute.params.id" />
   </main>
 </template>
 
 <script>
 import * as api from '@/api'
 import MsgBoard from '~/components/MsgBoard'
+import Breadcrumb from '~/components/Breadcrumb'
 export default {
   components: {
-    MsgBoard
+    MsgBoard, Breadcrumb
   },
   data() {
     return {
@@ -43,6 +46,16 @@ export default {
   },
 
   mounted() {
+    // if(this.$router.currentRoute.params.from){
+    //   localStorage.setItem('from', this.$router.currentRoute.params.from)
+    // }
+    // let from = localStorage.getItem('from')
+    // if(from === 'home'){
+    //   breadcrumb
+    // } else {
+
+    // }
+    // console.log(this.$router.currentRoute)
     this.title = this.$router.currentRoute.query.title
   }
 }

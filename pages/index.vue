@@ -21,13 +21,16 @@
                   <span>[ {{item.name}} ]</span>
                 </div>
                 <div class="text_main title">
-                  <nuxt-link :to="{name: 'article_info-id', params: {id: item.id }}">
+                  <nuxt-link :to="{name: 'article_info-id', params: {id: item.id, from: 'home' }}">
                     {{ item.title }}
                   </nuxt-link>
                   <span>{{ item.publish_time }}</span>
                 </div>
                 <div class="text preview">{{ item.preview }}</div>
               </div>
+            </div>
+            <div class="more_ariticle">
+              <el-button type="text" @click="moreArticle">查看更多文章</el-button>
             </div>
           </div>
         </div>
@@ -49,10 +52,11 @@ export default {
       content_module: []
     }
   },
-
+ 
   asyncData({ store, error, params }) {
-    return Promise.all([api.modelsList(), api.articleList({type: 0})])
+    return Promise.all([api.modelsList(), api.articleList({type: 0, pageNo: 1, pageSize: 5})])
       .then(arr => {
+        console.log(arr[1].data)
         return {
           content_module: arr[0].data || [],
           article_list: arr[1].data || []
@@ -61,9 +65,9 @@ export default {
       .catch(error)
   },
 
-  // mounted(){
-  //   this.content_module.unshift({id: 0, name: '全部', class: 'act'})
-  // },
+  mounted(){
+    this.content_module.unshift({id: 0, name: '全部', class: 'act'})
+  },
 
   methods: {
     moduleClick(val) {
@@ -81,7 +85,7 @@ export default {
       this.$router.push('/article_info?title=' + val.title)
     },
 
-    more() {
+    moreArticle() {
       this.$router.push('/article')
     }
   }

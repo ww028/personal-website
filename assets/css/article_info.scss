@@ -1,6 +1,24 @@
-.a_title{
-  margin: 20px 0;
-  font-size: 28px;
-  font-weight: bold;
-  text-align: center;
+.article_content {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #fff;
+
+
+  .title {
+    margin: 10px 0;
+    font-size: 28px;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  .info{
+    text-align: center;
+    font-size: 14px;
+    margin-bottom: 10px;
+    
+    span{
+      margin: 0 10px;
+      color: #909090;
+    }
+  }
 }
