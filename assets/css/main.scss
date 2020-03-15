@@ -1,67 +1,131 @@
 html{
-  background-color: #f4f5f5;
+  font-size:16px;
 }
 
-header {
+main{
+  position: absolute;
+  left: 0;
+  top: 0;
   width: 100%;
-  height: 50px;
-  background-color: #fff;
+  height: 100%;
+  color: #fff;
+  padding: 10px;
+
+  .main_container{
+    width: 800px;
+    margin: 0 auto;
+  }
 }
 
-.container{
-  width: 1000px;
-  margin: 0 auto;
+a{
+  color: #fff;
+  text-decoration: none;
 }
 
-.module_title{
-  font-weight: bold;
-  height: 30px;
-  line-height: 30px;
-  border-bottom: solid 1px #000;
-}
 
-.border_bottom{
-  // border-bottom: 1px solid rgba(178,186,194,.15);
-  border-bottom: 1px solid red;
-}
+@import './welcome.scss';
+@import './home.scss';
+// body {
+//   height: 100vh;
+//   background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+//   overflow: hidden;
+//   filter: drop-shadow(0 0 10px white);
+// }
 
-// 滚动条
-body::-webkit-scrollbar {
-  /*滚动条整体样式*/
-  width: 5px;
-  /*高宽分别对应横竖滚动条的尺寸*/
-  // height: 4px;
-}
 
-body::-webkit-scrollbar-thumb {
-  /*滚动条里面小方块*/
-  border-radius: 5px;
-  background: #adb1b1;;
-}
+// html,
+// body,
+// #__nuxt,
+// #__layout,
+// .__container{
+//   width: 100%;
+//   height: 100%;
+// }
 
-body::-webkit-scrollbar-track {
-  /*滚动条里面轨道*/
-  box-shadow: inset 0 0 5px #f5f9fa;
-  border-radius: 0;
-  background: lightgray;
-}
+// body{
+//   background-color: #000;
+// }
 
-// 修改element 样式
-.el-button{
-  padding: 0;
-}
+// main{
+//   width: 100%;
+//   height: 100%;
+//   position: absolute;
+//   left: 0;
+//   top: 0;
+//   color: #fff;
+// }
 
-.el-pagination{
-  padding: 10px 20px;
-}
 
-.el-breadcrumb{
-  margin-top: 10px;
-  padding: 10px 20px;
-  background-color: #fff;
-}
 
-@import './index.scss';
-@import './content_module.scss';
-@import './article.scss';
-@import './article_info.scss';
+// // header {
+// //   width: 100%;
+// //   height: 50px;
+// //   background-color: #409EFF;
+// //   color: #fff;
+// //   position: fixed;
+// //   left: 0;
+// //   top: 0;
+// // }
+
+// // main{
+// //   margin-top: 70px;
+// // }
+
+// // .container{
+// //   width: 1000px;
+// //   margin: 0 auto;
+// // }
+
+// // .module_title{
+// //   font-weight: bold;
+// //   height: 30px;
+// //   line-height: 30px;
+// //   border-bottom: solid 1px #000;
+// // }
+
+// // .border_bottom{
+// //   // border-bottom: 1px solid rgba(178,186,194,.15);
+// //   border-bottom: 1px solid red;
+// // }
+
+// // // 滚动条
+// // body::-webkit-scrollbar {
+// //   /*滚动条整体样式*/
+// //   width: 5px;
+// //   /*高宽分别对应横竖滚动条的尺寸*/
+// //   // height: 4px;
+// // }
+
+// // body::-webkit-scrollbar-thumb {
+// //   /*滚动条里面小方块*/
+// //   border-radius: 5px;
+// //   background: #adb1b1;;
+// // }
+
+// // body::-webkit-scrollbar-track {
+// //   /*滚动条里面轨道*/
+// //   box-shadow: inset 0 0 5px #f5f9fa;
+// //   border-radius: 0;
+// //   background: lightgray;
+// // }
+
+// // // 修改element 样式
+// // .el-button{
+// //   padding: 0;
+// // }
+
+// // .el-pagination{
+// //   padding: 10px 20px;
+// // }
+
+// // .el-breadcrumb{
+// //   margin-top: 10px;
+// //   padding: 10px 20px;
+// //   background-color: #fff;
+// // }
+
+// // @import './welcome.scss';
+// // @import './index.scss';
+// // @import './content_module.scss';
+// // @import './article.scss';
+// // @import './article_info.scss';

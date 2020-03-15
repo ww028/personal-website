@@ -1,17 +1,19 @@
 <template>
-  <div>
-    <DialogLogin v-if="this.$store.state.dialog_login"/>
-    <HeaderBar />
+  <div class="__container">
+    <!-- <div>default</div> -->
+    <Snow/>
+    <!-- <HeaderBar /> -->
     <nuxt />
   </div>
 </template>
 
 <script>
+import Snow from '~/components/Snow'
 import HeaderBar from '~/components/HeaderBar'
 import DialogLogin from '~/components/DialogLogin'
 export default {
   components: {
-    HeaderBar, DialogLogin
+    HeaderBar, DialogLogin, Snow
   },
 
   mounted(){

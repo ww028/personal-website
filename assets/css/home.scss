@@ -1,0 +1,17 @@
+.main_content{
+  display: flex;
+  margin-top: 20px;
+
+  .content_box{
+    width: 600px;
+    margin-right: 20px;
+  }
+}
+
+.article_list {
+  .item {
+    display: flex;
+    justify-content: space-between;
+    line-height: 30px;
+  }
+}
