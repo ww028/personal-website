@@ -1,5 +1,5 @@
 <template>
-  <header>title</header>
+  <header>W的博客</header>
 </template>
 
 <style lang="scss" scoped>
