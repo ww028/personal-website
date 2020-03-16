@@ -1,8 +1,8 @@
 <template>
   <div class="__container">
     <!-- <div>default</div> -->
-    <Snow/>
-    <!-- <HeaderBar /> -->
+    <Snow />
+    <HeaderBar />
     <nuxt />
   </div>
 </template>
@@ -13,12 +13,17 @@ import HeaderBar from '~/components/HeaderBar'
 import DialogLogin from '~/components/DialogLogin'
 export default {
   components: {
-    HeaderBar, DialogLogin, Snow
+    HeaderBar,
+    DialogLogin,
+    Snow
   },
 
-  mounted(){
-    if(localStorage.getItem('login_info')){
-      this.$store.commit('login/loginInfo', JSON.parse(localStorage.getItem('login_info')))
+  mounted() {
+    if (localStorage.getItem('login_info')) {
+      this.$store.commit(
+        'login/loginInfo',
+        JSON.parse(localStorage.getItem('login_info'))
+      )
     }
   }
 }

@@ -44,10 +44,10 @@ export default {
         { id: 1, username: '张三', msg: '今天是个好天气', create_time: '2020/03/15'},
         { id: 2, username: '张三', msg: '今天是个好天气', create_time: '2020/03/15'},
         { id: 3, username: '张三', msg: '今天是个好天气', create_time: '2020/03/15'},
-        { id: 3, username: '张三', msg: '今天是个好天气', create_time: '2020/03/15'},
-        { id: 3, username: '张三', msg: '今天是个好天气', create_time: '2020/03/15'},
-        { id: 3, username: '张三', msg: '今天是个好天气', create_time: '2020/03/15'},
-        { id: 3, username: '张三', msg: '今天是个好天气', create_time: '2020/03/15'},
+        { id: 4, username: '张三', msg: '今天是个好天气', create_time: '2020/03/15'},
+        { id: 5, username: '张三', msg: '今天是个好天气', create_time: '2020/03/15'},
+        { id: 6, username: '张三', msg: '今天是个好天气', create_time: '2020/03/15'},
+        { id: 7, username: '张三', msg: '今天是个好天气', create_time: '2020/03/15'},
       ]
     }
   }
