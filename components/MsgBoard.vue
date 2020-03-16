@@ -2,18 +2,21 @@
   <div class="msg_board">
     <div class="title">留言板</div>
     <div class="w_textarea">
-      <textarea></textarea>
+      <textarea v-model="sub_data.msg"></textarea>
     </div>
 
     <div class="w_input">
-      <input type="text" placeholder="请输入您的名字" />
+      <input type="text" v-model="sub_data.nick_name" placeholder="请输入您的名字" />
 
-      <input type="text" placeholder="请输入您的邮箱(不公开)" />
+      <input type="text" v-model="sub_data.email_or_tel" placeholder="请输入您的邮箱/电话号码" />
 
-      <button class="btn">发布</button>
+      <button class="btn" @click="submit">发布</button>
+
+      <div class="tips">{{tips}}</div>
     </div>
 
     <div class="msg_list">
+      <div class="title">留言内容 <span>({{msg_number}})</span> </div>
       <div
         v-for="(item, index) in msg_list"
         :key="item.id"
@@ -21,7 +24,7 @@
       >
         <div class="username">
           <span> #{{index+1}}</span>
-          <span>{{item.username}}</span>
+          <span>{{item.nick_name}}</span>
         </div>
 
         <div class="msg">
@@ -37,19 +40,75 @@
 </template>
 
 <script>
+import * as api from '@/api'
 export default {
+  props:{
+    /**
+     * type: 1 首页留言
+     * type: 2 文章留言
+     */
+    type: String,
+    article_id: [String, Number]
+  },
   data(){
     return{
-      msg_list: [
-        { id: 1, username: '张三', msg: '今天是个好天气', create_time: '2020/03/15'},
-        { id: 2, username: '张三', msg: '今天是个好天气', create_time: '2020/03/15'},
-        { id: 3, username: '张三', msg: '今天是个好天气', create_time: '2020/03/15'},
-        { id: 4, username: '张三', msg: '今天是个好天气', create_time: '2020/03/15'},
-        { id: 5, username: '张三', msg: '今天是个好天气', create_time: '2020/03/15'},
-        { id: 6, username: '张三', msg: '今天是个好天气', create_time: '2020/03/15'},
-        { id: 7, username: '张三', msg: '今天是个好天气', create_time: '2020/03/15'},
-      ]
+      msg_number: '',
+      sub_data:{
+        msg: '',
+        nick_name: '',
+        email_or_tel: ''
+      },
+      tips: '',
+      msg_list: []
     }
+  },
+
+  mounted(){
+    this.getData()
+  },
+
+  methods:{
+    submit(){
+      console.log(this.sub_data)
+      if(this.sub_data.msg === ''){
+        this.tips = '请输入留言内容'
+        return
+      }
+
+      if(this.sub_data.nick_name === ''){
+        this.tips = '请输入您的昵称'
+        return
+      }
+
+      if(this.sub_data.email_or_tel === ''){
+        this.tips = '请输入您的邮箱/电话号码'
+        return
+      }
+      this.sub_data.type = this.type
+      this.sub_data.article_id = this.article_id
+      api.messageEdit(this.sub_data).then(res => {
+        if (res.status) {
+          this.getData()
+          this.submit_tip = '发布留言成功'
+          setTimeout(() =>{
+            this.submit_tip = ''
+          },1000)
+        }
+      })
+      console.log('提交  ')
+    },
+
+    getData() {
+      let sub_data = {
+        type: Number(this.type),
+        article_id: Number(this.article_id)
+      }
+      api.messageList(sub_data).then(res => {
+        console.log(res)
+        this.msg_number = res.count
+        this.msg_list = res.data
+      })
+    },
   }
 }
 </script>
@@ -85,6 +144,14 @@ export default {
     padding: 10px;
     margin-right: 20px;
     background-color: rgba($color: #000000, $alpha: 0.5);
+  }
+
+  .tips{
+    height: 30px;
+    line-height: 30px;
+    color: red;
+    margin-left: 20px;
+    font-size: 14px;
   }
 }
 

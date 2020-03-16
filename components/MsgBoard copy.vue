@@ -46,7 +46,6 @@ export default {
     /**
      * type: 1 首页留言
      * type: 2 文章留言
-     * 
      */
     type: String,
     article_id: [String, Number]

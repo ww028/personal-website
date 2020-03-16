@@ -15,9 +15,9 @@
             <div>{{item.created_time}}</div>
           </div>
         </div>
-        <nuxt-link :to="{path: '/article' }">查看更多文章</nuxt-link>
+        <nuxt-link v-if='false' :to="{path: '/article' }">查看更多文章</nuxt-link>
 
-        <MsgBoard />
+        <MsgBoard type='1' />
       </div>
       <div class="info">
         <div class="m_title">关于 W 的博客:</div>

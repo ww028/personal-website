@@ -21,6 +21,8 @@
         <nuxt-link :to="{name: 'article_info' }"><i class="el-icon-back"></i>&nbsp;上一篇《上一篇》</nuxt-link>
         <nuxt-link :to="{name: 'article_info' }">下一篇《下一篇》&nbsp;<i class="el-icon-right"></i></nuxt-link>
       </div>
+
+      <MsgBoard type="2" :article_id="article.id"/>
     </div>
   </main>
 </template>
@@ -50,6 +52,10 @@ export default {
       })
       .catch(error)
   },
+
+  mounted(){
+    console.log(this.article)
+  }
 
 }
 </script>
