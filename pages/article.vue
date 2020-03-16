@@ -23,76 +23,56 @@
           <div class="preview">{{ item.preview }}</div>
         </div>
       </div>
-      <!-- <el-pagination background layout="prev, pager, next" :total="1000"></el-pagination> -->
+      <el-pagination
+        background
+        @current-change="handleCurrentChange"
+        :current-page="sub_data.pageNo"
+        :page-size="5"
+        layout="total, prev, pager, next, jumper"
+        :total="total"
+      ></el-pagination>
     </div>
   </main>
 </template>
 
 <script>
+import * as api from '@/api'
 export default {
   data() {
     return {
-      article: [
-        {
-          id: 1,
-          title: '测试文章',
-          type_name: 'HTML',
-          preview:
-            '预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预',
-          view_count: '100',
-          create_time: '2020/03/16'
-        },
-        {
-          id: 2,
-          title: '测试文章',
-          type_name: 'HTML',
-          preview:
-            '预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预',
-          view_count: '100',
-          create_time: '2020/03/16'
-        },
-        {
-          id: 3,
-          title: '测试文章',
-          type_name: 'HTML',
-          preview:
-            '预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预',
-          view_count: '100',
-          create_time: '2020/03/16'
-        },
-        {
-          id: 4,
-          title: '测试文章',
-          type_name: 'HTML',
-          preview:
-            '预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预',
-          view_count: '100',
-          create_time: '2020/03/16'
-        },
-        {
-          id: 5,
-          title: '测试文章',
-          type_name: 'HTML',
-          preview:
-            '预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预',
-          view_count: '100',
-          create_time: '2020/03/16'
-        },
-        {
-          id: 6,
-          title: '测试文章',
-          type_name: 'HTML',
-          preview:
-            '预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预览内容预',
-          view_count: '100',
-          create_time: '2020/03/16'
-        }
-      ]
+      sub_data: {
+        type: '',
+        pageNo: 1,
+        pageSize: 5
+      }
     }
+  },
+
+  asyncData({ store, error, params }) {
+    return Promise.all([
+      api.articleList({ type: 0, pageNo: 1, pageSize: 5 })
+    ])
+      .then(arr => {
+        console.log(arr[0].data)
+        return {
+          article: arr[0].data || [],
+          total: arr[0].total
+        }
+      })
+      .catch(error)
   },
 
   mounted(){
     console.log(this.$router)
+  },
+
+  methods:{
+    handleCurrentChange(val) {
+      this.sub_data.pageNo = val
+      api.articleList(this.sub_data).then(res => {
+        this.article = res.data
+      })
+    }
   }
 }
 </script>
@@ -102,7 +82,7 @@ export default {
   font-size: 14px;
   color: rgb(211, 209, 209);
 
-  .item{
+  .item {
     margin-bottom: 10px;
     padding-bottom: 10px;
     border-bottom: solid 1px rgba($color: #888282, $alpha: 0.9);
@@ -116,7 +96,7 @@ export default {
     .title {
       font-size: 16px;
       margin: 10px 0;
-      color: #fff
+      color: #fff;
     }
   }
 

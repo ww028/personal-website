@@ -7,7 +7,10 @@
           <div v-for="item in article" :key="item.id" class="item">
             <div>
               <span>[{{item.type_name}}]</span>
-              <nuxt-link :to="{name: 'article_info' }">{{ item.title }}</nuxt-link>
+              <!-- <nuxt-link :to="{name: 'article_info' }">{{ item.title }}</nuxt-link> -->
+              <nuxt-link
+                :to="{name: 'article_info-id', params: {id: item.id, from: 'article' }}"
+              >{{ item.title }}</nuxt-link>
             </div>
             <div>{{item.created_time}}</div>
           </div>
@@ -42,6 +45,7 @@
 </template>
 
 <script>
+import * as api from '@/api'
 import MsgBoard from '@/components/MsgBoard'
 export default {
   components: {
@@ -49,57 +53,21 @@ export default {
   },
   data() {
     return {
-      article: [
-        {
-          id: 1,
-          title: '测试文章',
-          type_name: 'code',
-          created_time: '2020/03/15'
-        },
-        {
-          id: 2,
-          title: '测试文章',
-          type_name: 'code',
-          created_time: '2020/03/15'
-        },
-        {
-          id: 3,
-          title: '测试文章',
-          type_name: 'code',
-          created_time: '2020/03/15'
-        },
-        {
-          id: 4,
-          title: '测试文章',
-          type_name: 'code',
-          created_time: '2020/03/15'
-        },
-        {
-          id: 5,
-          title: '测试文章',
-          type_name: 'code',
-          created_time: '2020/03/15'
-        },
-        {
-          id: 6,
-          title: '测试文章',
-          type_name: 'code',
-          created_time: '2020/03/15'
-        },
-        {
-          id: 7,
-          title: '测试文章',
-          type_name: 'code',
-          created_time: '2020/03/15'
-        },
-        {
-          id: 8,
-          title: '测试文章',
-          type_name: 'code',
-          created_time: '2020/03/15'
-        }
-      ]
+      // article: []
     }
+  },
+
+  asyncData({ store, error, params }) {
+    return Promise.all([
+      api.articleList({ type: 0, pageNo: 1, pageSize: 7 })
+    ])
+      .then(arr => {
+        console.log(arr[0].data)
+        return {
+          article: arr[0].data || []
+        }
+      })
+      .catch(error)
   }
 }
 </script>

@@ -37,11 +37,11 @@ export async function collectEdit(data) {
 }
 
 
-// 模块列表
-export async function modelsList(data) {
+// 文章类型
+export async function articleType(data) {
   return request({
-    url: '/models/list',
-    method: 'get',
+    url: '/article_type/list',
+    method: 'post',
     data
   })
 }

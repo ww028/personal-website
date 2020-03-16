@@ -25,6 +25,33 @@
   </main>
 </template>
 
+<script>
+import * as api from '@/api'
+import MsgBoard from '~/components/MsgBoard'
+export default {
+  components: {
+    MsgBoard, Breadcrumb
+  },
+  data() {
+    return {
+      title: '',
+      article_id: ''
+    }
+  },
+
+  asyncData({ store, error, params }) {
+    return Promise.all([api.articleList({ id: params.id })])
+      .then(arr => {
+        return {
+          article: arr[0].data[0] || []
+        }
+      })
+      .catch(error)
+  },
+
+}
+</script>
+
 <style lang="scss" scoped>
 .article_title {
   text-align: center;
