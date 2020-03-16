@@ -8,12 +8,25 @@ main{
   top: 0;
   width: 100%;
   height: 100%;
+  overflow: auto;
   color: #fff;
   padding: 10px;
 
   .main_container{
     width: 800px;
     margin: 0 auto;
+
+    .title{
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .w_card{
+      background-color: rgba($color: #000000, $alpha: 0.9);
+      padding: 10px;
+      margin-bottom: 10px;
+    }
   }
 }
 
