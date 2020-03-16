@@ -12,7 +12,7 @@
                 :to="{name: 'article_info-id', params: {id: item.id, from: 'article' }}"
               >{{ item.title }}</nuxt-link>
             </div>
-            <div>{{item.created_time}}</div>
+            <div>{{item.publish_time}}</div>
           </div>
         </div>
         <nuxt-link v-if='false' :to="{path: '/article' }">查看更多文章</nuxt-link>

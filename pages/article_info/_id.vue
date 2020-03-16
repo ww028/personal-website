@@ -10,17 +10,17 @@
       <div class="article_info">
         <span>文章类型: {{article.type_name}}</span>
         &emsp;
-        <span>阅读次数: 100</span>
-        &emsp;
+        <!-- <span>阅读次数: 100</span> -->
+        <!-- &emsp; -->
         <span>发布时间: {{article.publish_time}}</span>
       </div>
 
       <div class="article_content" v-html="article.content"></div>
       
-      <div class="pre">
+      <!-- <div class="pre">
         <nuxt-link :to="{name: 'article_info' }"><i class="el-icon-back"></i>&nbsp;上一篇《上一篇》</nuxt-link>
         <nuxt-link :to="{name: 'article_info' }">下一篇《下一篇》&nbsp;<i class="el-icon-right"></i></nuxt-link>
-      </div>
+      </div> -->
 
       <MsgBoard type="2" :article_id="article.id"/>
     </div>
