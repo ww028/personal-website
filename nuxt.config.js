@@ -14,6 +14,9 @@ module.exports = {
     // link: [
     //   { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     // ]
+    script: [
+      {src: '/js/fn.js'}
+    ]
   },
   /*
   ** Customize the progress-bar color
@@ -23,14 +26,14 @@ module.exports = {
   ** Global CSS
   */
   css: [
-    'element-ui/lib/theme-chalk/index.css',
+    // 'element-ui/lib/theme-chalk/index.css',
     { src: 'assets/css/main.scss', lang: 'scss' }
   ],
   /*
   ** Plugins to load before mounting the App
   */
   plugins: [
-    '@/plugins/element-ui'
+    // '@/plugins/element-ui',
   ],
   /*
   ** Nuxt.js dev-modules
@@ -46,7 +49,7 @@ module.exports = {
   ** Build configuration
   */
   build: {
-    transpile: [/^element-ui/],
+    // transpile: [/^element-ui/],
     /*
     ** You can extend webpack config here
     */

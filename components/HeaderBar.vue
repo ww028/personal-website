@@ -14,4 +14,10 @@ header {
   color: #fff;
   background-color: rgba($color: #000000, $alpha: 0.9);
 }
+
+@media screen and (max-width: 1000px) {
+  header {
+    font-size: 0.3rem
+  }
+}
 </style>

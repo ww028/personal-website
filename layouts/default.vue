@@ -2,7 +2,7 @@
   <div class="__container">
     <!-- <div>default</div> -->
     <Snow />
-    <HeaderBar />
+    <!-- <HeaderBar /> -->
     <nuxt />
   </div>
 </template>

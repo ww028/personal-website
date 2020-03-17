@@ -69,7 +69,6 @@ export default {
 
   methods:{
     submit(){
-      console.log(this.sub_data)
       if(this.sub_data.msg === ''){
         this.tips = '请输入留言内容'
         return
@@ -80,18 +79,21 @@ export default {
         return
       }
 
-      if(this.sub_data.email_or_tel === ''){
-        this.tips = '请输入您的邮箱/电话号码'
+      if(!this.emailOrTel(this.sub_data.email_or_tel)){
         return
       }
+     
       this.sub_data.type = this.type
       this.sub_data.article_id = this.article_id
       api.messageEdit(this.sub_data).then(res => {
         if (res.status) {
           this.getData()
-          this.submit_tip = '发布留言成功'
+          this.tips = '发布留言成功'
           setTimeout(() =>{
-            this.submit_tip = ''
+            this.tips = ''
+            this.sub_data.msg = ''
+            this.sub_data.nick_name = ''
+            this.sub_data.email_or_tel = ''
           },1000)
         }
       })
@@ -104,11 +106,38 @@ export default {
         article_id: Number(this.article_id)
       }
       api.messageList(sub_data).then(res => {
-        console.log(res)
         this.msg_number = res.count
         this.msg_list = res.data
       })
     },
+
+    emailOrTel(val){
+      let rule = ''
+      let flag = false
+
+      if(val === ''){
+        this.tips = '请输入您的邮箱/电话号码'
+        return false
+      }
+
+      if(val.indexOf('@') > 0){
+        // 邮箱
+        rule = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/
+        flag = rule.test(val)
+      } else {
+        // 电话
+        rule = /^1[3456789]\d{9}$/
+        flag = rule.test(val)
+      }
+
+      if(!flag){
+        this.tips = '邮箱/电话号码格式不正确'
+        return false
+      } else {
+        return true
+        this.tips = ''
+      }
+    }
   }
 }
 </script>
@@ -177,8 +206,6 @@ export default {
   color: #fff;
   margin-top: 10px;
   // background-color: rgba($color: #000000, $alpha: 0.5);
-  margin-top: 10px;
-  // padding: 10px;
 
   .item{
     margin-top: 10px;
@@ -199,4 +226,28 @@ export default {
     text-align: right;
   }
 }
+
+@media screen and (max-width: 1000px) {
+  .title{
+    font-size: 0.3rem
+  }
+
+  .w_textarea{
+    height: 2rem;
+  }
+
+  .w_input{
+    flex-direction: column;
+    input{
+      width: 5rem;
+      font-size: 0.2rem;
+      margin-bottom: 0.1rem;
+    }
+  }
+
+  .msg_list{
+    font-size: 0.2rem;
+  }
+}
+
 </style>

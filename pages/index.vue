@@ -5,15 +5,8 @@
       <div class="content">
         <div class="title"></div>
         <div class="introduce"></div>
-        <div>
-          <div class="loading">
-            <div
-              class="dot"
-              v-for="(item, index) in dot"
-              :key="index"
-              @click="start"
-            >{{ item.label }}</div>
-          </div>
+        <div class="loading">
+          <div class="dot" v-for="(item, index) in dot" :key="index" @click="start">{{ item.label }}</div>
         </div>
       </div>
     </div>
@@ -24,45 +17,45 @@
 export default {
   data() {
     return {
-      title: "你好啊，欢迎来到 W 的博客",
+      title: '你好啊，欢迎来到 W 的博客',
       introduce:
-        "我将会在这里分享一些 web前端开发技术，读书笔记等内容，希望您会感兴趣。",
+        '我将会在这里分享一些 web前端开发技术，读书笔记等内容，希望您会感兴趣。',
       dot: [
-        { label: "S" },
-        { label: "T" },
-        { label: "A" },
-        { label: "R" },
-        { label: "T" }
+        { label: 'S' },
+        { label: 'T' },
+        { label: 'A' },
+        { label: 'R' },
+        { label: 'T' }
       ]
-    };
+    }
   },
 
   mounted() {
-    this.textPlay(".title", this.title);
+    this.textPlay('.title', this.title)
     setTimeout(() => {
-      this.textPlay(".introduce", this.introduce);
-    }, 1500);
+      this.textPlay('.introduce', this.introduce)
+    }, 1500)
   },
 
   methods: {
     start() {
-      this.$router.push("/home");
+      this.$router.push('/home')
     },
 
     textPlay(dom, text) {
-      let landInTexts = document.querySelectorAll(dom);
-      console.log(landInTexts);
+      let landInTexts = document.querySelectorAll(dom)
+      console.log(landInTexts)
       landInTexts.forEach(landInText => {
-        let letters = text.split("");
-        landInText.textContent = "";
+        let letters = text.split('')
+        landInText.textContent = ''
         letters.forEach((letter, i) => {
-          let span = document.createElement("span");
-          span.textContent = letter;
-          span.style.animationDelay = `${i * 0.09}s`;
-          landInText.append(span);
-        });
-      });
+          let span = document.createElement('span')
+          span.textContent = letter
+          span.style.animationDelay = `${i * 0.09}s`
+          landInText.append(span)
+        })
+      })
     }
   }
-};
+}
 </script>

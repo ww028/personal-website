@@ -1,5 +1,6 @@
 html {
   font-size: 16px;
+  background-color: rgba($color: #000000, $alpha: 0.5);
 }
 
 a {
@@ -10,7 +11,7 @@ a {
 main {
   position: absolute;
   left: 0;
-  top: 50px;
+  top: 20px;
   width: 100%;
   height: calc(100% - 50px);
   color: #fff;
@@ -36,38 +37,56 @@ main {
   }
 }
 
-
 main::-webkit-scrollbar {
   width: 5px;
 }
 
 main::-webkit-scrollbar-thumb {
   /*滚动条里面小方块*/
-  background-color: red;
+  background-color: #000;
 }
 
 main::-webkit-scrollbar-track {
   /*滚动条里面轨道*/
-  background: #000;
+  background: rgba($color: #000000, $alpha: 0.9);
 }
 
-// 修改element ui 样式
-.el-breadcrumb{
-  margin: 10px 0;
+.breadcrumb{
+  display: flex;
+  font-size: 14px;
+  color: rgb(207, 205, 205);
+  
+  a{
+    color: rgb(207, 205, 205);
+  }
+
+  a:hover{
+    color: #fff;
+  }
+
+  >a,
+  >div{
+    margin-right: 5px;
+  }
 }
 
-.el-breadcrumb__inner a,
-.el-breadcrumb__inner.is-link,
-.el-breadcrumb__inner,
-.el-breadcrumb__item:last-child .el-breadcrumb__inner,
-.el-breadcrumb__item:last-child .el-breadcrumb__inner a,
-.el-breadcrumb__item:last-child .el-breadcrumb__inner a:hover,
-.el-breadcrumb__item:last-child .el-breadcrumb__inner:hover {
-  color: #fff;
+@media screen and (max-width: 1000px) {
+  html {
+    font-size: 0.3rem;
+    background-color: lightpink
+  }
+
+  main{
+    top: 0rem;
+    .main_container{
+      width: 100%;
+      padding: 0 0.2rem;
+
+      .m_title{
+        font-size: 0.3rem;
+      }
+    }
+  }
 }
 
-.is-link:hover{
-  color: red !important;
-}
-
-@import './welcome.scss';
+@import './index.scss';

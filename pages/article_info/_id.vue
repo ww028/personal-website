@@ -1,10 +1,15 @@
 <template>
   <main>
     <div class="main_container">
-      <el-breadcrumb separator-class="el-icon-arrow-right">
+      <div class="breadcrumb">
+        <nuxt-link :to="{name: 'home' }">首页</nuxt-link>
+        <div>&lt;</div>
+        <div>文章内容</div>
+      </div>
+      <!-- <el-breadcrumb separator-class="el-icon-arrow-right">
         <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
         <el-breadcrumb-item>全部文章</el-breadcrumb-item>
-      </el-breadcrumb>
+      </el-breadcrumb> -->
 
       <div class="article_title">{{article.title}}</div>
       <div class="article_info">
@@ -76,6 +81,7 @@ export default {
 
 .article_content{
   margin: 10px 0;
+  font-size: 0.28rem
 }
 
 .pre{

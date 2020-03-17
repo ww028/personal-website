@@ -38,3 +38,22 @@
     margin-top: 10px;
   }
 }
+
+@media screen and (max-width: 1000px) {
+  .main_container{
+    flex-direction: column;
+  }
+
+  .content_box{
+    width: 100%;  
+  }
+
+  .article_list{
+    font-size: 0.28rem;
+  }
+
+  .info{
+    width: 100%;
+    margin-top: 0.2rem;
+  }
+}
