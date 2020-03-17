@@ -1,6 +1,6 @@
 <template>
   <div class="snow_box">
-    <div v-for="o in 200" :key="o" class="snow"></div>
+    <div v-for="o in 20" :key="o" class="snow"></div>
   </div>
 </template>
 

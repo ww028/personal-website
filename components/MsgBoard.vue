@@ -10,7 +10,7 @@
 
       <input type="text" v-model="sub_data.email_or_tel" placeholder="请输入您的邮箱/电话号码" />
 
-      <button class="btn" @click="submit">发布</button>
+      <button class="btn" @click="submit" :disabled='submit_flag'>发布</button>
 
       <div class="tips">{{tips}}</div>
     </div>
@@ -35,6 +35,7 @@
           {{item.create_time}}
         </div>
       </div>
+      <button v-if="more_flag" @click="more">查看更多</button>
     </div>
   </div>
 </template>
@@ -53,6 +54,12 @@ export default {
   data(){
     return{
       msg_number: '',
+      submit_flag: false,
+      pamars: {
+        pageNo: 1,
+        pageSize: 3
+      },
+      page: 0,
       sub_data:{
         msg: '',
         nick_name: '',
@@ -63,12 +70,21 @@ export default {
     }
   },
 
+  computed:{
+    more_flag(){
+      return this.page > 0 && this.pamars.pageNo < this.page
+    }
+  },
+
   mounted(){
     this.getData()
   },
 
   methods:{
     submit(){
+      this.submit_flag = true
+      
+
       if(this.sub_data.msg === ''){
         this.tips = '请输入留言内容'
         return
@@ -94,20 +110,32 @@ export default {
             this.sub_data.msg = ''
             this.sub_data.nick_name = ''
             this.sub_data.email_or_tel = ''
+            this.submit_flag = false
           },1000)
         }
       })
-      console.log('提交  ')
+    },
+
+    more(){
+      this.pamars.pageNo++
+      this.getData()
     },
 
     getData() {
       let sub_data = {
         type: Number(this.type),
-        article_id: Number(this.article_id)
+        article_id: Number(this.article_id),
+        pageSize: this.pamars.pageSize,
+        pageNo: this.pamars.pageNo
       }
       api.messageList(sub_data).then(res => {
-        this.msg_number = res.count
-        this.msg_list = res.data
+        this.msg_number = res.total
+        this.page = res.page
+        if(this.pamars.pageNo > 1){
+          this.msg_list = this.msg_list.concat(res.data)
+        } else{
+          this.msg_list = res.data
+        }
       })
     },
 
