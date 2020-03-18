@@ -36,7 +36,7 @@
         </div>
       </div>
       <div class="more_btn">
-        <button class="btn" v-if="more_flag" @click="more">查看更多</button>
+        <button class="btn" v-if="more_flag" @click="more" :disabled='submit_flag'>查看更多</button>
       </div>
     </div>
   </div>
@@ -82,9 +82,6 @@ export default {
 
   methods:{
     submit(){
-
-      console.log()
-      
       if(this.sub_data.msg === ''){
         this.tips = '请输入留言内容'
         return
@@ -108,22 +105,28 @@ export default {
       this.sub_data.type = this.type
       this.sub_data.article_id = this.article_id
       api.messageEdit(this.sub_data).then(res => {
+        this.tips = res.message
         if (res.status) {
           this.pageNo = 1
+          this.sub_data.msg = ''
+          this.sub_data.nick_name = ''
+          this.sub_data.email_or_tel = ''
           this.getData()
-          this.tips = '发布留言成功'
           setTimeout(() =>{
             this.tips = ''
-            this.sub_data.msg = ''
-            this.sub_data.nick_name = ''
-            this.sub_data.email_or_tel = ''
-            this.submit_flag = false
           },1000)
         }
+        setTimeout(() =>{
+          this.submit_flag = false
+        },1000)
       })
     },
 
     more(){
+      this.submit_flag = true
+      setTimeout(() =>{
+        this.submit_flag = false
+      },1000)
       this.pageNo++
       this.getData()
     },
