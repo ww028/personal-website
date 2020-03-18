@@ -8,7 +8,7 @@
     <div class="w_input">
       <input type="text" v-model="sub_data.nick_name" placeholder="请输入您的名字" />
       <input type="text" v-model="sub_data.email_or_tel" placeholder="请输入您的邮箱/电话号码" />
-      <button class="btn" @click="submit" :disabled='submit_flag'>发布</button>
+      <button v-if="limit_count < 15" class="btn" @click="submit" :disabled='submit_flag'>发布</button>
       <div class="tips">{{tips}}</div>
     </div>
 
@@ -63,6 +63,7 @@ export default {
         email_or_tel: ''
       },
       tips: '',
+      limit_count: 0,
       msg_list: []
     }
   },
@@ -79,24 +80,24 @@ export default {
 
   methods:{
     submit(){
-      // if(this.sub_data.msg === ''){
-      //   this.tips = '请输入留言内容'
-      //   return
-      // }
+      if(this.sub_data.msg === ''){
+        this.tips = '请输入留言内容'
+        return
+      }
 
-      // if(this.sub_data.msg.indexOf('渣男') > -1) {
-      //   this.tips = '不要污蔑我！'
-      //   return
-      // }
+      if(this.sub_data.msg.indexOf('渣男') > -1) {
+        this.tips = '不要污蔑我！'
+        return
+      }
 
-      // if(this.sub_data.nick_name === ''){
-      //   this.tips = '请输入您的昵称'
-      //   return
-      // }
+      if(this.sub_data.nick_name === ''){
+        this.tips = '请输入您的昵称'
+        return
+      }
 
-      // if(!this.emailOrTel(this.sub_data.email_or_tel)){
-      //   return
-      // }
+      if(!this.emailOrTel(this.sub_data.email_or_tel)){
+        return
+      }
 
       this.submit_flag = true
       this.sub_data.type = this.type
@@ -135,8 +136,12 @@ export default {
         pageSize: this.pageSize,
         pageNo: this.pageNo
       }
-      console.log(sub_data)
       api.messageList(sub_data).then(res => {
+        console.log(res)
+        this.limit_count = res.limit_count
+        if(this.limit_count > 15){
+          this.tips = '每天做多只可以发布15条留言'
+        }
         this.msg_number = res.total
         this.page = res.page
         if(this.pageNo > 1){
