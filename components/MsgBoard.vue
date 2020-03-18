@@ -7,11 +7,8 @@
 
     <div class="w_input">
       <input type="text" v-model="sub_data.nick_name" placeholder="请输入您的名字" />
-
       <input type="text" v-model="sub_data.email_or_tel" placeholder="请输入您的邮箱/电话号码" />
-
       <button class="btn" @click="submit" :disabled='submit_flag'>发布</button>
-
       <div class="tips">{{tips}}</div>
     </div>
 
@@ -82,24 +79,24 @@ export default {
 
   methods:{
     submit(){
-      if(this.sub_data.msg === ''){
-        this.tips = '请输入留言内容'
-        return
-      }
+      // if(this.sub_data.msg === ''){
+      //   this.tips = '请输入留言内容'
+      //   return
+      // }
 
-      if(this.sub_data.msg.indexOf('渣男') > -1) {
-        this.tips = '不要污蔑我！'
-        return
-      }
+      // if(this.sub_data.msg.indexOf('渣男') > -1) {
+      //   this.tips = '不要污蔑我！'
+      //   return
+      // }
 
-      if(this.sub_data.nick_name === ''){
-        this.tips = '请输入您的昵称'
-        return
-      }
+      // if(this.sub_data.nick_name === ''){
+      //   this.tips = '请输入您的昵称'
+      //   return
+      // }
 
-      if(!this.emailOrTel(this.sub_data.email_or_tel)){
-        return
-      }
+      // if(!this.emailOrTel(this.sub_data.email_or_tel)){
+      //   return
+      // }
 
       this.submit_flag = true
       this.sub_data.type = this.type
@@ -198,6 +195,10 @@ export default {
   cursor: pointer;
   background-color: rgba($color: #000000, $alpha: 0.5);
   // border-radius: ;
+}
+
+.get_check_code{
+  width: 100px
 }
 
 .more_btn{
