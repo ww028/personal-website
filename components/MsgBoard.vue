@@ -23,7 +23,7 @@
         class="item"
       >
         <div class="username">
-          <span> #{{index+1}}</span>
+          <span> #{{ msg_number - index }}</span>
           <span>{{item.nick_name}}</span>
         </div>
 
@@ -35,7 +35,9 @@
           {{item.create_time}}
         </div>
       </div>
-      <button v-if="more_flag" @click="more">查看更多</button>
+      <div class="more_btn">
+        <button class="btn" v-if="more_flag" @click="more">查看更多</button>
+      </div>
     </div>
   </div>
 </template>
@@ -55,10 +57,8 @@ export default {
     return{
       msg_number: '',
       submit_flag: false,
-      pamars: {
-        pageNo: 1,
-        pageSize: 3
-      },
+      pageNo: 1,
+      pageSize: 3,
       page: 0,
       sub_data:{
         msg: '',
@@ -72,7 +72,7 @@ export default {
 
   computed:{
     more_flag(){
-      return this.page > 0 && this.pamars.pageNo < this.page
+      return this.page > 0 && this.pageNo < this.page
     }
   },
 
@@ -82,11 +82,16 @@ export default {
 
   methods:{
     submit(){
-      this.submit_flag = true
-      
 
+      console.log()
+      
       if(this.sub_data.msg === ''){
         this.tips = '请输入留言内容'
+        return
+      }
+
+      if(this.sub_data.msg.indexOf('渣男') > -1) {
+        this.tips = '不要污蔑我！'
         return
       }
 
@@ -98,11 +103,13 @@ export default {
       if(!this.emailOrTel(this.sub_data.email_or_tel)){
         return
       }
-     
+
+      this.submit_flag = true
       this.sub_data.type = this.type
       this.sub_data.article_id = this.article_id
       api.messageEdit(this.sub_data).then(res => {
         if (res.status) {
+          this.pageNo = 1
           this.getData()
           this.tips = '发布留言成功'
           setTimeout(() =>{
@@ -117,7 +124,7 @@ export default {
     },
 
     more(){
-      this.pamars.pageNo++
+      this.pageNo++
       this.getData()
     },
 
@@ -125,13 +132,14 @@ export default {
       let sub_data = {
         type: Number(this.type),
         article_id: Number(this.article_id),
-        pageSize: this.pamars.pageSize,
-        pageNo: this.pamars.pageNo
+        pageSize: this.pageSize,
+        pageNo: this.pageNo
       }
+      console.log(sub_data)
       api.messageList(sub_data).then(res => {
         this.msg_number = res.total
         this.page = res.page
-        if(this.pamars.pageNo > 1){
+        if(this.pageNo > 1){
           this.msg_list = this.msg_list.concat(res.data)
         } else{
           this.msg_list = res.data
@@ -189,11 +197,16 @@ export default {
   // border-radius: ;
 }
 
+.more_btn{
+  margin-top: 10px;
+  text-align: center
+}
+
 .w_input {
   display: flex;
   margin-top: 10px;
   input {
-    width: 200px;
+    width: 180px;
     height: 30px;
     border: solid 1px #000;
     outline: none;
@@ -209,6 +222,7 @@ export default {
     color: red;
     margin-left: 20px;
     font-size: 14px;
+    font-weight: bold
   }
 }
 
