@@ -60,7 +60,9 @@ export default {
           article: arr[0].data[0] || []
         }
       })
-      .catch(error)
+      .catch(err => {
+        error(err)
+      })
   },
 }
 </script>

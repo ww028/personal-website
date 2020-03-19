@@ -43,9 +43,9 @@
         <div class="m_title">数据统计</div>
         <div>
           <p>今日访问人数： {{ data_col.today_total_person }}</p>
-          <p>今日访问次数： {{ data_col.today_total }}</p> 
-          <p>历史访问人数： {{ data_col.total_person }}</p> 
-          <p>今日访问次数： {{ data_col.total }}</p> 
+          <p>今日访问次数： {{ data_col.today_total }}</p>
+          <p>历史访问人数： {{ data_col.total_person }}</p>
+          <p>今日访问次数： {{ data_col.total }}</p>
         </div>
       </div>
     </div>
@@ -67,22 +67,21 @@ export default {
   },
 
   asyncData({ store, error, params }) {
-    return Promise.all(
-      [
-        api.articleList({ type: 0, pageNo: 1, pageSize: 7 }),
-        api.dataCol({ page: 'home' }),
-        api.dataColList()
-      ]
-    )
+    return Promise.all([
+      api.articleList({ type: 0, pageNo: 1, pageSize: 7 }),
+      api.dataCol({ page: 'home' }),
+      api.dataColList()
+    ])
       .then(arr => {
-        console.log(arr[2].data)
         return {
           article: arr[0].data || [],
           data_col: arr[2].data
         }
       })
-      .catch(error)
-  },
+      .catch(err => {
+        error(err)
+      })
+  }
 }
 </script>
 

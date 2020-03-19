@@ -59,7 +59,9 @@ export default {
           total: arr[0].total
         }
       })
-      .catch(error)
+      .catch(err => {
+        error(err)
+      })
   },
 
   mounted(){
