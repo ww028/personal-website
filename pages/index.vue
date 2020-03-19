@@ -34,9 +34,7 @@ export default {
   asyncData({ store, error, params }) {
     return Promise.all([api.dataCol({ page: 'index' })])
       .then(arr => {})
-      .catch(err => {
-        error(err)
-      })
+      .catch(error)
   },
 
   methods: {

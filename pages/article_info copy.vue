@@ -46,9 +46,7 @@ export default {
           article: arr[0].data[0] || []
         }
       })
-      .catch(err => {
-        error(err)
-      })
+      .catch(error)
   },
 
 }

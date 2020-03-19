@@ -15,8 +15,8 @@
       <div class="article_info">
         <span>文章类型: {{article.type_name}}</span>
         &emsp;
-        <!-- <span>阅读次数: 100</span> -->
-        <!-- &emsp; -->
+        <span>阅读次数: {{total_view}}</span>
+        &emsp;
         <span>发布时间: {{article.publish_time}}</span>
       </div>
 
@@ -50,19 +50,18 @@ export default {
     console.log(params)
     return Promise.all(
       [
-        api.articleList({ id: params.id }),
         api.dataCol({ page: 'article', article_id: params.id }),
+        api.articleList({ id: params.id }),
       ]
     )
       .then(arr => {
-        console.log(arr[0])
+        console.log(arr[1].data[0])
         return {
-          article: arr[0].data[0] || []
+          article: arr[1].data[0] || [],
+          total_view: arr[1].total_view
         }
       })
-      .catch(err => {
-        error(err)
-      })
+      .catch(error)
   },
 }
 </script>
@@ -83,7 +82,7 @@ export default {
 
 .article_content{
   margin: 10px 0;
-  font-size: 0.28rem
+  // font-size: 0.4rem
 }
 
 .pre{

@@ -72,6 +72,15 @@ export async function articleList(data) {
   })
 }
 
+// 文章详情
+export async function articleInfo(data) {
+  return request({
+    url: '/article/info',
+    method: 'post',
+    data
+  })
+}
+
 // 留言板列表
 export async function messageList(data) {
   return request({
