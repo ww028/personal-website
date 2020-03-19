@@ -1,5 +1,22 @@
 import request from './request'
 
+// 数据采集
+export async function dataCol(data) {
+  return request({
+    url: '/data_collection/edit',
+    method: 'post',
+    data
+  })
+}
+
+export async function dataColList(data) {
+  return request({
+    url: '/data_collection/list',
+    method: 'post',
+    data
+  })
+}
+
 // 登录
 export async function login(data) {
   return request({

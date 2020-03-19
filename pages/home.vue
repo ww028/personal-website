@@ -15,9 +15,9 @@
             <div>{{item.publish_time}}</div>
           </div>
         </div>
-        <nuxt-link v-if='false' :to="{path: '/article' }">查看更多文章</nuxt-link>
+        <nuxt-link v-if="false" :to="{path: '/article' }">查看更多文章</nuxt-link>
 
-        <MsgBoard type='1' />
+        <MsgBoard type="1" />
       </div>
       <div class="info">
         <div class="m_title">关于 W 的博客:</div>
@@ -29,7 +29,7 @@
         </div>
 
         <div class="m_title">联系方式:</div>
-        <div>
+        <div class="connect">
           <p>邮箱：wwjobs@163.com</p>
           <p>
             微博:
@@ -38,6 +38,14 @@
               href="https://weibo.com/7413652268/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1"
             >考拉在华清池买橘子</a>
           </p>
+        </div>
+
+        <div class="m_title">数据统计</div>
+        <div>
+          <p>今日访问人数： {{ data_col.today_total_person }}</p>
+          <p>今日访问次数： {{ data_col.today_total }}</p> 
+          <p>历史访问人数： {{ data_col.total_person }}</p> 
+          <p>今日访问次数： {{ data_col.total }}</p> 
         </div>
       </div>
     </div>
@@ -53,14 +61,13 @@ export default {
   },
   data() {
     return {
+      data_col: {}
       // article: []
     }
   },
 
   asyncData({ store, error, params }) {
-    return Promise.all([
-      api.articleList({ type: 0, pageNo: 1, pageSize: 7 })
-    ])
+    return Promise.all([api.articleList({ type: 0, pageNo: 1, pageSize: 7 })])
       .then(arr => {
         console.log(arr[0].data)
         return {
@@ -68,6 +75,15 @@ export default {
         }
       })
       .catch(error)
+  },
+
+  mounted() {
+    api.dataCol({ page: 'home' }).then(() => {
+      api.dataColList().then(res => {
+        this.data_col = res.data
+        console.log(res.data)
+      })
+    })
   }
 }
 </script>

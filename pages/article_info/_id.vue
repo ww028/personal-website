@@ -59,9 +59,8 @@ export default {
   },
 
   mounted(){
-    console.log(this.article)
+    api.dataCol({page: 'article', article_id: this.article.id})
   }
-
 }
 </script>
 

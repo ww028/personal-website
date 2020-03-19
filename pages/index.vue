@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import * as api from '@/api'
 export default {
   data() {
     return {
@@ -30,7 +31,20 @@ export default {
     }
   },
 
+  // asyncData({ store, error, params }) {
+  //   console.log(getUnixTime())
+  //   return Promise.all([api.dataCol({ type: 0, pageNo: 1, pageSize: 7 })])
+  //     .then(arr => {
+  //       console.log(arr[0].data)
+  //       return {
+  //         article: arr[0].data || []
+  //       }
+  //     })
+  //     .catch(error)
+  // },
+
   mounted() {
+    api.dataCol({page: 'index'})
     this.textPlay('.title', this.title)
     setTimeout(() => {
       this.textPlay('.introduce', this.introduce)
