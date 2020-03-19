@@ -48,7 +48,12 @@ export default {
 
   asyncData({ store, error, params }) {
     console.log(params)
-    return Promise.all([api.articleList({ id: params.id })])
+    return Promise.all(
+      [
+        api.articleList({ id: params.id }),
+        api.dataCol({ page: 'article', article_id: params.id }),
+      ]
+    )
       .then(arr => {
         console.log(arr[0])
         return {
@@ -57,10 +62,6 @@ export default {
       })
       .catch(error)
   },
-
-  mounted(){
-    api.dataCol({page: 'article', article_id: this.article.id})
-  }
 }
 </script>
 

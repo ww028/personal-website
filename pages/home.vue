@@ -67,24 +67,22 @@ export default {
   },
 
   asyncData({ store, error, params }) {
-    return Promise.all([api.articleList({ type: 0, pageNo: 1, pageSize: 7 })])
+    return Promise.all(
+      [
+        api.articleList({ type: 0, pageNo: 1, pageSize: 7 }),
+        api.dataCol({ page: 'home' }),
+        api.dataColList()
+      ]
+    )
       .then(arr => {
-        console.log(arr[0].data)
+        console.log(arr[2].data)
         return {
-          article: arr[0].data || []
+          article: arr[0].data || [],
+          data_col: arr[2].data
         }
       })
       .catch(error)
   },
-
-  mounted() {
-    api.dataCol({ page: 'home' }).then(() => {
-      api.dataColList().then(res => {
-        this.data_col = res.data
-        console.log(res.data)
-      })
-    })
-  }
 }
 </script>
 
