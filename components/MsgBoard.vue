@@ -8,8 +8,8 @@
     <div class="w_input">
       <input type="text" v-model="sub_data.nick_name" placeholder="请输入您的名字" />
       <input type="text" v-model="sub_data.email_or_tel" placeholder="请输入您的邮箱/电话号码" />
-      <button v-if="limit_count < 15" class="btn" @click="submit" :disabled='submit_flag'>发布</button>
-      <div class="tips">{{tips}}</div>
+      <button v-if="limit_count < 3" class="btn" @click="submit" :disabled='submit_flag'>发布</button>
+      <div v-else class="tips" >{{tips}}</div>
     </div>
 
     <div class="msg_list">
@@ -139,8 +139,8 @@ export default {
       api.messageList(sub_data).then(res => {
         console.log(res)
         this.limit_count = res.limit_count
-        if(this.limit_count > 15){
-          this.tips = '每天做多只可以发布15条留言'
+        if(this.limit_count == 3){
+          this.tips = '每天做多只可以发布3条留言'
         }
         this.msg_number = res.total
         this.page = res.page
