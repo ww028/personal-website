@@ -37,6 +37,13 @@ export default {
       .catch(error)
   },
 
+  mounted() {
+    this.textPlay(".title", this.title);
+    setTimeout(() => {
+      this.textPlay(".introduce", this.introduce);
+    }, 1500);
+  },
+
   methods: {
     start() {
       this.$router.push('/home')

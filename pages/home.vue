@@ -42,10 +42,11 @@
 
         <div class="m_title">数据统计</div>
         <div>
-          <p>今日访问人数： {{ data_col.today_total_person }}</p>
+
           <p>今日访问次数： {{ data_col.today_total }}</p>
+          <p>今日访问人数： {{ data_col.today_total_person }}</p>
+          <p>历史访问次数： {{ data_col.total }}</p>
           <p>历史访问人数： {{ data_col.total_person }}</p>
-          <p>今日访问次数： {{ data_col.total }}</p>
         </div>
       </div>
     </div>
@@ -73,7 +74,6 @@ export default {
       api.dataColList()
     ])
       .then(arr => {
-        console.log(arr[0])
         return {
           article: arr[0].data || [],
           data_col: arr[2].data
