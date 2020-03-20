@@ -7,7 +7,7 @@ const service = axios.create({
   // baseURL: 'http://localhost:3001/', // url = base url + request url
   baseURL: 'http://39.100.228.198:3001/', // url = base url + request url
   // withCredentials: true, // send cookies when cross-domain requests
-  timeout: 5000 // request timeout
+  timeout: 15000 // request timeout
 })
 
 // request interceptor
