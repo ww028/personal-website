@@ -29,12 +29,12 @@ service.interceptors.response.use(
       const res_data = res.data.data;
       return res_data
     } else {
-      return Promise.reject(error)
+      return Promise.reject({message: error.message})
     }
   },
   error => {
     console.log('err debug' + error) // for debug
-    return Promise.reject(error)
+    return Promise.reject({message: error.message})
   }
 )
 
