@@ -74,6 +74,7 @@ export default {
       api.dataColList()
     ])
       .then(arr => {
+        console.log(arr[0].data)
         return {
           article: arr[0].data || [],
           data_col: arr[2].data
