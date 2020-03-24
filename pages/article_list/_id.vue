@@ -21,9 +21,23 @@
       <div class="article_info">
         <div class="article_title">{{ article_title }}</div>
         <div class="article_content" v-html="content"></div>
+        <div class="bottom_nav">
+          <nuxt-link
+            class="pre" :to="{name: 'article_list-id', params: {id: `${pre.type}-${pre.id}-${pre.title}`}}"
+          >上一篇 《{{ pre.title }}》</nuxt-link>
+          <nuxt-link
+            class="next" :to="{name: 'article_list-id', params: {id: `${next.type}-${next.id}-${next.title}`}}"
+          >下一篇 《{{ next.title }}》</nuxt-link>
+        </div>
       </div>
     </div>
-    <!-- </div> -->
+    <el-drawer
+      :visible.sync="drawer"
+      direction="rtl"
+      :with-header="false"
+      :before-close="handleClose">
+      <span>我来啦!</span>
+    </el-drawer>
   </main>
 </template>
 
@@ -34,6 +48,7 @@ export default {
     return {
       loading: false,
       article_title: '',
+      drawer: false,
     }
   },
 
@@ -51,39 +66,43 @@ export default {
       ]
     )
       .then(arr => {
+        console.log(arr[1].pre[0])
         return { 
           article_list: arr[0].data,
           type_title: title,
           article_title: arr[1].data[0].title,
-          content: arr[1].data[0].content
+          content: arr[1].data[0].content,
+          pre: arr[1].pre[0],
+          next: arr[1].next[0]
         }
       })
       .catch(error)
   },
+
+  methods:{
+    handleClose(done) {
+      done();
+    }
+  }
 }
 </script>
 
 <style lang="scss" scoped>
 main {
-  background-color: rgb(192, 180, 164);
-  // background-color: rgb(212, 204, 194);
-  color: #000;
+  // background-color: rgb(192, 180, 164);
+  // background-color: #fff;
+  // color: #000;
+  color: #fff;
   padding: 0;
 
-  a,
-  .breadcrumb {
-    color: #000;
-  }
+  // a,
+  // .breadcrumb {
+  //   color: #000;
+  // }
 }
 
 .breadcrumb {
   margin-bottom: 10px;
-}
-
-.m_title {
-  text-align: center;
-  border-bottom: solid 1px #000;
-  line-height: 40px;
 }
 
 .content_box {
@@ -93,9 +112,9 @@ main {
   .aside {
     width: 200px;
     height: 100vh;
-    border-right: solid 1px #000;
+    // border-right: solid 1px rgba(178,186,194,.15);
+    border-right: solid 1px rgb(100, 94, 85);
     padding: 10px;
-    margin-right: 10px;
 
     .type_title{
       font-weight: bold;
@@ -116,11 +135,19 @@ main {
     height: 100vh;
     padding: 10px;
     overflow: auto;
+
     .article_title {
       font-weight: bold;
       font-size: 16px;
       margin-bottom: 10px;
     }
+  }
+
+  .bottom_nav{
+    margin-top: 20px;
+    width: 600px;
+    display: flex;
+    justify-content: space-between;
   }
 }
 </style>
@@ -129,10 +156,18 @@ main {
 .article_content {
   >p,
   >div{
-    width: 800px;
+    width: 600px;
   }
-  a{
-    color: #000;
+
+  pre{
+    width: fit-content;
+    // background-color: #f8f8f8;
+    background-color: #000;
+    padding: 10px
   }
+
+  // a{
+  //   color: #000;
+  // }
 }
 </style>
