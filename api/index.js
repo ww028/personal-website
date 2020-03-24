@@ -81,6 +81,24 @@ export async function articleInfo(data) {
   })
 }
 
+// 文章内容
+export async function articleContent(data) {
+  return request({
+    url: '/article/content',
+    method: 'post',
+    data
+  })
+}
+
+// 专题文章列表
+export async function typeArticleList(data) {
+  return request({
+    url: '/type_article/list',
+    method: 'post',
+    data
+  })
+}
+
 // 留言板列表
 export async function messageList(data) {
   return request({

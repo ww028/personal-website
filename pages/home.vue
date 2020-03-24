@@ -17,6 +17,19 @@
         </div>
         <nuxt-link v-if="false" :to="{path: '/article' }">查看更多文章</nuxt-link>
 
+        <div class="m_title">内容专题</div>
+        <div class="article_type">
+          <div
+            v-for="item in article_type"
+            :key="item.id"
+            class="item"
+          >
+            <nuxt-link
+              :to="{name: 'article_list-id', params: {id: `${item.id}-21-${item.type_name}`}}"
+            >{{ item.type_name }}</nuxt-link>
+          </div>
+        </div>
+
         <MsgBoard type="1" />
       </div>
       <div class="info">
@@ -69,15 +82,17 @@ export default {
 
   asyncData({ store, error, params }) {
     return Promise.all([
+      api.articleType({}),
       api.articleList({ type: 0, pageNo: 1, pageSize: 7 }),
       api.dataCol({ page: 'home' }),
       api.dataColList()
     ])
       .then(arr => {
-        console.log(arr[0].data)
+        console.log(arr[0])
         return {
-          article: arr[0].data || [],
-          data_col: arr[2].data
+          article_type: arr[0].data,
+          article: arr[1].data || [],
+          data_col: arr[3].data
         }
       })
       .catch(error)

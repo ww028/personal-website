@@ -6,10 +6,6 @@
         <div>&lt;</div>
         <div>文章内容</div>
       </div>
-      <!-- <el-breadcrumb separator-class="el-icon-arrow-right">
-        <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
-        <el-breadcrumb-item>全部文章</el-breadcrumb-item>
-      </el-breadcrumb> -->
 
       <div class="article_title">{{article.title}}</div>
       <div class="article_info">
@@ -22,11 +18,6 @@
 
       <div class="article_content" v-html="article.content"></div>
       
-      <!-- <div class="pre">
-        <nuxt-link :to="{name: 'article_info' }"><i class="el-icon-back"></i>&nbsp;上一篇《上一篇》</nuxt-link>
-        <nuxt-link :to="{name: 'article_info' }">下一篇《下一篇》&nbsp;<i class="el-icon-right"></i></nuxt-link>
-      </div> -->
-
       <MsgBoard type="2" :article_id="article.id"/>
     </div>
   </main>
@@ -81,12 +72,12 @@ export default {
 
 .article_content{
   margin: 10px 0;
-  font-size: 0.3rem;
   overflow: auto;
 }
 
-// .pre{
-//   display: flex;
-//   justify-content: space-between;
-// }
+@media screen and (max-width: 1000px) {
+  .article_content{
+    font-size: 0.3rem;
+  }
+}
 </style>

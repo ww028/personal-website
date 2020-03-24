@@ -5,9 +5,7 @@ html {
 
 a {
   color: #fff;
-  text-decoration: none;
-  // background-color: none !important;
-  background-color: #000 !important;
+  // text-decoration: none;
 }
 
 code{
@@ -17,9 +15,9 @@ code{
 main {
   position: absolute;
   left: 0;
-  top: 20px;
   width: 100%;
-  height: calc(100% - 50px);
+  height: 100%;
+  // height: calc(100% - 50px);
   color: #fff;
   overflow: auto;
   padding-top: 10px;
