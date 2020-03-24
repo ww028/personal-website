@@ -81,11 +81,12 @@ export default {
 
 .article_content{
   margin: 10px 0;
-  // font-size: 0.4rem
+  font-size: 0.3rem;
+  overflow: auto;
 }
 
-.pre{
-  display: flex;
-  justify-content: space-between;
-}
+// .pre{
+//   display: flex;
+//   justify-content: space-between;
+// }
 </style>
