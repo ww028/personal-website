@@ -2,34 +2,36 @@
   <main>
     <!-- <div class="main_container"> -->
     <!-- <div class="m_title">相关的文章</div> -->
-
+<!-- :class="mobil_menu ? 'menu_open' : 'menu_close'" -->
     <div class="content_box">
-      <div class="aside">
+      <div class="aside" :class="mobil_menu_class">
         <div class="breadcrumb">
           <nuxt-link :to="{name: 'home' }">首页</nuxt-link>
           <div>&lt;</div>
           <div>文章列表</div>
         </div>
         <div class="type_title">{{ type_title }}</div>
-        
+
         <div v-for="item in article_list" :key="item.id" class="item">
           <nuxt-link
             :to="{name: 'article_list-id', params: {id: `${item.type}-${item.id}-${type_title}`}}"
           >{{ item.title }}</nuxt-link>
         </div>
       </div>
-      <div class="article_info">
+      <div class="article_info" @click="mobil_menu_class = 'menu_close'">
         <div class="article_title">{{ article_title }}</div>
         <div class="article_content" v-html="content"></div>
         <div class="bottom_nav">
           <nuxt-link
             v-if="pre.id"
-            class="pre" :to="{name: 'article_list-id', params: {id: `${pre.type}-${pre.id}-${type_title}`}}"
+            class="pre"
+            :to="{name: 'article_list-id', params: {id: `${pre.type}-${pre.id}-${type_title}`}}"
           >上一篇 《{{ pre.title }}》</nuxt-link>
           <div v-else>&emsp;</div>
           <nuxt-link
             v-if="next.id"
-            class="next" :to="{name: 'article_list-id', params: {id: `${next.type}-${next.id}-${type_title}`}}"
+            class="next"
+            :to="{name: 'article_list-id', params: {id: `${next.type}-${next.id}-${type_title}`}}"
           >下一篇 《{{ next.title }}》</nuxt-link>
         </div>
       </div>
@@ -38,9 +40,14 @@
       :visible.sync="drawer"
       direction="rtl"
       :with-header="false"
-      :before-close="handleClose">
+      :before-close="handleClose"
+    >
       <span>我来啦!</span>
     </el-drawer>
+
+    <div class="float_menu">
+      <i class="el-icon-more" @click="showMenu"></i>
+    </div>
   </main>
 </template>
 
@@ -52,6 +59,8 @@ export default {
       loading: false,
       article_title: '',
       drawer: false,
+      mobil_menu_class: '',
+      mobil_menu: false
     }
   },
 
@@ -62,14 +71,12 @@ export default {
     let type = params.id.split('-')[0]
     let id = params.id.split('-')[1]
     let title = params.id.split('-')[2]
-    return Promise.all(
-      [
-        api.typeArticleList({ type: type }),
-        api.articleContent( {id: id, type: type} )
-      ]
-    )
+    return Promise.all([
+      api.typeArticleList({ type: type }),
+      api.articleContent({ id: id, type: type })
+    ])
       .then(arr => {
-        return { 
+        return {
           article_list: arr[0].data,
           type_title: title,
           article_title: arr[1].data[0].title,
@@ -81,9 +88,13 @@ export default {
       .catch(error)
   },
 
-  methods:{
+  methods: {
     handleClose(done) {
-      done();
+      done()
+    },
+
+    showMenu() {
+      this.mobil_menu_class = 'menu_open'
     }
   }
 }
@@ -91,16 +102,8 @@ export default {
 
 <style lang="scss" scoped>
 main {
-  // background-color: rgb(192, 180, 164);
-  // background-color: #fff;
-  // color: #000;
   color: #fff;
   padding: 0;
-
-  // a,
-  // .breadcrumb {
-  //   color: #000;
-  // }
 }
 
 .breadcrumb {
@@ -113,13 +116,11 @@ main {
 
   .aside {
     width: 200px;
-    // height: 100vh;
     height: calc(100vh - 60px);
-    // border-right: solid 1px rgba(178,186,194,.15);
     border-right: solid 1px rgb(100, 94, 85);
     padding: 10px;
 
-    .type_title{
+    .type_title {
       font-weight: bold;
       font-size: 16px;
       margin-bottom: 10px;
@@ -135,8 +136,6 @@ main {
   .article_info {
     width: 0;
     flex-grow: 1;
-    // height: 100vh;
-    // height: calc(100vh - 50px);
     height: calc(100vh - 60px);
     padding: 10px;
     overflow: auto;
@@ -148,31 +147,92 @@ main {
     }
   }
 
-  .bottom_nav{
+  .bottom_nav {
     margin-top: 20px;
     width: 600px;
     display: flex;
     justify-content: space-between;
   }
 }
+
+@media screen and (max-width: 1000px) {
+  .float_menu {
+    display: block;
+    position: fixed;
+    right: 0.2rem;
+    top: 1.2rem;
+    font-size: 0.3rem;
+  }
+
+  .content_box {
+    width: 100%;
+    position: relative;
+    .aside {
+      position: absolute;
+      left: -5rem;
+      background-color: #000;
+      // display: none;
+    }
+
+    .bottom_nav {
+      width: 100%;
+    }
+  }
+
+  .menu_open{
+    animation: menu_open 0.2s forwards;
+  }
+
+  .menu_close{
+    animation: menu_close 0.2s forwards;
+  }
+
+  @keyframes menu_open {
+    from {
+      left: -5rem;
+    }
+    to {
+      left: 0;
+    }
+  }
+
+  @keyframes menu_close {
+    from {
+      left: 0;
+    }
+    to {
+      left: -5rem;
+    }
+  }
+}
 </style>
 
 <style lang="scss">
 .article_content {
-  >p,
-  >div{
+  > p,
+  > div {
     width: 600px;
   }
 
-  pre{
+  pre {
     width: fit-content;
-    // background-color: #f8f8f8;
     background-color: #000;
-    padding: 10px
+    padding: 10px;
   }
+}
 
-  // a{
-  //   color: #000;
-  // }
+@media screen and (max-width: 1000px) {
+  .article_content {
+    > p,
+    > div {
+      width: 100%;
+    }
+
+    pre {
+      width: fit-content;
+      background-color: #000;
+      padding: 0.2rem;
+    }
+  }
 }
 </style>
