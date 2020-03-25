@@ -63,10 +63,28 @@ export async function articleType(data) {
   })
 }
 
+// 文章类型列表
+export async function articleTypeNew(data) {
+  return request({
+    url: '/article/article_type_list',
+    method: 'post',
+    data
+  })
+}
+
 // 文章列表
 export async function articleList(data) {
   return request({
     url: '/article/list',
+    method: 'post',
+    data
+  })
+}
+
+// 文章列表新的接口
+export async function articleListNew(data) {
+  return request({
+    url: '/article/article_list',
     method: 'post',
     data
   })

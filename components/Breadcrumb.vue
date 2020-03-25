@@ -27,7 +27,6 @@ export default {
   },
 
   mounted(){
-    console.log(this.$router)
     let from = this.$router.currentRoute.params.from || localStorage.getItem('from')
     if(from){
       localStorage.setItem('from', from)

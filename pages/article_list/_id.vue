@@ -14,7 +14,7 @@
         
         <div v-for="item in article_list" :key="item.id" class="item">
           <nuxt-link
-            :to="{name: 'article_list-id', params: {id: `${item.type}-${item.id}-${item.title}`}}"
+            :to="{name: 'article_list-id', params: {id: `${item.type}-${item.id}-${type_title}`}}"
           >{{ item.title }}</nuxt-link>
         </div>
       </div>
@@ -23,10 +23,13 @@
         <div class="article_content" v-html="content"></div>
         <div class="bottom_nav">
           <nuxt-link
-            class="pre" :to="{name: 'article_list-id', params: {id: `${pre.type}-${pre.id}-${pre.title}`}}"
+            v-if="pre.id"
+            class="pre" :to="{name: 'article_list-id', params: {id: `${pre.type}-${pre.id}-${type_title}`}}"
           >上一篇 《{{ pre.title }}》</nuxt-link>
+          <div v-else>&emsp;</div>
           <nuxt-link
-            class="next" :to="{name: 'article_list-id', params: {id: `${next.type}-${next.id}-${next.title}`}}"
+            v-if="next.id"
+            class="next" :to="{name: 'article_list-id', params: {id: `${next.type}-${next.id}-${type_title}`}}"
           >下一篇 《{{ next.title }}》</nuxt-link>
         </div>
       </div>
@@ -62,18 +65,17 @@ export default {
     return Promise.all(
       [
         api.typeArticleList({ type: type }),
-        api.articleContent({id: id})
+        api.articleContent( {id: id, type: type} )
       ]
     )
       .then(arr => {
-        console.log(arr[1].pre[0])
         return { 
           article_list: arr[0].data,
           type_title: title,
           article_title: arr[1].data[0].title,
           content: arr[1].data[0].content,
-          pre: arr[1].pre[0],
-          next: arr[1].next[0]
+          pre: arr[1].pre,
+          next: arr[1].next
         }
       })
       .catch(error)
@@ -111,7 +113,8 @@ main {
 
   .aside {
     width: 200px;
-    height: 100vh;
+    // height: 100vh;
+    height: calc(100vh - 60px);
     // border-right: solid 1px rgba(178,186,194,.15);
     border-right: solid 1px rgb(100, 94, 85);
     padding: 10px;
@@ -132,7 +135,9 @@ main {
   .article_info {
     width: 0;
     flex-grow: 1;
-    height: 100vh;
+    // height: 100vh;
+    // height: calc(100vh - 50px);
+    height: calc(100vh - 60px);
     padding: 10px;
     overflow: auto;
 

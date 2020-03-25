@@ -53,17 +53,12 @@ export default {
       api.articleList({ type: 0, pageNo: 1, pageSize: 5 })
     ])
       .then(arr => {
-        console.log(arr[0].data)
         return {
           article: arr[0].data || [],
           total: arr[0].total
         }
       })
       .catch(error)
-  },
-
-  mounted(){
-    console.log(this.$router)
   },
 
   methods:{

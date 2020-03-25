@@ -2,17 +2,16 @@
   <main>
     <div class="main_container">
       <div class="content_box">
-        <div class="m_title">最近的文章</div>
+        <div class="m_title">最近的文章({{article_total}})</div>
         <div class="article_list">
           <div v-for="item in article" :key="item.id" class="item">
             <div>
               <span>[{{item.type_name}}]</span>
-              <!-- <nuxt-link :to="{name: 'article_info' }">{{ item.title }}</nuxt-link> -->
               <nuxt-link
-                :to="{name: 'article_info-id', params: {id: item.id, from: 'article' }}"
+                :to="{name: 'article_list-id', params: {id: `${item.type}-${item.id}-${item.type_name}`}}"
               >{{ item.title }}</nuxt-link>
             </div>
-            <div>{{item.publish_time}}</div>
+            <div>{{item.edit_time}}</div>
           </div>
         </div>
         <nuxt-link v-if="false" :to="{path: '/article' }">查看更多文章</nuxt-link>
@@ -25,7 +24,7 @@
             class="item"
           >
             <nuxt-link
-              :to="{name: 'article_list-id', params: {id: `${item.id}-21-${item.type_name}`}}"
+              :to="{name: 'article_list-id', params: {id: `${item.id}-0-${item.type_name}`}}"
             >{{ item.type_name }}</nuxt-link>
           </div>
         </div>
@@ -82,16 +81,16 @@ export default {
 
   asyncData({ store, error, params }) {
     return Promise.all([
-      api.articleType({}),
-      api.articleList({ type: 0, pageNo: 1, pageSize: 7 }),
+      api.articleListNew({pageNo: 1, pageSize: 5}),
+      api.articleTypeNew(),
       api.dataCol({ page: 'home' }),
       api.dataColList()
     ])
       .then(arr => {
-        console.log(arr[0])
         return {
-          article_type: arr[0].data,
-          article: arr[1].data || [],
+          article: arr[0].data,
+          article_total: arr[0].total,
+          article_type: arr[1].data,
           data_col: arr[3].data
         }
       })

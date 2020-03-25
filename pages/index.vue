@@ -51,7 +51,6 @@ export default {
 
     textPlay(dom, text) {
       let landInTexts = document.querySelectorAll(dom)
-      console.log(landInTexts)
       landInTexts.forEach(landInText => {
         let letters = text.split('')
         landInText.textContent = ''

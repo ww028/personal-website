@@ -1,5 +1,9 @@
 <template>
-  <header>W的博客</header>
+  <header>
+    <nuxt-link
+      :to="{name: 'index'}"
+    >W 的博客</nuxt-link>
+  </header>
 </template>
 
 <style lang="scss" scoped>
@@ -12,7 +16,7 @@ header {
   padding: 0 10px;
   line-height: 50px;
   color: #fff;
-  background-color: rgba($color: #000000, $alpha: 0.9);
+  background-color: rgba($color: #000000, $alpha: 0.3);
 }
 
 @media screen and (max-width: 1000px) {

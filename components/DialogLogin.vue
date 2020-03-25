@@ -103,7 +103,6 @@ export default {
       } else {
         // 注册
         register(this.form_data).then(res => {
-          console.log(res)
           this.form_data = {
             username: res.data.username,
             password: ''

@@ -45,7 +45,6 @@ export default {
       ]
     )
       .then(arr => {
-        console.log(arr[1])
         return {
           article: arr[1].data[0],
           total_view: arr[1].total_view

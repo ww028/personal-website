@@ -10,14 +10,12 @@ const platform = () => {
 }
 
 const setFontSize = () => {
-  console.log('mobil')
   let _dom = document.documentElement;
   let view_width = _dom.clientWidth;
   _dom.style.fontSize = view_width / 7.5 + "px";
 }
 
 const emailOrTel = (val) => {
-  console.log(val)
   let rule = ''
   let flag = false
 

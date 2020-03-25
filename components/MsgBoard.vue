@@ -137,7 +137,6 @@ export default {
         pageNo: this.pageNo
       }
       api.messageList(sub_data).then(res => {
-        console.log(res)
         this.limit_count = res.limit_count
         if(this.limit_count == 3){
           this.tips = '每天做多只可以发布3条留言'
