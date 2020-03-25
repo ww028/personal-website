@@ -106,6 +106,10 @@ main {
   padding: 0;
 }
 
+.float_menu{
+  display: none;
+}
+
 .breadcrumb {
   margin-bottom: 10px;
 }
@@ -209,12 +213,14 @@ main {
 
 <style lang="scss">
 .article_content {
+  line-height: 24px;
   > p,
   > div {
-    width: 600px;
+     width: 600px;
   }
 
   pre {
+    // width: 600px;
     width: fit-content;
     background-color: #000;
     padding: 10px;

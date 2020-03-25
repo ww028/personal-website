@@ -42,16 +42,19 @@ main {
   }
 }
 
-main::-webkit-scrollbar {
+main::-webkit-scrollbar,
+.article_info::-webkit-scrollbar {
   width: 5px;
 }
 
-main::-webkit-scrollbar-thumb {
+main::-webkit-scrollbar-thumb,
+.article_info::-webkit-scrollbar-thumb {
   /*滚动条里面小方块*/
   background-color: #fff;
 }
 
-main::-webkit-scrollbar-track {
+main::-webkit-scrollbar-track,
+.article_info::-webkit-scrollbar-track {
   /*滚动条里面轨道*/
   background: rgba($color: #000000, $alpha: 0.9);
 }
