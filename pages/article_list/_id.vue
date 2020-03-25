@@ -18,9 +18,9 @@
           >{{ item.title }}</nuxt-link>
         </div>
       </div>
-      <div class="article_info" @click="mobil_menu_class = 'menu_close'">
+      <div class="article_info">
         <div class="article_title">{{ article_title }}</div>
-        <div class="article_content" v-html="content"></div>
+        <div class="article_content" v-html="content" @click="mobil_menu_class = 'menu_close'"></div>
         <div class="bottom_nav">
           <nuxt-link
             v-if="pre.id"
