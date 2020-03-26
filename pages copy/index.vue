@@ -22,10 +22,7 @@
               <span>{{item.edit_time}}</span>
             </div>
             <div class="title">
-              <nuxt-link
-                :to="{name: 'article_info-id', params: {id: `${item.type}-${item.id}-${item.type_name}`}}"
-              >{{ item.title }}</nuxt-link>
-              <!-- <a href="#">{{item.title}}</a> -->
+              <a href="#">{{item.title}}</a>
             </div>
             <div class="preview">
               {{ item.preview }}

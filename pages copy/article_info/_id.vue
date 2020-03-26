@@ -1,52 +1,46 @@
 <template>
   <main>
-    <!-- <div class="main_container"> -->
-    <!-- <div class="m_title">相关的文章</div> -->
-<!-- :class="mobil_menu ? 'menu_open' : 'menu_close'" -->
-    <div class="content_box">
-      <div class="aside" :class="mobil_menu_class">
-        <div class="breadcrumb">
-          <nuxt-link :to="{name: 'home' }">首页</nuxt-link>
-          <div>&lt;</div>
-          <div>文章列表</div>
-        </div>
-        <div class="type_title">{{ type_title }}</div>
+    <div class="main_container">
+      <!-- <div class="main_container"> -->
+      <!-- <div class="m_title">相关的文章</div> -->
+      <!-- :class="mobil_menu ? 'menu_open' : 'menu_close'" -->
+      <div class="content_box">
+        <div class="aside" :class="mobil_menu_class">
+          <div class="breadcrumb">
+            <nuxt-link :to="{name: 'home' }">首页</nuxt-link>
+            <div>&lt;</div>
+            <div>文章详情</div>
+          </div>
+          <div class="type_title">{{ type_title }}</div>
 
-        <div v-for="item in article_list" :key="item.id" class="item">
-          <nuxt-link
-            :to="{name: 'article_list-id', params: {id: `${item.type}-${item.id}-${type_title}`}}"
-          >{{ item.title }}</nuxt-link>
+          <div v-for="item in article_list" :key="item.id" class="item">
+            <nuxt-link
+              :to="{name: 'article_info-id', params: {id: `${item.type}-${item.id}-${type_title}`}}"
+            >{{ item.title }}</nuxt-link>
+          </div>
+        </div>
+        <div class="article_info">
+          <div class="article_title">{{ article_title }}</div>
+          <div class="article_content" v-html="content" @click="mobil_menu_class = 'menu_close'"></div>
+          <div class="bottom_nav">
+            <nuxt-link
+              v-if="pre.id"
+              class="pre"
+              :to="{name: 'article_info-id', params: {id: `${pre.type}-${pre.id}-${type_title}`}}"
+            >上一篇 《{{ pre.title }}》</nuxt-link>
+            <div v-else>&emsp;</div>
+            <nuxt-link
+              v-if="next.id"
+              class="next"
+              :to="{name: 'article_info-id', params: {id: `${next.type}-${next.id}-${type_title}`}}"
+            >下一篇 《{{ next.title }}》</nuxt-link>
+          </div>
         </div>
       </div>
-      <div class="article_info">
-        <div class="article_title">{{ article_title }}</div>
-        <div class="article_content" v-html="content" @click="mobil_menu_class = 'menu_close'"></div>
-        <div class="bottom_nav">
-          <nuxt-link
-            v-if="pre.id"
-            class="pre"
-            :to="{name: 'article_list-id', params: {id: `${pre.type}-${pre.id}-${type_title}`}}"
-          >上一篇 《{{ pre.title }}》</nuxt-link>
-          <div v-else>&emsp;</div>
-          <nuxt-link
-            v-if="next.id"
-            class="next"
-            :to="{name: 'article_list-id', params: {id: `${next.type}-${next.id}-${type_title}`}}"
-          >下一篇 《{{ next.title }}》</nuxt-link>
-        </div>
-      </div>
-    </div>
-    <el-drawer
-      :visible.sync="drawer"
-      direction="rtl"
-      :with-header="false"
-      :before-close="handleClose"
-    >
-      <span>我来啦!</span>
-    </el-drawer>
 
-    <div class="float_menu">
-      <i class="el-icon-more" @click="showMenu"></i>
+      <div class="float_menu">
+        <i class="el-icon-more" @click="showMenu"></i>
+      </div>
     </div>
   </main>
 </template>
@@ -58,7 +52,6 @@ export default {
     return {
       loading: false,
       article_title: '',
-      drawer: false,
       mobil_menu_class: '',
       mobil_menu: false
     }
@@ -89,10 +82,6 @@ export default {
   },
 
   methods: {
-    handleClose(done) {
-      done()
-    },
-
     showMenu() {
       this.mobil_menu_class = 'menu_open'
     }
@@ -106,7 +95,7 @@ main {
   padding: 0;
 }
 
-.float_menu{
+.float_menu {
   display: none;
 }
 
@@ -153,7 +142,6 @@ main {
 
   .bottom_nav {
     margin-top: 20px;
-    width: 600px;
     display: flex;
     justify-content: space-between;
   }
@@ -183,11 +171,11 @@ main {
     }
   }
 
-  .menu_open{
+  .menu_open {
     animation: menu_open 0.2s forwards;
   }
 
-  .menu_close{
+  .menu_close {
     animation: menu_close 0.2s forwards;
   }
 
@@ -214,10 +202,10 @@ main {
 <style lang="scss">
 .article_content {
   line-height: 24px;
-  > p,
-  > div {
-     width: 600px;
-  }
+  // > p,
+  // > div {
+  //   width: 600px;
+  // }
 
   pre {
     // width: 600px;

@@ -1,82 +1,81 @@
 <template>
   <main>
-    <div class="main_container">
+    <div class="header_nav">
       <div class="breadcrumb">
-        <nuxt-link :to="{name: 'home' }">首页</nuxt-link>
-        <div>&lt;</div>
-        <div>文章内容</div>
+        <el-breadcrumb separator-class="el-icon-arrow-right">
+          <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+          <el-breadcrumb-item>专题文章列表</el-breadcrumb-item>
+        </el-breadcrumb>
       </div>
-
-      <div class="article_title">{{article.title}}</div>
-      <div class="article_info">
-        <span>文章类型: {{article.type_name}}</span>
-        &emsp;
-        <span>阅读次数: {{total_view}}</span>
-        &emsp;
-        <span>发布时间: {{article.publish_time}}</span>
+      <div class="type_title">{{type_title}}</div>
+    </div>
+    <div class="container">
+      <div class="menu">
+        <ul>
+          <li v-for="item in article" :key="item.id" class="item">
+            <nuxt-link
+              :to="{name: 'article_info-id', params: {id: `${item.type}-${item.id}-${type_title}`}}"
+            >{{ item.title }}</nuxt-link>
+          </li>
+        </ul>
       </div>
-
-      <div class="article_content" v-html="article.content"></div>
-      
-      <MsgBoard type="2" :article_id="article.id"/>
+      <div class="content">
+        <div class="article_title">{{ article_title }}</div>
+        <div class="article_content" v-html="content"></div>
+        <div class="bottom_nav">
+          <nuxt-link
+            v-if="pre.id"
+            class="pre"
+            :to="{name: 'article_info-id', params: {id: `${pre.type}-${pre.id}-${type_title}`}}"
+          >上一篇 《{{ pre.title }}》</nuxt-link>
+          <div v-else>&emsp;</div>
+          <nuxt-link
+            v-if="next.id"
+            class="next"
+            :to="{name: 'article_info-id', params: {id: `${next.type}-${next.id}-${type_title}`}}"
+          >下一篇 《{{ next.title }}》</nuxt-link>
+        </div>
+      </div>
     </div>
   </main>
 </template>
 
 <script>
 import * as api from '@/api'
-import MsgBoard from '~/components/MsgBoard'
 export default {
-  components: {
-    MsgBoard
-  },
-  data() {
-    return {
-      title: '',
-      article_id: ''
-    }
-  },
-
   asyncData({ store, error, params }) {
-    return Promise.all(
-      [
-        api.dataCol({ page: 'article', article_id: params.id }),
-        api.articleList({ id: params.id }),
-      ]
-    )
+    /**
+     * params: type-id-title
+     */
+    let type = params.id.split('-')[0]
+    let id = params.id.split('-')[1]
+    let title = params.id.split('-')[2]
+    return Promise.all([
+      api.typeArticleList({ type: type }),
+      api.articleContent({ id: id, type: type })
+    ])
       .then(arr => {
+        console.log(arr[0].data)
         return {
-          article: arr[1].data[0],
-          total_view: arr[1].total_view
+          article: arr[0].data,
+          type_title: title,
+          article_title: arr[1].data[0].title,
+          content: arr[1].data[0].content,
+          pre: arr[1].pre,
+          next: arr[1].next
         }
       })
       .catch(error)
-  },
+  }
 }
 </script>
 
 <style lang="scss" scoped>
-.article_title {
-  text-align: center;
-  font-size: 20px;
-  letter-spacing: 2px;
-}
+@import '../../assets/scss/article_info.scss';
+</style>
 
-.article_info{
-  text-align: center;
-  font-size: 14px;
-  color: rgb(211, 209, 209);
-  margin-top: 10px;
-}
-
-.article_content{
-  margin: 10px 0;
-  overflow: auto;
-}
-
-@media screen and (max-width: 1000px) {
-  .article_content{
-    font-size: 0.3rem;
-  }
+<style lang="scss">
+pre {
+  background-color: #eff2f7;
 }
 </style>

@@ -8,13 +8,15 @@
             <div>
               <span>[{{item.type_name}}]</span>
               <nuxt-link
-                :to="{name: 'article_list-id', params: {id: `${item.type}-${item.id}-${item.type_name}`}}"
+                :to="{name: 'article_info-id', params: {id: `${item.type}-${item.id}-${item.type_name}`}}"
               >{{ item.title }}</nuxt-link>
             </div>
             <div>{{item.edit_time}}</div>
           </div>
         </div>
-        <nuxt-link v-if="false" :to="{path: '/article' }">查看更多文章</nuxt-link>
+        <div class="more">
+          <nuxt-link v-if="article_total > 5" :to="{path: '/article_list' }">查看更多文章</nuxt-link>
+        </div>
 
         <div class="m_title">内容专题</div>
         <div class="article_type">
@@ -24,7 +26,7 @@
             class="item"
           >
             <nuxt-link
-              :to="{name: 'article_list-id', params: {id: `${item.id}-0-${item.type_name}`}}"
+              :to="{name: 'article_info-id', params: {id: `${item.id}-0-${item.type_name}`}}"
             >{{ item.type_name }}</nuxt-link>
           </div>
         </div>

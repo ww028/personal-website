@@ -1,0 +1,38 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+
+html{
+  // background-color: #f4f5f5;
+  background-color: #dee5ee;
+  font-size: 14px;
+}
+
+a{
+  font-size: 14px;
+  text-decoration: none;
+}
+
+li{
+  list-style: none;
+}
+
+main{
+  width: 960px;
+  margin: 50px auto 0;
+}
+
+.content::-webkit-scrollbar {
+  width: 5px;
+}
+
+.content::-webkit-scrollbar-thumb {
+  /*滚动条里面小方块*/
+  background-color: #000;
+}
+
+.content::-webkit-scrollbar-track {
+  /*滚动条里面轨道*/
+  background: rgba($color: #fff, $alpha: 0.9);
+}
