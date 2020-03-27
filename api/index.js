@@ -35,3 +35,21 @@ export async function articleContent(data) {
     data
   })
 }
+
+// 数据采集插入
+export async function dataAnalysis(data) {
+  return request({
+    url: '/analysis/edit',
+    method: 'post',
+    data
+  })
+}
+
+// 数据采集获取
+export async function dataAnalysisGet(data) {
+  return request({
+    url: '/analysis/get_count',
+    method: 'post',
+    data
+  })
+}

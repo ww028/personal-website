@@ -1,39 +1,39 @@
 <template>
-  <div>
-    <div class="msg_board_input">
-      <div class="msg_board_input_title">留言</div>
-      <textarea v-model="msg" placeholder="请输入留言内容" :disabled="!login_status.login"></textarea>
-      <div class="tips">
-        <div>
-          <span v-if="!login_status.login" @click="login">
-            请
-            <span>登陆</span> 后发布留言
-          </span>
-        </div>
-
-        <div>
-          <i class="submit_tip">{{submit_tip}}</i>
-          <span v-if="login_status.login" @click="submit">发布</span>
-        </div>
-      </div>
+  <div class="msg_board">
+    <div class="title">留言板</div>
+    <div class="w_textarea">
+      <textarea v-model="sub_data.msg"></textarea>
     </div>
 
-    <div class="msg_board">
-      <div class="border_bottom">
-        <div class="msg_title">留言板 ({{msg_number}}条)</div>
-      </div>
-      <div class="msg_list">
-        <div class="border_bottom">
-          <div v-for="(item, index) in msg_list" :key="index" class="border_bottom item">
-            <div class="nick_name">#{{index+1}} {{item.username}}:</div>
-            <div class="msg_content">{{item.content}}</div>
-            <div class="create_time">{{item.publish_time}}</div>
-          </div>
+    <div class="w_input">
+      <input type="text" v-model="sub_data.nick_name" placeholder="请输入您的名字" />
+      <input type="text" v-model="sub_data.email_or_tel" placeholder="请输入您的邮箱/电话号码" />
+      <button v-if="limit_count < 3" class="btn" @click="submit" :disabled='submit_flag'>发布</button>
+      <div v-else class="tips" >{{tips}}</div>
+    </div>
+
+    <div class="msg_list">
+      <div class="title">留言内容 <span>({{msg_number}})</span> </div>
+      <div
+        v-for="(item, index) in msg_list"
+        :key="item.id"
+        class="item"
+      >
+        <div class="username">
+          <span> #{{ msg_number - index }}</span>
+          <span>{{item.nick_name}}</span>
+        </div>
+
+        <div class="msg">
+          {{item.msg}}
+        </div>
+
+        <div class="create_time">
+          {{item.create_time}}
         </div>
       </div>
-
-      <div class="more_msg">
-        <!-- <div @click="moreMsg">加载更多留言</div> -->
+      <div class="more_btn">
+        <button class="btn" v-if="more_flag" @click="more" :disabled='submit_flag'>查看更多</button>
       </div>
     </div>
   </div>
@@ -50,163 +50,254 @@ export default {
     type: String,
     article_id: [String, Number]
   },
-
-  data() {
-    return {
-      submit_tip: '',
-      msg: '',
+  data(){
+    return{
       msg_number: '',
+      submit_flag: false,
+      pageNo: 1,
+      pageSize: 3,
+      page: 0,
+      sub_data:{
+        msg: '',
+        nick_name: '',
+        email_or_tel: ''
+      },
+      tips: '',
+      limit_count: 0,
       msg_list: []
     }
   },
 
-  // watch:{
-  //   msg(val){
-  //     this.submit_tip = ''
-  //   }
-  // },
-
-  computed: {
-    login_status() {
-      return this.$store.state.login
+  computed:{
+    more_flag(){
+      return this.page > 0 && this.pageNo < this.page
     }
   },
 
-  mounted() {
-    this.getList()
+  mounted(){
+    this.getData()
   },
 
-  methods: {
-    login(){
-      this.$store.commit('dialogLogin', true)
-    },
+  methods:{
+    submit(){
+      if(this.sub_data.msg === ''){
+        this.tips = '请输入留言内容'
+        return
+      }
 
-    submit() {
-      if (this.msg) {
-        let sub_data = {
-          username: this.$store.state.login.username,
-          content: this.msg,
-          type: Number(this.type),
-          article_id: Number(this.article_id)
+      if(this.sub_data.msg.indexOf('渣男') > -1) {
+        this.tips = '不要污蔑我！'
+        return
+      }
+
+      if(this.sub_data.nick_name === ''){
+        this.tips = '请输入您的昵称'
+        return
+      }
+
+      if(!this.emailOrTel(this.sub_data.email_or_tel)){
+        return
+      }
+
+      this.submit_flag = true
+      this.sub_data.type = this.type
+      this.sub_data.article_id = this.article_id
+      api.messageEdit(this.sub_data).then(res => {
+        this.tips = res.message
+        if (res.status) {
+          this.pageNo = 1
+          this.sub_data.msg = ''
+          this.sub_data.nick_name = ''
+          this.sub_data.email_or_tel = ''
+          this.getData()
+          setTimeout(() =>{
+            this.tips = ''
+          },1000)
         }
-        api.messageEdit(sub_data).then(res => {
-          this.msg = ''
-          if (res.status) {
-            this.getList()
-            this.submit_tip = '发布留言成功'
-            setTimeout(() =>{
-              this.submit_tip = ''
-            },1000)
-          }
-        })
-      } else {
-        this.submit_tip = '请输入留言内容'
-      }
-    },
-
-    getList() {
-      let sub_data = {
-        type: Number(this.type),
-        article_id: Number(this.article_id)
-      }
-      api.messageList(sub_data).then(res => {
-        this.msg_number = res.count
-        this.msg_list = res.data
+        setTimeout(() =>{
+          this.submit_flag = false
+        },1000)
       })
     },
 
-    moreMsg() {
-      let msg = {
-        username: '张三',
-        content: '今天是个好日子',
-        publish_time: '2020-02-25 14:34'
+    more(){
+      this.submit_flag = true
+      setTimeout(() =>{
+        this.submit_flag = false
+      },1000)
+      this.pageNo++
+      this.getData()
+    },
+
+    getData() {
+      let sub_data = {
+        type: Number(this.type),
+        article_id: Number(this.article_id),
+        pageSize: this.pageSize,
+        pageNo: this.pageNo
       }
-      this.msg_list.push(msg)
+      api.messageList(sub_data).then(res => {
+        this.limit_count = res.limit_count
+        if(this.limit_count == 3){
+          this.tips = '每天做多只可以发布3条留言'
+        }
+        this.msg_number = res.total
+        this.page = res.page
+        if(this.pageNo > 1){
+          this.msg_list = this.msg_list.concat(res.data)
+        } else{
+          this.msg_list = res.data
+        }
+      })
+    },
+
+    emailOrTel(val){
+      let rule = ''
+      let flag = false
+
+      if(val === ''){
+        this.tips = '请输入您的邮箱/电话号码'
+        return false
+      }
+
+      if(val.indexOf('@') > 0){
+        // 邮箱
+        rule = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/
+        flag = rule.test(val)
+      } else {
+        // 电话
+        rule = /^1[3456789]\d{9}$/
+        flag = rule.test(val)
+      }
+
+      if(!flag){
+        this.tips = '邮箱/电话号码格式不正确'
+        return false
+      } else {
+        return true
+        this.tips = ''
+      }
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.msg_board_input {
-  background-color: #fff;
+.title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.btn {
+  width: 80px;
+  height: 30px;
+  color: #fff;
+  border: solid 1px #000;
+  outline: none;
+  cursor: pointer;
+  background-color: rgba($color: #000000, $alpha: 0.5);
+  // border-radius: ;
+}
+
+.get_check_code{
+  width: 100px
+}
+
+.more_btn{
   margin-top: 10px;
+  text-align: center
+}
 
-  .msg_board_input_title {
-    font-weight: bold;
-  }
-  padding: 10px 20px;
-  textarea {
-    width: 100%;
-    height: 100px;
-    outline: 0;
-    padding: 10px;
-    margin-top: 10px;
-    border: 1px solid #f1f1f1;
-    resize: none;
-  }
-
+.w_input {
+  display: flex;
+  margin-top: 10px;
   input {
-    width: 260px;
+    width: 180px;
+    height: 30px;
+    border: solid 1px #000;
+    outline: none;
+    color: #fff;
+    padding: 10px;
+    margin-right: 20px;
+    background-color: rgba($color: #000000, $alpha: 0.5);
+  }
+
+  .tips{
     height: 30px;
     line-height: 30px;
-    padding: 0 10px;
-    border: 1px solid #f1f1f1;
-    outline: 0;
-  }
-
-  .tips {
-    display: flex;
-    justify-content: space-between;
+    color: red;
+    margin-left: 20px;
     font-size: 14px;
-
-    .submit_tip{
-      color: red;
-      margin-right: 5px;
-    }
-
-    span {
-      text-decoration: underline;
-      cursor: pointer;
-      color: #007fff
-    }
+    font-weight: bold
   }
 }
 
-.msg_board {
+.w_textarea {
+  width: 100%;
+  height: 200px;
+
+  textarea {
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    resize: none;
+    outline: none;
+    border: solid 1px #000;
+    background-color: rgba($color: #000000, $alpha: 0.5);
+    color: #fff;
+    font-size: 14px;
+    line-height: 18px;
+  }
+}
+
+.msg_list{
+  color: #fff;
   margin-top: 10px;
-  background-color: #fff;
+  // background-color: rgba($color: #000000, $alpha: 0.5);
 
-  .msg_title {
-    font-weight: bold;
-    padding: 10px 20px;
+  .item{
+    margin-top: 10px;
+    border-bottom: solid 1px rgba($color: #fff, $alpha: 0.1);
   }
 
-  .msg_list {
-    .item {
-      padding: 10px 20px;
-      font-size: 14px;
-
-      .msg_content {
-        font-size: 16px;
-      }
-    }
-
-    .msg_content {
-      text-indent: 40px;
-      margin: 10px 0;
-    }
-
-    .create_time {
-      text-align: right;
-    }
+  .item:last-child{
+    border: 0;
   }
 
-  .more_msg {
-    margin: 10px 0;
-    padding-bottom: 20px;
-    text-align: center;
-    cursor: pointer;
+  .msg{
+    margin-top: 10px;
+    text-indent: 20px;
+  }
+
+  .create_time{
+    padding-bottom: 10px;
+    text-align: right;
   }
 }
+
+@media screen and (max-width: 1000px) {
+  .title{
+    font-size: 0.3rem
+  }
+
+  .w_textarea{
+    height: 2rem;
+  }
+
+  .w_input{
+    flex-direction: column;
+    input{
+      width: 5rem;
+      font-size: 0.2rem;
+      margin-bottom: 0.1rem;
+    }
+  }
+
+  .msg_list{
+    font-size: 0.2rem;
+  }
+}
+
 </style>

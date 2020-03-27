@@ -15,7 +15,8 @@ module.exports = {
     //   { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     // ]
     script: [
-      {src: '/js/fn.js'}
+      { src: '/js/fn.js' },
+      { src: 'http://pv.sohu.com/cityjson' },
     ]
   },
   /*

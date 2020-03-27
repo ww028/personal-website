@@ -12,8 +12,9 @@
     <div class="container">
       <div class="menu">
         <ul>
-          <li v-for="item in article" :key="item.id" class="item">
+          <li v-for="item in article" :key="item.id" >
             <nuxt-link
+              :class="item.class"
               :to="{name: 'article_info-id', params: {id: `${item.type}-${item.id}-${type_title}`}}"
             >{{ item.title }}</nuxt-link>
           </li>
@@ -55,6 +56,15 @@ export default {
       api.articleContent({ id: id, type: type })
     ])
       .then(arr => {
+        arr[0].data.map(item =>{
+          if(item.id == id){
+            item.class = 'act'
+          }
+        })
+        
+        if(id == 0){
+          arr[0].data[0].class = 'act'
+        }
         console.log(arr[0].data)
         return {
           article: arr[0].data,
@@ -66,7 +76,15 @@ export default {
         }
       })
       .catch(error)
-  }
+  },
+
+  mounted() {
+    api.dataAnalysis({
+      w_ip: returnCitySN['cip'],
+      w_city: returnCitySN['cname'],
+      page: 'article'
+    })
+  },
 }
 </script>
 

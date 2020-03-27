@@ -25,16 +25,16 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   response => {
     const res = response
+    console.log(res)
     if (res.data.code === 200) {
       const res_data = res.data.data;
       return res_data
     } else {
-      return Promise.reject({message: error.message})
+      return Promise.reject({message: '请求失败'})
     }
   },
   error => {
     console.log('err debug' + error) // for debug
-    return Promise.reject({message: error.message})
   }
 )
 

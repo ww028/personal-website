@@ -1,6 +1,6 @@
 main{
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 
 .content,
@@ -23,6 +23,10 @@ main{
     color: #393a3c;
     font-weight: bold;
   }
+
+  .festival{
+    margin-bottom: 10px;
+  }
 }
 
 .c_header{
@@ -35,6 +39,10 @@ main{
 
   ul{
     display: flex;
+
+    .recently{
+      color: #007fff;
+    }
 
     li{
       list-style: none;
