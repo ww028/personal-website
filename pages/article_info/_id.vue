@@ -8,11 +8,20 @@
         </el-breadcrumb>
       </div>
       <div class="type_title">{{type_title}}</div>
+
+      <div class="mobil_header">
+        <nuxt-link :to="{path: '/'}">
+          <i class="el-icon-arrow-left"></i>
+        </nuxt-link>
+      </div>
+      <div class="mobil_header" @click="showMenu">
+        <i class="el-icon-more"></i>
+      </div>
     </div>
     <div class="container">
-      <div class="menu">
+      <div class="menu" v-show="meun_show">
         <ul>
-          <li v-for="item in article" :key="item.id" >
+          <li v-for="item in article" :key="item.id">
             <nuxt-link
               :class="item.class"
               :to="{name: 'article_info-id', params: {id: `${item.type}-${item.id}-${type_title}`}}"
@@ -44,6 +53,12 @@
 <script>
 import * as api from '@/api'
 export default {
+  data() {
+    return {
+      meun_show: true
+    }
+  },
+
   asyncData({ store, error, params }) {
     /**
      * params: type-id-title
@@ -56,13 +71,13 @@ export default {
       api.articleContent({ id: id, type: type })
     ])
       .then(arr => {
-        arr[0].data.map(item =>{
-          if(item.id == id){
+        arr[0].data.map(item => {
+          if (item.id == id) {
             item.class = 'act'
           }
         })
-        
-        if(id == 0){
+
+        if (id == 0) {
           arr[0].data[0].class = 'act'
         }
         console.log(arr[0].data)
@@ -79,12 +94,25 @@ export default {
   },
 
   mounted() {
+    let _dom = document.documentElement
+    let view_width = _dom.clientWidth
+    console.log(view_width)
+    if(view_width < 1000){
+      this.meun_show = false
+    }
+
     api.dataAnalysis({
       w_ip: returnCitySN['cip'],
       w_city: returnCitySN['cname'],
       page: 'article'
     })
   },
+
+  methods: {
+    showMenu() {
+      this.meun_show = !this.meun_show
+    }
+  }
 }
 </script>
 
@@ -95,5 +123,11 @@ export default {
 <style lang="scss">
 pre {
   background-color: #eff2f7;
+}
+
+@media screen and (max-width: 1000px) {
+  pre {
+    overflow: auto;
+  }
 }
 </style>

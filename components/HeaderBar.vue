@@ -28,7 +28,11 @@ header{
 
 @media screen and (max-width: 1000px) {
   header {
-    font-size: 0.3rem
+    z-index: 999;
+    font-size: 0.3rem;
+    height: 0.8rem;
+    line-height: 0.8rem;
+    border-bottom: 1px solid rgba(178, 186, 194, 0.15)
   }
 }
 </style>

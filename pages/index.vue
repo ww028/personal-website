@@ -25,13 +25,12 @@
               <nuxt-link
                 :to="{name: 'article_info-id', params: {id: `${item.type}-${item.id}-${item.type_name}`}}"
               >{{ item.title }}</nuxt-link>
-              <!-- <a href="#">{{item.title}}</a> -->
             </div>
             <div class="preview">{{ item.preview }}</div>
-            <div class="read_info">
+            <!-- <div class="read_info">
               <i class="el-icon-view">15</i>
               <i class="el-icon-chat-line-square">15</i>
-            </div>
+            </div> -->
           </li>
         </ul>
       </div>

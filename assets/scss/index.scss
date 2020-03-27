@@ -104,6 +104,10 @@ main{
 
     .preview{
       margin-bottom: 5px;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      overflow: hidden;
     }
 
     .read_info{
@@ -125,5 +129,41 @@ main{
   }
   to {
     background-color: #eff3f8;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  main{
+    display: block;
+    width: 100%;
+    margin-bottom: 0;
+    margin-top: 1.6rem;
+  }
+
+  .content{
+    width: 100%;
+  }
+
+  .c_header{
+    position: fixed;
+    height: 0.8rem;
+    left: 0;
+    top: 0.8rem;
+    background-color: #fff;
+    border-bottom: 1px solid rgba(178, 186, 194, 0.15)
+  }
+
+  .article_list{
+    font-size: 0.2rem;
+
+    .title{
+      font-size: 0.3rem;
+    }
+  }
+
+  .websit_info{
+    width: 100%;
+    border-top: 1px solid rgba(178, 186, 194, 0.15)
+    // margin-top: 0.2rem;
   }
 }
