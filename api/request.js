@@ -1,6 +1,5 @@
 import axios from 'axios'
 import fn from '../assets/js/fn.js'
-console.log(process.env.BASE_URL)
 
 // create an axios instance
 const service = axios.create({
