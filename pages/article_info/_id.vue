@@ -1,6 +1,6 @@
 <template>
   <main>
-    <div class="header_nav">
+    <!-- <div class="header_nav">
       <div class="breadcrumb">
         <el-breadcrumb separator-class="el-icon-arrow-right">
           <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
@@ -17,9 +17,9 @@
       <div class="mobil_header" @click="showMenu">
         <i class="el-icon-more"></i>
       </div>
-    </div>
-    <div class="container">
+    </div> -->
       <div class="menu" v-show="meun_show">
+        <div class="type_title">{{type_title}}</div>
         <ul>
           <li v-for="item in article_list" :key="item.id">
             <nuxt-link
@@ -30,6 +30,22 @@
         </ul>
       </div>
       <div class="content">
+        <div class="header_nav">
+          <div class="breadcrumb">
+            <el-breadcrumb separator-class="el-icon-arrow-right">
+              <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+              <el-breadcrumb-item>专题文章列表</el-breadcrumb-item>
+            </el-breadcrumb>
+          </div>
+
+          <div class="mobil_header">
+              <nuxt-link :to="{path: '/'}">
+                <i class="el-icon-arrow-left"></i>
+              </nuxt-link>
+              <i class="el-icon-more" @click="showMenu"></i>
+          </div>
+        </div>
+        
         <div class="article_title">{{ article.title }}</div>
         <div class="article_info">
           <span>浏览次数: {{ article.view_count }}</span>
@@ -51,7 +67,6 @@
           >下一篇 《{{ next.title }}》</nuxt-link>
         </div>
       </div>
-    </div>
   </main>
 </template>
 
