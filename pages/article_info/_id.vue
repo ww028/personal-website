@@ -21,7 +21,7 @@
     <div class="container">
       <div class="menu" v-show="meun_show">
         <ul>
-          <li v-for="item in article" :key="item.id">
+          <li v-for="item in article_list" :key="item.id">
             <nuxt-link
               :class="item.class"
               :to="{name: 'article_info-id', params: {id: `${item.type}-${item.id}-${type_title}`}}"
@@ -30,8 +30,13 @@
         </ul>
       </div>
       <div class="content">
-        <div class="article_title">{{ article_title }}</div>
-        <div class="article_content" v-html="content"></div>
+        <div class="article_title">{{ article.title }}</div>
+        <div class="article_info">
+          <span>浏览次数: {{ article.view_count }}</span>
+          &emsp;
+          <span>发布时间: {{ article.publish_time }}</span>
+        </div>
+        <div class="article_content" v-html="article.content"></div>
         <div class="bottom_nav">
           <nuxt-link
             v-if="pre.id"
@@ -71,7 +76,6 @@ export default {
       api.articleInfoContent({ id: id, type: type })
     ])
       .then(arr => {
-        console.log(arr[0])
         arr[0].data.map(item => {
           if (item.id == id) {
             item.class = 'act'
@@ -81,12 +85,10 @@ export default {
         if (id == 0) {
           arr[0].data[0].class = 'act'
         }
-        console.log(arr[0].data)
         return {
-          article: arr[0].data,
+          article_list: arr[0].data,
           type_title: title,
-          article_title: arr[1].data[0].title,
-          content: arr[1].data[0].content,
+          article: arr[1].data[0],
           pre: arr[1].pre,
           next: arr[1].next
         }
@@ -100,12 +102,6 @@ export default {
     if(view_width < 1000){
       this.meun_show = false
     }
-
-    // api.dataAnalysis({
-    //   w_ip: returnCitySN['cip'],
-    //   w_city: returnCitySN['cname'],
-    //   page: 'article'
-    // })
   },
 
   methods: {
