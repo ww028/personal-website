@@ -35,7 +35,7 @@
         </ul>
       </div>
 
-      <MsgBoard />
+      <!-- <MsgBoard /> -->
     </div>
     <div class="websit_info">
       websit_info
