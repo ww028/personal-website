@@ -34,15 +34,19 @@
           </li>
         </ul>
       </div>
+
+      <MsgBoard />
     </div>
     <div class="websit_info">
+      websit_info
+      
       <!-- <div class="info_title">每一天都是一个特殊的日子</div>
       <div class="festival">今天是: 大撒法</div> -->
       <!-- <div>
         今天是：xxxx
       </div>-->
 
-      <div class="info_title">数据统计：</div>
+      <!-- <div class="info_title">数据统计：</div> -->
       <!-- <div>今日访问人数: {{ today_num }}</div>
       <div>今日访问次数: {{ today_count }}</div>
       <div>历史访问人数: {{ total_num }}</div>

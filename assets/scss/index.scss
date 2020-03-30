@@ -5,7 +5,7 @@ main{
 
 .content,
 .websit_info{
-  background-color: #fff;
+  // background-color: #fff;
 }
 
 .content{
@@ -20,6 +20,7 @@ main{
   padding: 10px 20px;
   font-size: 14px;
   color: #7c8aab;
+  background-color: #fff;
 
   .info_title{
     color: #393a3c;
@@ -38,6 +39,7 @@ main{
   font-size: 14px;
   // color: #909090;
   color: #7c8aab;
+  background-color: #fff;
 
   ul{
     display: flex;
@@ -69,6 +71,7 @@ main{
 .article_list{
   font-size: 14px;
   color: #7c8aab;
+  background-color: #fff;
 
   li{
     // cursor: pointer;
