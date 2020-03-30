@@ -1,4 +1,3 @@
-
 module.exports = {
   mode: 'universal',
   /*
@@ -15,7 +14,6 @@ module.exports = {
     //   { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     // ]
     script: [
-      { src: '/js/fn.js' },
       { src: 'http://pv.sohu.com/cityjson' },
     ]
   },
@@ -57,5 +55,10 @@ module.exports = {
     */
     extend (config, ctx) {
     }
+  },
+
+  env: {
+    BASE_URL: process.env.BASE_URL,
+    NODE_ENV: process.env.NODE_ENV
   }
 }

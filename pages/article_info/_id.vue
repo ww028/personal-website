@@ -55,7 +55,7 @@ import * as api from '@/api'
 export default {
   data() {
     return {
-      meun_show: true
+      meun_show: true,
     }
   },
 
@@ -67,10 +67,11 @@ export default {
     let id = params.id.split('-')[1]
     let title = params.id.split('-')[2]
     return Promise.all([
-      api.typeArticleList({ type: type }),
-      api.articleContent({ id: id, type: type })
+      api.articleInfoMenu({ type: type }),
+      api.articleInfoContent({ id: id, type: type })
     ])
       .then(arr => {
+        console.log(arr[0])
         arr[0].data.map(item => {
           if (item.id == id) {
             item.class = 'act'
@@ -96,16 +97,15 @@ export default {
   mounted() {
     let _dom = document.documentElement
     let view_width = _dom.clientWidth
-    console.log(view_width)
     if(view_width < 1000){
       this.meun_show = false
     }
 
-    api.dataAnalysis({
-      w_ip: returnCitySN['cip'],
-      w_city: returnCitySN['cname'],
-      page: 'article'
-    })
+    // api.dataAnalysis({
+    //   w_ip: returnCitySN['cip'],
+    //   w_city: returnCitySN['cname'],
+    //   page: 'article'
+    // })
   },
 
   methods: {

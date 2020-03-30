@@ -1,11 +1,10 @@
 import axios from 'axios'
-// import qs from 'qs'
+import fn from '../assets/js/fn.js'
+console.log(process.env.BASE_URL)
 
 // create an axios instance
 const service = axios.create({
-  // baseURL: process.env.API, // url = base url + request url
-  baseURL: 'http://localhost:3001/', // url = base url + request url
-  // baseURL: 'http://39.100.228.198:3001/', // url = base url + request url
+  baseURL: process.env.BASE_URL, // url = base url + request url
   // withCredentials: true, // send cookies when cross-domain requests
   timeout: 15000 // request timeout
 })
@@ -13,6 +12,7 @@ const service = axios.create({
 // request interceptor
 service.interceptors.request.use(
   config => {
+    config.data.sign = fn.createSign(config.data)
     return config
   },
   error => {
@@ -25,7 +25,6 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   response => {
     const res = response
-    console.log(res)
     if (res.data.code === 200) {
       const res_data = res.data.data;
       return res_data
