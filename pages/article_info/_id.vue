@@ -29,6 +29,7 @@
           </li>
         </ul>
       </div>
+
       <div class="content">
         <div class="header_nav">
           <div class="breadcrumb">
@@ -67,14 +68,21 @@
           >下一篇 《{{ next.title }}》</nuxt-link>
         </div>
       </div>
+
+      <MsgBoard :type='2' :article_id='article_id'/>
   </main>
 </template>
 
 <script>
 import * as api from '@/api'
+import MsgBoard from '@/components/MsgBoard'
 export default {
+  components: {
+    MsgBoard
+  },
   data() {
     return {
+      article_id: 0,
       meun_show: true,
     }
   },
@@ -109,6 +117,11 @@ export default {
         }
       })
       .catch(error)
+  },
+
+  created(){
+    let params = this.$router.currentRoute.params
+    this.article_id = Number(params.id.split('-')[1])
   },
 
   mounted() {

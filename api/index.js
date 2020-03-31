@@ -35,3 +35,20 @@ export async function articleInfoContent(data = {}) {
     data
   })
 }
+
+// 留言板
+export async function msgBoardEdit(data = {}) {
+  return request({
+    url: '/client/msg_board/edit',
+    method: 'post',
+    data
+  })
+}
+
+export async function msgBoardList(data = {}) {
+  return request({
+    url: '/client/msg_board/list',
+    method: 'post',
+    data
+  })
+}
