@@ -224,4 +224,24 @@ export default {
     text-align: center
   }
 }
+
+@media screen and (max-width: 1000px) {
+  .message_board{
+    width: 100%;
+    margin-top: 0;
+    border-top: 1px solid rgba(178, 186, 194, 0.15);
+  }
+
+  .msg_title{
+    font-size: 0.3rem;
+  }
+
+  .input_info{
+    display: contents;
+    .w_input{
+      margin-top: 0.2rem;
+      font-size: 0.2rem;
+    }
+  }
+}
 </style>
