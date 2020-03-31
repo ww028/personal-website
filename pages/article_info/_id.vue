@@ -130,6 +130,13 @@ export default {
     if(view_width < 1000){
       this.meun_show = false
     }
+
+    api.dataAnalysisEdit({
+      w_ip: returnCitySN['cip'],
+      w_city: returnCitySN['cname'],
+      page: 'article',
+      article_id: this.article_id
+    })
   },
 
   methods: {

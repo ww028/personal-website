@@ -47,10 +47,10 @@
       </div>-->
 
       <!-- <div class="info_title">数据统计：</div> -->
-      <!-- <div>今日访问人数: {{ today_num }}</div>
+      <div>今日访问人数: {{ today_num }}</div>
       <div>今日访问次数: {{ today_count }}</div>
       <div>历史访问人数: {{ total_num }}</div>
-      <div>历史访问次数: {{ total_count }}</div> -->
+      <div>历史访问次数: {{ total_count }}</div>
     </div>
   </main>
 </template>
@@ -73,7 +73,7 @@ export default {
     return Promise.all([
       api.articleType(),
       api.articleList({ pageNo: 1, pageSize: 10 }),
-      // api.dataAnalysisGet()
+      api.dataAnalysisList()
     ])
       .then(arr => {
         console.log(arr[0].data)
@@ -81,22 +81,22 @@ export default {
           article_type: arr[0].data,
           article: arr[1].data,
           article_total: arr[1].total,
-          // today_num: arr[2].today_num,
-          // today_count: arr[2].today_count,
-          // total_num: arr[2].total_num,
-          // total_count: arr[2].total_count
+          today_num: arr[2].today_num,
+          today_count: arr[2].today_count,
+          total_num: arr[2].total_num,
+          total_count: arr[2].total_count
         }
       })
       .catch(error)
   },
 
-  // mounted() {
-  //   api.dataAnalysis({
-  //     w_ip: returnCitySN['cip'],
-  //     w_city: returnCitySN['cname'],
-  //     page: 'index'
-  //   })
-  // },
+  mounted() {
+    api.dataAnalysisEdit({
+      w_ip: returnCitySN['cip'],
+      w_city: returnCitySN['cname'],
+      page: 'index'
+    })
+  },
 
   methods: {
     changeType(val) {

@@ -52,3 +52,20 @@ export async function msgBoardList(data = {}) {
     data
   })
 }
+
+// 数据统计
+export async function dataAnalysisList(data = {}) {
+  return request({
+    url: '/client/data_analysis/list',
+    method: 'post',
+    data
+  })
+}
+
+export async function dataAnalysisEdit(data = {}) {
+  return request({
+    url: '/client/data_analysis/edit',
+    method: 'post',
+    data
+  })
+}
