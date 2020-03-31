@@ -74,7 +74,6 @@ export default {
       api.dataAnalysisList()
     ])
       .then(arr => {
-        console.log(arr[0].data)
         return {
           article_type: arr[0].data,
           article: arr[1].data,

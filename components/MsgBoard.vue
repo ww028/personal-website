@@ -71,7 +71,6 @@ export default {
       api.msgBoardList(
         { type: this.type, article_id: this.article_id || '', pageNo: pageNo, pageSize: this.pageSize}
       ).then(res =>{
-        console.log(res)
         this.msg_list = this.msg_list.concat(res.data)
         // this.msg_list.(res.data)
         this.total = res.total
@@ -125,7 +124,7 @@ export default {
         setTimeout(() =>{
           this.submit_flag = false;
           this.tips = ''
-        },1000)
+        },2000)
       })
     },
 
