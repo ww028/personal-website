@@ -29,7 +29,7 @@
             <div class="preview">{{ item.preview }}</div>
             <div class="read_info">
               <i class="el-icon-view">&nbsp;{{ item.view_count }}</i>
-              <i class="el-icon-chat-line-square">15</i>
+              <i class="el-icon-chat-line-square">&nbsp;{{ item.msg_count }}</i>
             </div>
           </li>
         </ul>
