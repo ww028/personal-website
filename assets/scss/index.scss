@@ -3,11 +3,6 @@ main{
   justify-content: space-between;
 }
 
-.content,
-.websit_info{
-  // background-color: #fff;
-}
-
 .content{
   width: 710px;
 }
@@ -52,6 +47,7 @@ main{
       list-style: none;
       padding: 0 10px;
       border-right: 1px solid hsla(0,0%,59.2%,.2);
+      cursor: pointer;
 
       a{
         color: #909090;
@@ -64,6 +60,14 @@ main{
 
     li:last-child{
       border: none;
+    }
+
+    li:hover{
+      color: #007fff;
+    }
+
+    .act{
+      color: #007fff;
     }
   }
 }

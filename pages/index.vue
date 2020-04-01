@@ -3,12 +3,12 @@
     <div class="content">
       <div class="c_header">
         <ul>
-          <li class="recently">最近的文章</li>
-          <li v-for="item in article_type" :key="item.id" @click="changeType(item)">
-            <nuxt-link
+          <!-- <li class="recently">最近的文章</li> -->
+          <li v-for="item in article_type" :class="item.class" :key="item.id" @click="changeType(item)">
+            {{ item.type_name }}
+            <!-- <nuxt-link
               :to="{name: 'article_info-id', params: {id: `${item.id}-0-${item.type_name}`}}"
-            >{{ item.type_name }}</nuxt-link>
-            <!-- <a href="#">{{ item.type_name }}</a> -->
+            >{{ item.type_name }}</nuxt-link> -->
           </li>
         </ul>
       </div>
@@ -62,8 +62,6 @@ export default {
   },
   data() {
     return {
-      article_type: [],
-      article: []
     }
   },
 
@@ -74,6 +72,7 @@ export default {
       api.dataAnalysisList()
     ])
       .then(arr => {
+        arr[0].data.unshift({ id: '', type_name: '最近的文章', class: 'act'})
         return {
           article_type: arr[0].data,
           article: arr[1].data,
@@ -97,8 +96,14 @@ export default {
 
   methods: {
     changeType(val) {
-      api.articleList({ pageNo: 1, pageSize: 10 })
-    }
+      this.article_type.map(item =>{
+        item.class = ''
+      })
+      val.class = 'act'
+      api.articleList({ pageNo: 1, pageSize: 10, type: val.id }).then(res =>{
+        this.article = res.data || []
+      })
+    } 
   }
 }
 </script>
