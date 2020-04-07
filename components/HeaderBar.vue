@@ -2,7 +2,7 @@
   <header>
     <nuxt-link
       :to="{name: 'index'}"
-    >W的博客</nuxt-link>
+    >W 唠嗑的地方</nuxt-link>
   </header>
 </template>
 
