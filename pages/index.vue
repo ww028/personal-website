@@ -4,11 +4,16 @@
       <div class="c_header">
         <ul>
           <!-- <li class="recently">最近的文章</li> -->
-          <li v-for="item in article_type" :class="item.class" :key="item.id" @click="changeType(item)">
+          <li
+            v-for="item in article_type"
+            :class="item.class"
+            :key="item.id"
+            @click="changeType(item)"
+          >
             {{ item.type_name }}
             <!-- <nuxt-link
               :to="{name: 'article_info-id', params: {id: `${item.id}-0-${item.type_name}`}}"
-            >{{ item.type_name }}</nuxt-link> -->
+            >{{ item.type_name }}</nuxt-link>-->
           </li>
         </ul>
       </div>
@@ -35,11 +40,11 @@
         </ul>
       </div>
 
-      <MsgBoard :type="1"/>
+      <MsgBoard :type="1" />
     </div>
     <div class="websit_info">
       <!-- <div class="info_title">每一天都是一个特殊的日子</div>
-      <div class="festival">今天是: 大撒法</div> -->
+      <div class="festival">今天是: 大撒法</div>-->
       <!-- <div>
         今天是：xxxx
       </div>-->
@@ -54,15 +59,14 @@
 </template>
 
 <script>
-import * as api from '@/api'
-import MsgBoard from '@/components/MsgBoard'
+import * as api from "@/api";
+import MsgBoard from "@/components/MsgBoard";
 export default {
   components: {
     MsgBoard
   },
   data() {
-    return {
-    }
+    return {};
   },
 
   asyncData({ store, error, params }) {
@@ -72,7 +76,7 @@ export default {
       api.dataAnalysisList()
     ])
       .then(arr => {
-        arr[0].data.unshift({ id: '', type_name: '最近的文章', class: 'act'})
+        arr[0].data.unshift({ id: "", type_name: "最近的文章", class: "act" });
         return {
           article_type: arr[0].data,
           article: arr[1].data,
@@ -81,33 +85,33 @@ export default {
           today_count: arr[2].today_count,
           total_num: arr[2].total_num,
           total_count: arr[2].total_count
-        }
+        };
       })
-      .catch(error)
+      .catch(error);
   },
 
   mounted() {
     api.dataAnalysisEdit({
-      w_ip: returnCitySN['cip'],
-      w_city: returnCitySN['cname'],
-      page: 'index'
-    })
+      w_ip: returnCitySN["cip"],
+      w_city: returnCitySN["cname"],
+      page: "index"
+    });
   },
 
   methods: {
     changeType(val) {
-      this.article_type.map(item =>{
-        item.class = ''
-      })
-      val.class = 'act'
-      api.articleList({ pageNo: 1, pageSize: 10, type: val.id }).then(res =>{
-        this.article = res.data || []
-      })
-    } 
+      this.article_type.map(item => {
+        item.class = "";
+      });
+      val.class = "act";
+      api.articleList({ pageNo: 1, pageSize: 10, type: val.id }).then(res => {
+        this.article = res.data || [];
+      });
+    }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/scss/index.scss';
+@import "../assets/scss/index.scss";
 </style>
