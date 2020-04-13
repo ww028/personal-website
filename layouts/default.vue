@@ -3,15 +3,17 @@
     <!-- <div>default</div> -->
     <HeaderBar />
     <nuxt />
+    <FooterBar />
   </div>
 </template>
 
 <script>
 import HeaderBar from '~/components/HeaderBar'
+import FooterBar from '~/components/FooterBar'
 // import DialogLogin from '~/components/DialogLogin'
 export default {
   components: {
-    HeaderBar,
+    HeaderBar, FooterBar
   },
 
   mounted() {
