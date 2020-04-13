@@ -73,6 +73,7 @@ export default {
       ).then(res =>{
         this.msg_list = this.msg_list.concat(res.data)
         // this.msg_list.(res.data)
+        console.log(res)
         this.total = res.total
         this.total_page = res.total_page
       })
