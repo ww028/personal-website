@@ -25,7 +25,10 @@
     <div class="message_list">
       <ul>
         <li v-for="(item, index) in msg_list" :key="item.id">
-          <div><span>#{{index+1}}</span> {{ item.nick_name}}</div>
+          <div>
+            <span>#{{index+1}}</span>
+            {{ item.nick_name}}
+          </div>
           <div class="msg">{{ item.msg }}</div>
           <div class="create_time">{{ item.create_time }}</div>
         </li>
@@ -38,8 +41,8 @@
 </template>
 
 <script>
-import * as api from '@/api'
-import fn from '@/assets/js/fn.js'
+import * as api from "@/api";
+import fn from "@/assets/js/fn.js";
 export default {
   props: {
     type: Number,
@@ -49,125 +52,129 @@ export default {
   data() {
     return {
       msg_form: {
-        msg: '',
-        nick_name: '',
-        email: ''
+        msg: "",
+        nick_name: "",
+        email: ""
       },
-      total: '',
+      total: "",
       submit_flag: false,
-      tips: '',
+      tips: "",
       msg_list: [],
       pageNo: 1,
       pageSize: 5,
-      total_page: 1,
-    }
+      total_page: 1
+    };
   },
 
-  mounted(){
-    this.getData()
+  mounted() {
+    this.getData();
   },
 
   methods: {
-    getData(pageNo = 1){
-      api.msgBoardList(
-        { type: this.type, article_id: this.article_id || '', pageNo: pageNo, pageSize: this.pageSize}
-      ).then(res =>{
-        this.msg_list = this.msg_list.concat(res.data)
-        // this.msg_list.(res.data)
-        console.log(res)
-        this.total = res.total
-        this.total_page = res.total_page
-      })
+    getData(pageNo = 1) {
+      api
+        .msgBoardList({
+          type: this.type,
+          article_id: this.article_id || "",
+          pageNo: pageNo,
+          pageSize: this.pageSize
+        })
+        .then(res => {
+          this.msg_list = this.msg_list.concat(res.data);
+          // this.msg_list.(res.data)
+          console.log(res);
+          this.total = res.total;
+          this.total_page = res.total_page;
+        });
     },
 
-    more(){
-      this.pageNo++
-      this.getData(this.pageNo)
+    more() {
+      this.pageNo++;
+      this.getData(this.pageNo);
     },
 
     submit() {
       // 验证内容
-      if (this.msg_form.msg === '') {
-        this.tips = '请输入留言内容'
-        return
+      if (this.msg_form.msg === "") {
+        this.tips = "请输入留言内容";
+        return;
+      }
+
+      if (this.msg_form.msg.indexOf("渣") > -1 || this.msg_form.msg.indexOf("zha") > -1) {
+        this.tips = "总有刁民想污蔑朕";
+        return;
       }
 
       // 验证昵称
       if (!this.checkNickName(this.msg_form.nick_name)) {
-        return
+        return;
       }
 
       // 验证邮箱
       if (!this.checkEmail(this.msg_form.email)) {
-        return
+        return;
       }
 
-      let sub_data = {
-        nick_name: this.msg_form.nick_name,
-        email: this.msg_form.email,
-        msg: this.msg_form.msg,
-        w_ip: returnCitySN['cip'],
-        w_city: returnCitySN['cname'],
-        type: this.type,
-        article_id: this.article_id || '',
-      }
-
+      this.msg_form.w_ip = returnCitySN["cip"];
+      this.msg_form.w_city = returnCitySN["cname"];
+      this.msg_form.type = this.type;
+      this.msg_form.article_id = this.article_id || "";
       this.submit_flag = true;
-      api.msgBoardEdit(sub_data).then(res =>{
-        if(res.status){
-          this.tips = res.message
-          for(let key in sub_data){
-            sub_data[key] = ''
-          }
-          for(let key in this.msg_form){
-            this.msg_form[key] = ''
+
+      api.msgBoardEdit(this.msg_form).then(res => {
+        this.tips = res.message;
+
+        if (res.status) {
+          // 清空留言板输入内容
+          for (let key in this.msg_form) {
+            this.msg_form[key] = "";
           }
         }
-        setTimeout(() =>{
+        setTimeout(() => {
           this.submit_flag = false;
-          this.tips = ''
-        },2000)
-      })
+          this.tips = "";
+        }, 3000);
+      });
     },
 
     checkNickName(val) {
-      if (val === '') {
-        this.tips = '昵称不能为空'
-        return false
+      if (val === "") {
+        this.tips = "昵称不能为空";
+        return false;
       }
 
       if (val.length < 2) {
-        this.tips = '昵称长度不可以少于 2 个字符'
-        return false
+        this.tips = "昵称长度不可以少于 2 个字符";
+        return false;
       }
 
       if (val.length > 8) {
-        this.tips = '昵称长度不可以大于 8 个字符'
-        return false
+        this.tips = "昵称长度不可以大于 8 个字符";
+        return false;
       }
 
-      let check_rule = /^[\u4E00-\u9FA5A-Za-z0-9]+$/
+      let check_rule = /^[\u4E00-\u9FA5A-Za-z0-9]+$/;
       if (check_rule.test(this.msg_form.nick_name)) {
-        this.tips = ''
-        return true
+        this.tips = "";
+        return true;
       } else {
-        this.tips = '昵称不可以输入特殊字符'
-        return false
+        this.tips = "昵称不可以输入特殊字符";
+        return false;
       }
     },
 
     checkEmail(val) {
-      let check_rule = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/
+      let check_rule = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
       if (check_rule.test(this.msg_form.email)) {
-        this.tips = ''
-        return true
+        this.tips = "";
+        return true;
       } else {
-        this.tips = '邮箱格式不正确'
-        return false
+        this.tips = "邮箱格式不正确";
+        return false;
       }
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -221,26 +228,26 @@ export default {
     text-align: right;
   }
 
-  .more{
+  .more {
     border-top: 1px solid rgba(178, 186, 194, 0.15);
-    text-align: center
+    text-align: center;
   }
 }
 
 @media screen and (max-width: 1000px) {
-  .message_board{
+  .message_board {
     width: 100%;
     margin-top: 0;
     border-top: 1px solid rgba(178, 186, 194, 0.15);
   }
 
-  .msg_title{
+  .msg_title {
     font-size: 0.3rem;
   }
 
-  .input_info{
+  .input_info {
     display: contents;
-    .w_input{
+    .w_input {
       margin-top: 0.2rem;
       font-size: 0.2rem;
     }
