@@ -86,8 +86,6 @@ export default {
     },
 
     submit() {
-       console.log(fn)
-      console.log(fn.emailOrTel('123'))
       // 验证内容
       if (this.msg_form.msg === '') {
         this.tips = '请输入留言内容'
