@@ -10,9 +10,9 @@ module.exports = {
       { name: 'viewport', content: 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"' },
       { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
     ],
-    // link: [
-    //   { rel: 'icon', type: 'image/x-icon', href: '/w_logo1.png' }
-    // ],
+    link: [
+      { rel: 'icon', type: 'image/x-icon', href: '/w_logo1.png' }
+    ],
     script: [
       { src: '/js/fn.js' },
       { src: 'http://pv.sohu.com/cityjson' },
