@@ -11,7 +11,10 @@ const service = axios.create({
 // request interceptor
 service.interceptors.request.use(
   config => {
-    config.data.sign = fn.createSign(config.data)
+    console.log(config.data.flag)
+    if(!config.data.flag){
+      config.data.sign = fn.createSign(config.data)
+    }
     return config
   },
   error => {
@@ -24,10 +27,13 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   response => {
     const res = response
+
     if (res.data.code === 200) {
       const res_data = res.data.data;
       return res_data
-    } else {
+    } else if(res.data.status === '1'){
+      return res.data.districts[0].districts
+    } else{
       return Promise.reject({message: '请求失败'})
     }
   },

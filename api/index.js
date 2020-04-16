@@ -69,3 +69,13 @@ export async function dataAnalysisEdit(data = {}) {
     data
   })
 }
+
+export async function areaList(data = {}) {
+  return request({
+    // url: `https://restapi.amap.com/v3/config/district?key=${data.key}&offset=${data.offset}`,
+    url: `https://restapi.amap.com/v3/config/district?key=${data.key}&offset=${data.offset}&keywords=${data.keywords || ''}`,
+    // url: `https://restapi.amap.com/v3/config/district`,
+    method: 'get',
+    data
+  })
+}

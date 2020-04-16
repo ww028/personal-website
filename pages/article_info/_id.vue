@@ -1,23 +1,5 @@
 <template>
   <main>
-    <!-- <div class="header_nav">
-      <div class="breadcrumb">
-        <el-breadcrumb separator-class="el-icon-arrow-right">
-          <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-          <el-breadcrumb-item>专题文章列表</el-breadcrumb-item>
-        </el-breadcrumb>
-      </div>
-      <div class="type_title">{{type_title}}</div>
-
-      <div class="mobil_header">
-        <nuxt-link :to="{path: '/'}">
-          <i class="el-icon-arrow-left"></i>
-        </nuxt-link>
-      </div>
-      <div class="mobil_header" @click="showMenu">
-        <i class="el-icon-more"></i>
-      </div>
-    </div> -->
       <div class="menu" v-show="meun_show">
         <div class="type_title">{{type_title}}</div>
         <ul>

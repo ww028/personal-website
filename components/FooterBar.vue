@@ -20,7 +20,7 @@ footer {
   width: 100%;
   height: 40px;
   background-color: #fff;
-
+  
   main {
     margin: 10px auto 0;
     height: 40px;
