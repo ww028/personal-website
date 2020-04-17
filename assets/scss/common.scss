@@ -3,9 +3,20 @@
   padding: 0;
 }
 
+html,
+body{
+  height: 100%;
+}
+
 html{
   background-color: #dee5ee;
   font-size: 14px;
+}
+
+.__container{
+  height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 a{
@@ -19,7 +30,10 @@ li{
 
 main{
   width: 960px;
-  margin: 50px auto 20px;
+  margin: 0 auto;
+  padding-top: 50px;
+  margin-bottom: 10px;
+  flex-grow: 1;
   position: relative;
 }
 
@@ -39,4 +53,8 @@ main{
 
 textarea{
   height: 150px;
+}
+
+.el-radio{
+  margin-right: 0;
 }

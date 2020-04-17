@@ -1,11 +1,11 @@
 <template>
   <footer>
-    <main>
+    <div class="container">
       <span>邮箱: wwjobs@163.com</span>
       <span>
         <a href="http://www.beian.miit.gov.cn" target="blank">蜀ICP备20009820号</a>
       </span>
-    </main>
+    </div>
   </footer>
 </template>
 
@@ -20,9 +20,11 @@ footer {
   width: 100%;
   height: 40px;
   background-color: #fff;
-  
-  main {
-    margin: 10px auto 0;
+
+  .container {
+    width: 960px;
+    margin: 0 auto;
+    // margin: 10px auto 0;
     height: 40px;
     line-height: 40px;
     font-size: 14px;
@@ -36,6 +38,12 @@ footer {
       color: #7c8aab;
       font-size: 14px;
     }
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  footer{
+    padding: 0rem 0.1rem;
   }
 }
 </style>
