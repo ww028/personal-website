@@ -44,6 +44,10 @@ footer {
 @media screen and (max-width: 1000px) {
   footer{
     padding: 0rem 0.1rem;
+
+    .container{
+      width: 100%;
+    }
   }
 }
 </style>
