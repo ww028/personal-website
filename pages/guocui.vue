@@ -83,7 +83,6 @@ export default {
   asyncData({ store, error, params }) {
     return Promise.all([api.GameList(), api.memberList()])
       .then(arr => {
-        console.log(arr[0].data[0].members_info);
         return {
           tableData: arr[0].data,
           tableDataMembers: arr[1].data
@@ -106,7 +105,6 @@ export default {
 
   methods: {
     chartsInit() {
-      console.log(this.tableDataMembers);
       // 找到容器
       let myChart = this.$echarts.init(document.getElementById("myChart"));
       let xAxisData = [];

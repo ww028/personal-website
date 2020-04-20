@@ -11,7 +11,6 @@ const service = axios.create({
 // request interceptor
 service.interceptors.request.use(
   config => {
-    console.log(config.data.flag)
     if(!config.data.flag){
       config.data.sign = fn.createSign(config.data)
     }
