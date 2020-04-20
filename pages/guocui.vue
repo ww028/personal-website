@@ -3,7 +3,7 @@
     <div class="filter">
       <el-radio-group v-model="radio1" size="mini">
         <el-radio label="1" border>比赛</el-radio>
-        <el-radio label="2" border>人员</el-radio>
+        <el-radio label="2" border>玩家</el-radio>
         <el-radio label="3" border>累计积分图表</el-radio>
       </el-radio-group>
     </div>
@@ -12,9 +12,11 @@
     <el-table v-show="radio1 == 1" :data="tableData" stripe style="width: 100%">
       <el-table-column prop="id" align="center" label="比赛轮次"></el-table-column>
       <el-table-column prop="members" align="center" label="参赛人员"></el-table-column>
-      <el-table-column prop="start_time" align="center" label="比赛时间"></el-table-column>
-      <el-table-column prop="end_time" align="center" label="比赛时间"></el-table-column>
-      <el-table-column prop="game_time" align="center" label="比赛时间(分钟)"></el-table-column>
+      <el-table-column prop="start_time" align="center" label="开始时间"></el-table-column>
+      <el-table-column prop="end_time" align="center" label="结束时间"></el-table-column>
+      <el-table-column prop="game_time" align="center" label="比赛时长(分钟)"></el-table-column>
+      <el-table-column prop="product_integral" align="center" label="产生积分"></el-table-column>
+      <el-table-column prop="reduce_integral" align="center" label="消耗积分"></el-table-column>
       <el-table-column type="expand" label="游戏详情" width="200px">
         <template slot-scope="props">
           <el-form label-position="left" inline class="demo-table-expand">
@@ -23,12 +25,13 @@
               :key="index"
               class="items"
             >
-              <el-form-item :label="('玩家-'+(index + 1)+':')">
-                <span>{{ props.row.members_info[index].user_name }}</span>
-              </el-form-item>
-              <el-form-item label="积分:">
-                <span>{{ props.row.members_info[index].integral }}</span>
-              </el-form-item>
+              <div>
+                玩家 {{index+1}}: {{ props.row.members_info[index].user_name }}
+              </div>
+
+              <div>
+                积分: {{ props.row.members_info[index].integral }}
+              </div>
             </div>
           </el-form>
         </template>
@@ -45,9 +48,12 @@
     >
       <el-table-column prop="user_name" align="center" label="昵称"></el-table-column>
       <el-table-column prop="count" sortable align="center" label="参赛次数"></el-table-column>
+      <el-table-column prop="win_count" sortable align="center" label="收割次数"></el-table-column>
+      <el-table-column prop="lose_count" sortable align="center" label="失败次数"></el-table-column>
+      <el-table-column prop="win_odds" sortable align="center" label="收割率"></el-table-column>
       <el-table-column prop="total_game_time" sortable align="center" label="累计游戏时长(分钟)"></el-table-column>
-      <el-table-column prop="integral" sortable align="center" label="累计积分"></el-table-column>
-      <el-table-column prop="commission" sortable align="center" label="国粹建设贡献积分"></el-table-column>
+      <el-table-column prop="integral" sortable align="center" label="个人累计积分"></el-table-column>
+      <el-table-column prop="commission" sortable align="center" label="团队建设贡献积分"></el-table-column>
     </el-table>
     <div class="chart" v-show="radio1 == 3">
       <div id="myChart"></div>

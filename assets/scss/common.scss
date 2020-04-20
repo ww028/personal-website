@@ -63,6 +63,15 @@ textarea{
 .el-table__body{
   .el-form{
     display: flex;
-    justify-content: space-between;
+    // flex-direction: row-reverse;
+    float: right;
+    .items{
+      margin-right: 50px;
+    }
+    // justify-content: space-between;
+  }
+
+  .el-table__expanded-cell[class*=cell]{
+    padding: 10px 50px;
   }
 }
