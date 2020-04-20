@@ -58,3 +58,11 @@ textarea{
 .el-radio{
   margin-right: 0;
 }
+
+// element-ui
+.el-table__body{
+  .el-form{
+    display: flex;
+    justify-content: space-between;
+  }
+}

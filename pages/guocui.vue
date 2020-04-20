@@ -15,6 +15,24 @@
       <el-table-column prop="start_time" align="center" label="比赛时间"></el-table-column>
       <el-table-column prop="end_time" align="center" label="比赛时间"></el-table-column>
       <el-table-column prop="game_time" align="center" label="比赛时间(分钟)"></el-table-column>
+      <el-table-column type="expand" label="游戏详情" width="200px">
+        <template slot-scope="props">
+          <el-form label-position="left" inline class="demo-table-expand">
+            <div
+              v-for="(item, index) in props.row.members_info"
+              :key="index"
+              class="items"
+            >
+              <el-form-item :label="('玩家-'+(index + 1)+':')">
+                <span>{{ props.row.members_info[index].user_name }}</span>
+              </el-form-item>
+              <el-form-item label="积分:">
+                <span>{{ props.row.members_info[index].integral }}</span>
+              </el-form-item>
+            </div>
+          </el-form>
+        </template>
+      </el-table-column>
     </el-table>
 
     <!-- 成员列表 -->
@@ -31,7 +49,6 @@
       <el-table-column prop="integral" sortable align="center" label="累计积分"></el-table-column>
       <el-table-column prop="commission" sortable align="center" label="国粹建设贡献积分"></el-table-column>
     </el-table>
-
     <div class="chart" v-show="radio1 == 3">
       <div id="myChart"></div>
     </div>
@@ -39,6 +56,7 @@
 </template>
 
   <script>
+// [{"integral": 0, "user_name": "向毅"}, {"integral": -25, "user_name": "刘贝夫"}, {"integral": -380, "user_name": "王彦宇"}, {"integral": 255, "user_name": "魏微"}]
 import * as api from "@/api";
 export default {
   data() {
@@ -50,7 +68,7 @@ export default {
   asyncData({ store, error, params }) {
     return Promise.all([api.GameList(), api.memberList()])
       .then(arr => {
-        console.log(arr[1]);
+        console.log(arr[0].data[0].members_info);
         return {
           tableData: arr[0].data,
           tableDataMembers: arr[1].data
