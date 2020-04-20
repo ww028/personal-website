@@ -4,20 +4,32 @@
       <el-radio-group v-model="radio1" size="mini">
         <el-radio label="1" border>比赛</el-radio>
         <el-radio label="2" border>人员</el-radio>
-        <el-radio label="3" border>图表</el-radio>
+        <el-radio label="3" border>累计积分图表</el-radio>
       </el-radio-group>
     </div>
 
+    <!-- 比赛列表 -->
     <el-table v-show="radio1 == 1" :data="tableData" stripe style="width: 100%">
-      <el-table-column prop="term" align="center" label="比赛轮次"></el-table-column>
-      <el-table-column prop="person" align="center" label="参赛人员"></el-table-column>
-      <el-table-column prop="time" align="center" label="比赛时间"></el-table-column>
+      <el-table-column prop="id" align="center" label="比赛轮次"></el-table-column>
+      <el-table-column prop="members" align="center" label="参赛人员"></el-table-column>
+      <el-table-column prop="start_time" align="center" label="比赛时间"></el-table-column>
+      <el-table-column prop="end_time" align="center" label="比赛时间"></el-table-column>
+      <el-table-column prop="game_time" align="center" label="比赛时间(分钟)"></el-table-column>
     </el-table>
 
-    <el-table v-show="radio1 == 2" :data="tableDataMembers" stripe style="width: 100%">
-      <el-table-column prop="nick_name" align="center" label="昵称"></el-table-column>
-      <el-table-column prop="count" align="center" label="参赛次数"></el-table-column>
-      <el-table-column prop="integral" align="center" label="累计积分"></el-table-column>
+    <!-- 成员列表 -->
+    <el-table
+      v-show="radio1 == 2"
+      :data="tableDataMembers"
+      stripe
+      :default-sort="{prop: 'count', order: 'descending'}"
+      style="width: 100%"
+    >
+      <el-table-column prop="user_name" align="center" label="昵称"></el-table-column>
+      <el-table-column prop="count" sortable align="center" label="参赛次数"></el-table-column>
+      <el-table-column prop="total_game_time" sortable align="center" label="累计游戏时长(分钟)"></el-table-column>
+      <el-table-column prop="integral" sortable align="center" label="累计积分"></el-table-column>
+      <el-table-column prop="commission" sortable align="center" label="国粹建设贡献积分"></el-table-column>
     </el-table>
 
     <div class="chart" v-show="radio1 == 3">
@@ -27,86 +39,108 @@
 </template>
 
   <script>
+import * as api from "@/api";
 export default {
   data() {
     return {
-      radio1: "3",
-      tableData: [
-        { term: "1", person: "张三、李四、王二麻子、赵五", time: "2020-04-17" },
-        { term: "1", person: "张三、李四、王二麻子、赵五", time: "2020-04-17" },
-        { term: "1", person: "张三、李四、王二麻子、赵五", time: "2020-04-17" },
-        { term: "1", person: "张三、李四、王二麻子、赵五", time: "2020-04-17" },
-        { term: "1", person: "张三、李四、王二麻子、赵五", time: "2020-04-17" },
-        { term: "1", person: "张三、李四、王二麻子、赵五", time: "2020-04-17" },
-        { term: "1", person: "张三、李四、王二麻子、赵五", time: "2020-04-17" },
-        { term: "1", person: "张三、李四、王二麻子、赵五", time: "2020-04-17" },
-        { term: "1", person: "张三、李四、王二麻子、赵五", time: "2020-04-17" },
-      ],
-      tableDataMembers: [
-        {
-          nick_name: "张三",
-          count: "1",
-          integral: "100"
-        }
-      ]
+      radio1: "1"
     };
   },
 
-  mounted() {
-    this.echartsInit();
+  asyncData({ store, error, params }) {
+    return Promise.all([api.GameList(), api.memberList()])
+      .then(arr => {
+        console.log(arr[1]);
+        return {
+          tableData: arr[0].data,
+          tableDataMembers: arr[1].data
+        };
+      })
+      .catch(error);
+  },
+
+  // mounted() {
+  //   this.chartsInit();
+  // },
+
+  watch: {
+    radio1(val, oldVal) {
+      if (val == 3) {
+        this.chartsInit();
+      }
+    }
   },
 
   methods: {
-    echartsInit() {
+    chartsInit() {
+      console.log(this.tableDataMembers);
       // 找到容器
       let myChart = this.$echarts.init(document.getElementById("myChart"));
-      // 开始渲染
+      let xAxisData = [];
+
+      let y_data = [];
+
+      this.tableDataMembers.map(item => {
+        xAxisData.push(item.user_name);
+        y_data.push(item.integral);
+      });
+
       myChart.setOption({
-        tooltip: {
-          trigger: "axis",
-          axisPointer: {
-            // 坐标轴指示器，坐标轴触发有效
-            type: "shadow" // 默认为直线，可选为：'line' | 'shadow'
+        title: {
+          text: "累计积分"
+        },
+        // toolbox: {
+        //   feature: {
+        //     magicType: {
+        //       type: ["stack", "tiled"]
+        //     },
+        //     dataView: {},
+        //     saveAsImage: {
+        //       pixelRatio: 2
+        //     }
+        //   }
+        // },
+        tooltip: {},
+        xAxis: {
+          data: xAxisData,
+          splitLine: {
+            show: false
           }
         },
-        legend: {
-          data: [
-            "参赛次数",
-            "累计积分",
-          ]
-        },
-        grid: {
-          left: "3%",
-          right: "4%",
-          bottom: "3%",
-          containLabel: true
-        },
-        xAxis: [
-          {
-            type: "category",
-            data: ["洪恩", "向毅", "吴彦祖","贝夫", "彦宇", "账灏", "王威", "杨骁", "世林", "熊萍", "秀峰", "ST路人丙", "ST路人乙", "*ST路人丁", "*ST路人丑",]
-          }
-        ],
-        yAxis:{
-          type: "value",
-        },
+        yAxis: {},
         series: [
           {
-            name: "参赛次数",
-            barWidth : 15,//柱图宽度
-            barGap: "20%",//柱图间距
-            type: "bar",
-            data: [320, 332, 301, 334, 390, 390, 330, 320, 320, 332, 301, 334, 390, 330, 320]
-          },
-          {
             name: "累计积分",
-            barWidth : 15,//柱图宽度
-            barGap: "20%",//柱图间距
             type: "bar",
-            stack: "广告",
-            data: [120, 132, 101, 134, 90, 390, 230, 210, 320, 332, 301, 334, 390, 330, 320]
-          },
-        ]
+            data: y_data,
+            barWidth: 15, //柱图宽度
+            barGap: "20%", //柱图间距
+            itemStyle: {
+              normal: {
+                color: function(params) {
+                  const colorList = [
+                    "#3398db",
+                    "#434348",
+                    "#90ed7d",
+                    "#f7a35c",
+                    "#61a0a8",
+                    "#61a0a8",
+                    "#91c7ae",
+                    "#2f4554"
+                  ];
+                  return colorList[params.dataIndex];
+                }
+              }
+            },
+            animationDelay: function(idx) {
+              return idx * 10 + 100;
+            }
+          }
+        ],
+        animationEasing: "elasticOut",
+        animationDelayUpdate: function(idx) {
+          return idx * 5;
+        }
       });
     }
   }
@@ -114,7 +148,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-main{
+main {
   width: 1500px;
 }
 
@@ -126,12 +160,12 @@ main{
 
 .chart {
   background-color: #fff;
-  height: 600px;
+  height: 700px;
   width: 100%;
   padding: 10px;
   #myChart {
     width: 1400px;
-    height: 600px;
+    height: 700px;
     margin: 0 auto;
   }
 }

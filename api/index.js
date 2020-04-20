@@ -70,6 +70,22 @@ export async function dataAnalysisEdit(data = {}) {
   })
 }
 
+export async function GameList(data = {}) {
+  return request({
+    url: '/client/guocui_game/list',
+    method: 'post',
+    data
+  })
+}
+
+export async function memberList(data = {}) {
+  return request({
+    url: '/client/guocui_members/list',
+    method: 'post',
+    data
+  })
+}
+
 export async function areaList(data = {}) {
   return request({
     // url: `https://restapi.amap.com/v3/config/district?key=${data.key}&offset=${data.offset}`,
