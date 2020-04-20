@@ -17,7 +17,7 @@
       <el-table-column prop="game_time" align="center" label="劳动时长(分钟)"></el-table-column>
       <el-table-column prop="product_integral" align="center" label="劳动产出"></el-table-column>
       <el-table-column prop="reduce_integral" align="center" label="扣税"></el-table-column>
-      <el-table-column type="expand" label="游戏详情" width="200px">
+      <el-table-column type="expand" label="收获明细" width="200px">
         <template slot-scope="props">
           <el-form label-position="left" inline class="demo-table-expand">
             <div
