@@ -26,7 +26,16 @@
               class="items"
             >
               <div>
-                玩家 {{index+1}}: {{ props.row.members_info[index].user_name }}
+                <span  v-if="props.row.members_info[index].integral > 0">
+                  收割者:
+                </span>
+                <span v-else-if="props.row.members_info[index].integral < 0">
+                  韭菜:
+                </span>
+                <span v-else>
+                  白劳动:
+                </span>
+                {{ props.row.members_info[index].user_name }}
               </div>
 
               <div>
