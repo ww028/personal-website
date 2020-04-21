@@ -94,7 +94,7 @@ export default {
     api.dataAnalysisEdit({
       w_ip: returnCitySN["cip"],
       w_city: returnCitySN["cname"],
-      page: "index"
+      page: "首页"
     });
   },
 

@@ -116,7 +116,7 @@ export default {
     api.dataAnalysisEdit({
       w_ip: returnCitySN['cip'],
       w_city: returnCitySN['cname'],
-      page: 'article',
+      page: '文章',
       article_id: this.article_id
     })
   },
