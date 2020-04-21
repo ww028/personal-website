@@ -71,7 +71,6 @@
 </template>
 
   <script>
-// [{"integral": 0, "user_name": "向毅"}, {"integral": -25, "user_name": "刘贝夫"}, {"integral": -380, "user_name": "王彦宇"}, {"integral": 255, "user_name": "魏微"}]
 import * as api from "@/api";
 export default {
   data() {
@@ -101,6 +100,14 @@ export default {
         this.chartsInit();
       }
     }
+  },
+
+  mounted(){
+    api.dataAnalysisEdit({
+      w_ip: returnCitySN['cip'],
+      w_city: returnCitySN['cname'],
+      page: '国粹',
+    })
   },
 
   methods: {
