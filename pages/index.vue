@@ -16,6 +16,11 @@
             >{{ item.type_name }}</nuxt-link>-->
           </li>
         </ul>
+
+        <!-- <div class="search_bar">
+          <input v-model="search_content" class="search_input" :class="search_click ? 'search_input_focus' : ''" type="text">
+          <el-button @click='searchClick' icon="el-icon-search" size="mini" circle></el-button>
+        </div> -->
       </div>
 
       <div class="article_list">
@@ -66,7 +71,10 @@ export default {
     MsgBoard
   },
   data() {
-    return {};
+    return {
+      search_click: false,
+      search_content: '',
+    };
   },
 
   asyncData({ store, error, params }) {
@@ -107,6 +115,13 @@ export default {
       api.articleList({ pageNo: 1, pageSize: 10, type: val.id }).then(res => {
         this.article = res.data || [];
       });
+    },
+
+    searchClick(){
+      this.search_click = true
+      if(this.search_content){
+        console.log(this.search_content)
+      }
     }
   }
 };

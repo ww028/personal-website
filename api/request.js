@@ -11,9 +11,15 @@ const service = axios.create({
 // request interceptor
 service.interceptors.request.use(
   config => {
-    if(!config.data.flag){
+    if (!config.data.flag) {
       config.data.sign = fn.createSign(config.data)
     }
+
+    let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRCI6IjVlYTZjM2JkZGZkZjA3ZDVkNjQzZThlYiIsIkNoZWNrRGF0YSI6IntcIndlYlwiOjE1ODgxNjU5Mjl9IiwiZXhwIjoxNTg4MjUyMzI5fQ.yrLrj1mt-BonJRyee9rOYRrcnxRRga5Oo7_EdsSzNLQ'
+    if (token) {
+      config.headers.Authorization = token
+    }
+
     return config
   },
   error => {
@@ -30,10 +36,10 @@ service.interceptors.response.use(
     if (res.data.code === 200) {
       const res_data = res.data.data;
       return res_data
-    } else if(res.data.status === '1'){
+    } else if (res.data.status === '1') {
       return res.data.districts[0].districts
-    } else{
-      return Promise.reject({message: '请求失败'})
+    } else {
+      return Promise.reject({ message: '请求失败' })
     }
   },
   error => {

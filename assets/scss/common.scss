@@ -11,10 +11,8 @@ body{
 // 隐藏友盟入口
 body{
   > a {
-    visibility: hidden;
-    position: absolute;
-    left: 0;
-    top: 0;
+    display: none;
+    // visibility: hidden;
   }
 }
 

@@ -35,6 +35,7 @@ main{
   // color: #909090;
   color: #7c8aab;
   background-color: #fff;
+  justify-content: space-between;
 
   ul{
     display: flex;
@@ -44,6 +45,8 @@ main{
     }
 
     li{
+      height: 28px;
+      line-height: 28px;
       list-style: none;
       padding: 0 10px;
       border-right: 1px solid hsla(0,0%,59.2%,.2);
@@ -69,6 +72,29 @@ main{
     .act{
       color: #007fff;
     }
+  }
+
+  .search_bar{
+    .search_input{
+      outline: none;
+      border: none;
+      border-bottom: 1px solid #dcdfe6;
+      width: 0;
+    }
+    
+    .search_input_focus{
+      animation: search_bar 0.2s forwards;
+    }
+    
+  }
+}
+
+@keyframes search_bar {
+  from {
+    width:0;
+  }
+  to {
+    width: 180px;
   }
 }
 

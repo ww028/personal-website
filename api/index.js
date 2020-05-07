@@ -1,5 +1,14 @@
 import request from './request'
 
+// 测试
+export async function test(data = {}) {
+  return request({
+    url: '/user/center/info',
+    method: 'get',
+    data
+  })
+}
+
 // 文章类型
 export async function articleType(data = {}) {
   return request({
