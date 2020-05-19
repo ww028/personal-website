@@ -1,0 +1,16 @@
+.lucky_box {
+  width: 400px;
+  height: 400px;
+  background-color: lightblue;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.lucky_box .item {
+  width: 120px;
+  height: 120px;
+  background-color: #fff;
+}
+.lucky_box .act {
+  background-color: lightcoral;
+}
