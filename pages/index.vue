@@ -98,13 +98,13 @@ export default {
       .catch(error);
   },
 
-  // mounted() {
-  //   api.dataAnalysisEdit({
-  //     w_ip: returnCitySN["cip"],
-  //     w_city: returnCitySN["cname"],
-  //     page: "首页"
-  //   });
-  // },
+  mounted() {
+    api.dataAnalysisEdit({
+      w_ip: returnCitySN["cip"],
+      w_city: returnCitySN["cname"],
+      page: "首页"
+    });
+  },
 
   methods: {
     changeType(val) {
