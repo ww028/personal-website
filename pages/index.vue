@@ -20,7 +20,7 @@
         <!-- <div class="search_bar">
           <input v-model="search_content" class="search_input" :class="search_click ? 'search_input_focus' : ''" type="text">
           <el-button @click='searchClick' icon="el-icon-search" size="mini" circle></el-button>
-        </div> -->
+        </div>-->
       </div>
 
       <div class="article_list">
@@ -73,7 +73,7 @@ export default {
   data() {
     return {
       search_click: false,
-      search_content: '',
+      search_content: ""
     };
   },
 
@@ -98,13 +98,13 @@ export default {
       .catch(error);
   },
 
-  mounted() {
-    api.dataAnalysisEdit({
-      w_ip: returnCitySN["cip"],
-      w_city: returnCitySN["cname"],
-      page: "首页"
-    });
-  },
+  // mounted() {
+  //   api.dataAnalysisEdit({
+  //     w_ip: returnCitySN["cip"],
+  //     w_city: returnCitySN["cname"],
+  //     page: "首页"
+  //   });
+  // },
 
   methods: {
     changeType(val) {
@@ -117,10 +117,10 @@ export default {
       });
     },
 
-    searchClick(){
-      this.search_click = true
-      if(this.search_content){
-        console.log(this.search_content)
+    searchClick() {
+      this.search_click = true;
+      if (this.search_content) {
+        console.log(this.search_content);
       }
     }
   }

@@ -80,10 +80,12 @@ export default {
           pageSize: this.pageSize
         })
         .then(res => {
-          this.msg_list = this.msg_list.concat(res.data);
+          if(res){
+            this.msg_list = this.msg_list.concat(res.data);
+            this.total = res.total;
+            this.total_page = res.total_page;
+          }
           // this.msg_list.(res.data)
-          this.total = res.total;
-          this.total_page = res.total_page;
         });
     },
 
