@@ -81,7 +81,7 @@ export default {
     return Promise.all([
       api.articleType(),
       api.articleList({ pageNo: 1, pageSize: 10 }),
-      api.dataAnalysisList()
+      api.dataAnalysisList(),
     ])
       .then(arr => {
         arr[0].data.unshift({ id: "", type_name: "最近的文章", class: "act" });
