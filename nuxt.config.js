@@ -14,7 +14,7 @@ module.exports = {
       { rel: 'icon', type: 'image/x-icon', href: '/w_logo1.png' }
     ],
     script: [
-      { src: 'https://s4.cnzz.com/z_stat.php?id=1278830410&web_id=1278830410' },
+      // { src: 'https://s4.cnzz.com/z_stat.php?id=1278830410&web_id=1278830410' },
       { src: '/js/fn.js' },
       { src: 'http://pv.sohu.com/cityjson' },
     ]

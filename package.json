@@ -1,13 +1,13 @@
 {
   "name": "personal-website",
   "version": "1.0.0",
-  "description": "My incredible Nuxt.js project",
+  "description": "W 的博客",
   "author": "ww",
   "private": true,
   "scripts": {
     "dev": "cross-env BASE_URL=http://localhost:3001/ NODE_ENV=development nodemon server/index.js --watch server",
-    "build": "cross-env BASE_URL=http://39.100.228.198:3001/ nuxt build",
-    "start": "cross-env BASE_URL=http://39.100.228.198:3001/ NODE_ENV=production node server/index.js",
+    "build": "cross-env BASE_URL=http://wwblogs.cn:3001/ nuxt build",
+    "start": "cross-env BASE_URL=http://wwblogs.cn:3001/ NODE_ENV=production node server/index.js",
     "generate": "nuxt generate"
   },
   "dependencies": {
