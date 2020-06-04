@@ -99,11 +99,11 @@ export default {
   },
 
   mounted() {
-    api.dataAnalysisEdit({
-      w_ip: returnCitySN["cip"],
-      w_city: returnCitySN["cname"],
-      page: "首页"
-    });
+    // api.dataAnalysisEdit({
+    //   w_ip: returnCitySN["cip"],
+    //   w_city: returnCitySN["cname"],
+    //   page: "首页"
+    // });
   },
 
   methods: {
