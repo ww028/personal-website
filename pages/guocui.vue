@@ -80,7 +80,6 @@ export default {
   asyncData({ store, error, params }) {
     return Promise.all([api.GameList(), api.memberList({ count: "count" })])
       .then(arr => {
-        console.log(JSON.stringify(arr))
         return {
           tableData: arr[0].data,
           tableDataMembers: arr[1].data
