@@ -80,16 +80,13 @@ export default {
   asyncData({ store, error, params }) {
     return Promise.all([api.GameList(), api.memberList({ count: "count" })])
       .then(arr => {
+        console.log(JSON.stringify(arr))
         return {
           tableData: arr[0].data,
           tableDataMembers: arr[1].data
         };
       })
       .catch(error);
-  },
-
-  mounted() {
-    this.chartsInit();
   },
 
   watch: {
@@ -102,6 +99,11 @@ export default {
   },
 
   mounted() {
+    console.log('mounted')
+    api.GameList().then(res =>{
+      console.log(res)
+    })
+    this.chartsInit();
     // api.dataAnalysisEdit({
     //   w_ip: returnCitySN['cip'],
     //   w_city: returnCitySN['cname'],
