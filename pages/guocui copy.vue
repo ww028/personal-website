@@ -1,4 +1,4 @@
-<template>
+  <template>
   <main>
     <div class="filter">
       <el-radio-group v-model="radio1" size="mini">
@@ -64,14 +64,13 @@
 
       <!-- 个人收获走势 -->
       <div class="my_chart1">
-        <el-select
-          v-model="player"
-          placeholder="请选择玩家"
-          value-key="id"
-          size="mini"
-          @change="changePlayer"
-        >
-          <el-option v-for="item in tableDataMembers" :key="item.id" :label="item.name" :value="item"></el-option>
+        <el-select size="mini" v-model="player" @change="changePlayer" placeholder="请选择玩家">
+          <el-option
+            v-for="item in tableDataMembers"
+            :key="item.id"
+            :label="item.name"
+            :value="item"
+          ></el-option>
         </el-select>
         <div id="my_chart1"></div>
       </div>
@@ -85,7 +84,8 @@ export default {
   data() {
     return {
       player: "",
-      radio1: "1"
+      radio1: "3",
+      player: []
     };
   },
 
@@ -105,48 +105,65 @@ export default {
     radio1(val, oldVal) {
       if (val == 3) {
         this.chartsInit();
-        this.chartsLineInit(this.tableDataMembers[0]);
+        this.chartsLineInit(this.tableDataMembers);
       }
     }
   },
 
   mounted() {
     this.chartsInit();
-    this.chartsLineInit(this.tableDataMembers[0]);
+    this.chartsLineInit(this.tableDataMembers);
   },
 
   methods: {
     changePlayer(val) {
       console.log(val);
-      this.chartsLineInit(val);
+      this.chartsLineInit();
     },
 
     chartsLineInit(val) {
       console.log(val);
       let my_chart = this.$echarts.init(document.getElementById("my_chart1"));
-      let legend = [];
+      let legend = []
+      let count = this.tableDataMembers[0].total_count;
       let x_data = [];
-      let y_data = [
-        {
-          name: val.name,
-          type: "line",
-          stack: "总量",
-          data: val.game_history.split(",")
-        }
-      ];
+      let y_data = [];
 
-      for (let i = 0; i < val.total_count; i++) {
-        x_data.push(`第${i + 1}次`);
+      for(let i=0; i< count; i++){
+        x_data.push(`第${i+1}次`)
       }
+      console.log(x_data)
+      /**
+       * {
+            name: "邮件营销",
+            type: "line",
+            stack: "总量",
+            data: [120, 132, 101, 134, 90, 230]
+          },
+       * 
+       */
+      this.tableDataMembers.map(item => {
+        legend.push(item.name)
+        y_data.push(
+          {
+            name: item.name,
+            type: "line",
+            stack: "总量",
+            data: item.game_history.split(',')
+          }
+        )
+      });
 
       my_chart.setOption({
         title: {
-          text: "个人走势"
+          text: "走势"
         },
         tooltip: {
           trigger: "axis"
         },
-
+        legend: {
+          data: legend
+        },
         grid: {
           left: "3%",
           right: "4%",
@@ -250,25 +267,22 @@ main {
 }
 
 .chart {
+  height: 500px;
   width: 100%;
   .my_chart,
   .my_chart1 {
-    width: 100%;
+    width: 50%;
     height: 500px;
-    padding: 10px;
     background-color: #fff;
+    padding: 10px;
   }
 
-  #my_chart {
+  #my_chart{
     width: 100%;
     height: 500px;
   }
 
-  .my_chart1 {
-    margin-top: 10px;
-  }
-
-  #my_chart1 {
+  #my_chart1{
     width: 100%;
     height: 450px;
   }
@@ -278,5 +292,9 @@ main {
     right: 10px;
     z-index: 999;
   }
+
+  // .personal_chart {
+  //   margin-left: 10px;
+  // }
 }
 </style>
