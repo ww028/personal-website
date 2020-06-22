@@ -110,6 +110,7 @@ export default {
   },
 
   mounted() {
+    this.player = this.tableDataMembers[0]
     this.chartsInit();
     this.chartsLineInit(this.tableDataMembers[0]);
   },
