@@ -2,9 +2,9 @@
   <main>
     <div class="filter">
       <el-radio-group v-model="radio1" size="mini">
+        <el-radio label="3" border>图表统计</el-radio>
         <el-radio label="1" border>劳动列表</el-radio>
         <el-radio label="2" border>韭菜</el-radio>
-        <el-radio label="3" border>图表统计</el-radio>
       </el-radio-group>
     </div>
 
@@ -85,7 +85,7 @@ export default {
   data() {
     return {
       player: "",
-      radio1: "1"
+      radio1: "3"
     };
   },
 
