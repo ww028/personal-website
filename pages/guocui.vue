@@ -116,12 +116,10 @@ export default {
 
   methods: {
     changePlayer(val) {
-      console.log(val);
       this.chartsLineInit(val);
     },
 
     chartsLineInit(val) {
-      console.log(val);
       let my_chart = this.$echarts.init(document.getElementById("my_chart1"));
       let legend = [];
       let x_data = [];
