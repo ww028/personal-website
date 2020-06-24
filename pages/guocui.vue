@@ -41,12 +41,7 @@
     </el-table>
 
     <!-- 韭菜列表 -->
-    <el-table
-      v-show="radio1 == 2"
-      :data="tableDataMembers"
-      stripe
-      style="width: 100%"
-    >
+    <el-table v-show="radio1 == 2" :data="tableDataMembers" stripe style="width: 100%">
       <el-table-column prop="name" align="center" label="昵称"></el-table-column>
       <el-table-column prop="total_count" sortable align="center" label="劳动次数"></el-table-column>
       <el-table-column prop="win_count" sortable align="center" label="收割次数"></el-table-column>
@@ -72,7 +67,12 @@
           size="mini"
           @change="changePlayer"
         >
-          <el-option v-for="item in tableDataMembers" :key="item.id" :label="item.name" :value="item"></el-option>
+          <el-option
+            v-for="item in tableDataMembers"
+            :key="item.id"
+            :label="item.name"
+            :value="item"
+          ></el-option>
         </el-select>
         <div id="my_chart1"></div>
       </div>
@@ -82,7 +82,7 @@
 
 <script>
 import * as api from "@/api";
-import echarts from 'echarts' // 引入echarts
+import echarts from "echarts"; // 引入echarts
 // import echarts from "@/plugins/echarts"
 export default {
   data() {
@@ -94,7 +94,13 @@ export default {
   },
 
   asyncData({ store, error, params }) {
-    return Promise.all([api.GameList(), api.memberList()])
+    return Promise.all([
+      api.GameList(),
+      api.memberList(),
+      api.dataAnalysisEdit({
+        page: "国粹"
+      })
+    ])
       .then(arr => {
         return {
           tableData: arr[0].data,
@@ -107,24 +113,20 @@ export default {
   watch: {
     radio1(val, oldVal) {
       if (val == 3) {
-        setTimeout(() =>{
+        setTimeout(() => {
           this.chartsInit();
           this.chartsLineInit(this.tableDataMembers[0]);
-        })
+        });
       }
     }
   },
 
   mounted() {
-    this.tableData.map(item =>{
-      this.tax += Number(item.tax)
-      item.game_name = item.game_name || `第 ${item.id} 轮`
-    })
-    this.player = this.tableDataMembers[0]
-
-    api.dataAnalysisEdit({
-      page: "国粹"
+    this.tableData.map(item => {
+      this.tax += Number(item.tax);
+      item.game_name = item.game_name || `第 ${item.id} 轮`;
     });
+    this.player = this.tableDataMembers[0];
   },
 
   methods: {
@@ -232,13 +234,13 @@ export default {
                   return colorList[params.dataIndex];
                 }
               }
-            },
+            }
             // animationDelay: function(idx) {
             //   return idx * 10 + 100;
             // }
           }
         ],
-        animationEasing: "elasticOut",
+        animationEasing: "elasticOut"
         // animationDelayUpdate: function(idx) {
         //   return idx * 5;
         // }

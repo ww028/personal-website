@@ -78,7 +78,11 @@ export default {
     let title = params.id.split('-')[2]
     return Promise.all([
       api.articleInfoMenu({ type: type }),
-      api.articleInfoContent({ id: id, type: type })
+      api.articleInfoContent({ id: id, type: type }),
+      api.dataAnalysisEdit({
+        page: '文章',
+        article_id: id
+      })
     ])
       .then(arr => {
         arr[0].data.map(item => {
@@ -112,11 +116,6 @@ export default {
     if(view_width < 1000){
       this.meun_show = false
     }
-
-    api.dataAnalysisEdit({
-      page: '文章',
-      article_id: this.article_id
-    });
   },
 
   methods: {
