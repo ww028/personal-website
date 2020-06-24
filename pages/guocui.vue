@@ -6,11 +6,13 @@
         <el-radio label="1" border>劳动列表</el-radio>
         <el-radio label="2" border>韭菜</el-radio>
       </el-radio-group>
+      <div>累计上税：{{tax}}</div>
     </div>
 
     <!-- 劳动列表 -->
     <el-table v-show="radio1 == 1" :data="tableData" stripe style="width: 100%">
       <el-table-column prop="id" align="center" label="劳动轮次"></el-table-column>
+      <el-table-column prop="game_name" align="center" label="劳动名称"></el-table-column>
       <el-table-column prop="members" align="center" label="劳动人员" width="220px"></el-table-column>
       <el-table-column prop="start_time" align="center" label="开始时间"></el-table-column>
       <el-table-column prop="end_time" align="center" label="结束时间"></el-table-column>
@@ -83,8 +85,9 @@ import * as api from "@/api";
 export default {
   data() {
     return {
+      tax: 0,
       player: "",
-      radio1: "2"
+      radio1: "3"
     };
   },
 
@@ -109,6 +112,10 @@ export default {
   },
 
   mounted() {
+    this.tableData.map(item =>{
+      this.tax += Number(item.tax)
+      item.game_name = item.game_name || `第 ${item.id} 轮`
+    })
     this.player = this.tableDataMembers[0]
     this.chartsInit();
     this.chartsLineInit(this.tableDataMembers[0]);
@@ -194,8 +201,8 @@ export default {
             name: "累计收获",
             type: "bar",
             data: y_data,
-            barWidth: 15, //柱图宽度
-            barGap: "10%", //柱图间距
+            barWidth: 20, //柱图宽度
+            barGap: "1%", //柱图间距
             itemStyle: {
               normal: {
                 color: function(params) {
@@ -220,15 +227,15 @@ export default {
                 }
               }
             },
-            animationDelay: function(idx) {
-              return idx * 10 + 100;
-            }
+            // animationDelay: function(idx) {
+            //   return idx * 10 + 100;
+            // }
           }
         ],
         animationEasing: "elasticOut",
-        animationDelayUpdate: function(idx) {
-          return idx * 5;
-        }
+        // animationDelayUpdate: function(idx) {
+        //   return idx * 5;
+        // }
       });
     }
   }
@@ -244,6 +251,8 @@ main {
   background-color: #fff;
   margin-bottom: 10px;
   padding: 10px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .chart {
