@@ -116,8 +116,8 @@ export default {
         return;
       }
 
-      this.msg_form.w_ip = returnCitySN["cip"];
-      this.msg_form.w_city = returnCitySN["cname"];
+      // this.msg_form.w_ip = returnCitySN["cip"];
+      // this.msg_form.w_city = returnCitySN["cname"];
       this.msg_form.type = this.type;
       this.msg_form.article_id = this.article_id || "";
       this.submit_flag = true;

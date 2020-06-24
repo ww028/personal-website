@@ -48,12 +48,6 @@
       <MsgBoard :type="1" />
     </div>
     <div class="websit_info">
-      <!-- <div class="info_title">每一天都是一个特殊的日子</div>
-      <div class="festival">今天是: 大撒法</div>-->
-      <!-- <div>
-        今天是：xxxx
-      </div>-->
-
       <div class="info_title">访问信息：</div>
       <div>今日访问人数: {{ today_num }}</div>
       <div>今日访问次数: {{ today_count }}</div>
@@ -99,11 +93,9 @@ export default {
   },
 
   mounted() {
-    // api.dataAnalysisEdit({
-    //   w_ip: returnCitySN["cip"],
-    //   w_city: returnCitySN["cname"],
-    //   page: "首页"
-    // });
+    api.dataAnalysisEdit({
+      page: "首页"
+    });
   },
 
   methods: {
