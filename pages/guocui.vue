@@ -44,7 +44,6 @@
       :data="tableDataMembers"
       stripe
       style="width: 100%"
-      :default-sort="{prop: 'total_count', order: 'descending'}"
     >
       <el-table-column prop="name" align="center" label="昵称"></el-table-column>
       <el-table-column prop="total_count" sortable align="center" label="劳动次数"></el-table-column>
@@ -85,12 +84,12 @@ export default {
   data() {
     return {
       player: "",
-      radio1: "3"
+      radio1: "2"
     };
   },
 
   asyncData({ store, error, params }) {
-    return Promise.all([api.GameList(), api.memberList({ count: "count" })])
+    return Promise.all([api.GameList(), api.memberList()])
       .then(arr => {
         return {
           tableData: arr[0].data,

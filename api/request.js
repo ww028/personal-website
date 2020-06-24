@@ -1,4 +1,5 @@
 import axios from 'axios'
+import qs from 'qs'
 import fn from '../assets/js/fn.js'
 
 // create an axios instance
@@ -14,12 +15,8 @@ service.interceptors.request.use(
     if (!config.data.flag) {
       config.data.sign = fn.createSign(config.data)
     }
-
-    let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRCI6IjVlYTZjM2JkZGZkZjA3ZDVkNjQzZThlYiIsIkNoZWNrRGF0YSI6IntcIndlYlwiOjE1ODgxNjU5Mjl9IiwiZXhwIjoxNTg4MjUyMzI5fQ.yrLrj1mt-BonJRyee9rOYRrcnxRRga5Oo7_EdsSzNLQ'
-    if (token) {
-      config.headers.Authorization = token
-    }
-
+    
+    config.data = qs.stringify(config.data)
     return config
   },
   error => {
