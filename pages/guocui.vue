@@ -2,9 +2,9 @@
   <main>
     <div class="filter">
       <el-radio-group v-model="radio1" size="mini">
-        <el-radio label="3" border>图表统计</el-radio>
         <el-radio label="1" border>劳动列表</el-radio>
         <el-radio label="2" border>韭菜</el-radio>
+        <el-radio label="3" border>图表统计</el-radio>
       </el-radio-group>
       <div>累计上税：{{tax}}</div>
     </div>
@@ -88,7 +88,7 @@ export default {
     return {
       tax: 0,
       player: "",
-      radio1: "3"
+      radio1: "1"
     };
   },
 
