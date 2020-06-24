@@ -82,6 +82,7 @@
 
 <script>
 import * as api from "@/api";
+import echarts from "@/plugins/echarts"
 export default {
   data() {
     return {
@@ -112,6 +113,7 @@ export default {
   },
 
   mounted() {
+    console.log(echarts)
     this.tableData.map(item =>{
       this.tax += Number(item.tax)
       item.game_name = item.game_name || `第 ${item.id} 轮`
@@ -127,7 +129,7 @@ export default {
     },
 
     chartsLineInit(val) {
-      let my_chart = this.$echarts.init(document.getElementById("my_chart1"));
+      let my_chart = echarts.init(document.getElementById("my_chart1"));
       let legend = [];
       let x_data = [];
       let y_data = [
@@ -175,7 +177,7 @@ export default {
     },
 
     chartsInit() {
-      let my_chart = this.$echarts.init(document.getElementById("my_chart"));
+      let my_chart = echarts.init(document.getElementById("my_chart"));
       let xAxisData = [];
       let y_data = [];
 
