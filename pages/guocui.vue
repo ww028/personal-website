@@ -88,7 +88,7 @@ export default {
     return {
       tax: 0,
       player: "",
-      radio1: "1"
+      radio1: "2"
     };
   },
 
@@ -106,21 +106,20 @@ export default {
   watch: {
     radio1(val, oldVal) {
       if (val == 3) {
-        this.chartsInit();
-        this.chartsLineInit(this.tableDataMembers[0]);
+        setTimeout(() =>{
+          this.chartsInit();
+          this.chartsLineInit(this.tableDataMembers[0]);
+        })
       }
     }
   },
 
   mounted() {
-    console.log(echarts)
     this.tableData.map(item =>{
       this.tax += Number(item.tax)
       item.game_name = item.game_name || `第 ${item.id} 轮`
     })
     this.player = this.tableDataMembers[0]
-    this.chartsInit();
-    this.chartsLineInit(this.tableDataMembers[0]);
   },
 
   methods: {
