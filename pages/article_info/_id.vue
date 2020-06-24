@@ -113,12 +113,10 @@ export default {
       this.meun_show = false
     }
 
-    // api.dataAnalysisEdit({
-    //   w_ip: returnCitySN['cip'],
-    //   w_city: returnCitySN['cname'],
-    //   page: '文章',
-    //   article_id: this.article_id
-    // })
+    api.dataAnalysisEdit({
+      page: '文章',
+      article_id: this.article_id
+    });
   },
 
   methods: {

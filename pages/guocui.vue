@@ -120,6 +120,10 @@ export default {
       item.game_name = item.game_name || `第 ${item.id} 轮`
     })
     this.player = this.tableDataMembers[0]
+
+    api.dataAnalysisEdit({
+      page: "国粹"
+    });
   },
 
   methods: {
