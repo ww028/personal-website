@@ -82,13 +82,14 @@
 
 <script>
 import * as api from "@/api";
-import echarts from "@/plugins/echarts"
+import echarts from 'echarts' // 引入echarts
+// import echarts from "@/plugins/echarts"
 export default {
   data() {
     return {
       tax: 0,
       player: "",
-      radio1: "2"
+      radio1: "1"
     };
   },
 

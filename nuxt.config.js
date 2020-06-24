@@ -28,7 +28,6 @@ module.exports = {
   */
   css: [
     'element-ui/lib/theme-chalk/index.css',
-    // { src: 'assets/css/main.scss', lang: 'scss' }
     { src: 'assets/scss/common.scss', lang: 'scss' }
   ],
   /*
@@ -36,7 +35,6 @@ module.exports = {
   */
   plugins: [
     '@/plugins/element-ui',
-    // '@plugins/echarts',
   ],
   /*
   ** Nuxt.js dev-modules
