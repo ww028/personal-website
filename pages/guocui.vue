@@ -58,9 +58,9 @@
         <div id="my_chart"></div>
       </div>
 
-      <!-- 个人收获走势 -->
+      <!-- 单次走势图 -->
       <div class="my_chart1">
-        <el-select
+        <!-- <el-select
           v-model="player"
           placeholder="请选择玩家"
           value-key="id"
@@ -73,8 +73,13 @@
             :label="item.name"
             :value="item"
           ></el-option>
-        </el-select>
+        </el-select> -->
         <div id="my_chart1"></div>
+      </div>
+      
+      <!-- 累加走势图 -->
+      <div class="my_chart1">
+        <div id="my_chart2"></div>
       </div>
     </div>
   </main>
@@ -115,7 +120,8 @@ export default {
       if (val == 3) {
         setTimeout(() => {
           this.chartsInit();
-          this.chartsLineInit(this.tableDataMembers[0]);
+          this.chartsLineInit(this.tableDataMembers);
+          this.chartsLineSumInit(this.tableDataMembers);
         });
       }
     }
@@ -126,39 +132,110 @@ export default {
       this.tax += Number(item.tax);
       item.game_name = item.game_name || `第 ${item.id} 轮`;
     });
-    this.player = this.tableDataMembers[0];
   },
 
   methods: {
-    changePlayer(val) {
-      this.chartsLineInit(val);
-    },
+    // changePlayer(val) {
+    //   this.chartsLineInit(val);
+    // },
 
     chartsLineInit(val) {
       let my_chart = echarts.init(document.getElementById("my_chart1"));
       let legend = [];
       let x_data = [];
-      let y_data = [
-        {
-          name: val.name,
-          type: "line",
-          stack: "总量",
-          data: val.game_history.split(",")
-        }
-      ];
+      let y_data = [];
 
-      for (let i = 0; i < val.total_count; i++) {
+      val.map(item => {
+        legend.push(item.name);
+        y_data.push(
+          {
+            name: item.name,
+            type: "line",
+            data: item.game_history.split(",")
+          },
+        )
+      });
+
+      for (let i = 0; i < this.tableData.length; i++) {
         x_data.push(`第${i + 1}次`);
       }
 
       my_chart.setOption({
         title: {
-          text: "个人走势"
+          text: "单次走势图"
         },
         tooltip: {
           trigger: "axis"
         },
+        legend: {
+          data: legend
+        },
+        grid: {
+          left: "3%",
+          right: "4%",
+          bottom: "3%",
+          containLabel: true
+        },
+        toolbox: {
+          feature: {
+            saveAsImage: {}
+          }
+        },
+        xAxis: {
+          type: "category",
+          boundaryGap: false,
+          data: x_data
+        },
+        yAxis: {
+          type: "value"
+        },
+        series: y_data
+      });
+    },
 
+    chartsLineSumInit(val){
+      let my_chart = echarts.init(document.getElementById("my_chart2"));
+      let legend = [];
+      let x_data = [];
+      let y_data = [];
+
+      val.map(item => {
+        legend.push(item.name);
+
+        let game_history = item.game_history.split(',') 
+        let sum = 0
+        let arr = []
+
+        for(let i=0; i < game_history.length; i++){
+          sum += Number(game_history[i])
+          arr.push(sum)
+        }
+
+        y_data.push(
+          {
+            name: item.name,
+            type: "line",
+            data: arr
+          },
+        )
+      });
+
+      console.log(y_data)
+
+      for (let i = 0; i < this.tableData.length; i++) {
+        x_data.push(`第${i + 1}次`);
+      }
+
+      my_chart.setOption({
+        title: {
+          text: "累计走势图"
+        },
+        tooltip: {
+          trigger: "axis"
+        },
+        legend: {
+          data: legend
+        },
         grid: {
           left: "3%",
           right: "4%",
@@ -282,7 +359,7 @@ main {
     margin-top: 10px;
   }
 
-  #my_chart1 {
+  #my_chart1,#my_chart2 {
     width: 100%;
     height: 450px;
   }
