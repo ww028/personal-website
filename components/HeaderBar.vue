@@ -1,10 +1,26 @@
 <template>
-  <header>
+  <header :class="currentRoute === '/aboutMe' ? 'aboutMe' : ''">
     <nuxt-link
       :to="{name: 'index'}"
     >W 唠嗑的地方</nuxt-link>
   </header>
 </template>
+
+<script>
+export default {
+  name: "HeaderBar",
+
+  data(){
+    return{
+      currentRoute: "",
+    }
+  },
+
+  mounted(){
+    this.currentRoute = this.$router.currentRoute.fullPath
+  }
+}
+</script>
 
 <style lang="scss" scoped>
 header{
@@ -24,6 +40,14 @@ header{
     color: #08108a;
     font-weight: bold;
     letter-spacing: 5px;
+  }
+}
+
+.aboutMe{
+  background-color: #24292e;
+
+  a{
+    color: #fff;
   }
 }
 
