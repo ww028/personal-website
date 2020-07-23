@@ -11,15 +11,15 @@
 
     <!-- 劳动列表 -->
     <el-table v-show="radio1 == 1" :data="tableData" stripe style="width: 100%">
-      <el-table-column prop="id" align="center" label="劳动轮次"></el-table-column>
+      <el-table-column prop="id" align="center" :width="60" label="轮次"></el-table-column>
       <el-table-column prop="game_name" align="center" label="劳动名称"></el-table-column>
-      <el-table-column prop="members" align="center" label="劳动人员" width="220px"></el-table-column>
-      <el-table-column prop="start_time" align="center" label="开始时间"></el-table-column>
-      <el-table-column prop="end_time" align="center" label="结束时间"></el-table-column>
-      <el-table-column prop="total_time" align="center" label="劳动时长(分钟)"></el-table-column>
-      <el-table-column prop="out_put" align="center" label="劳动产出"></el-table-column>
-      <el-table-column prop="tax" align="center" label="扣税"></el-table-column>
-      <el-table-column type="expand" label="收获明细" width="200px">
+      <el-table-column prop="members" align="center" :width="320" label="劳动人员"></el-table-column>
+      <el-table-column prop="start_time" align="center" :width="150" label="开始时间"></el-table-column>
+      <el-table-column prop="end_time" align="center" :width="150" label="结束时间"></el-table-column>
+      <el-table-column prop="total_time" align="center" :width="120" label="劳动时长(分钟)"></el-table-column>
+      <el-table-column prop="out_put" align="center" :width="80" label="劳动产出"></el-table-column>
+      <el-table-column prop="tax" align="center" :width="60" label="扣税"></el-table-column>
+      <el-table-column type="expand" label="收获明细" :width="80">
         <template slot-scope="props">
           <el-form label-position="left" inline class="demo-table-expand">
             <div v-for="(item, index) in props.row.game_info" :key="index" class="items">
@@ -73,10 +73,10 @@
             :label="item.name"
             :value="item"
           ></el-option>
-        </el-select> -->
+        </el-select>-->
         <div id="my_chart1"></div>
       </div>
-      
+
       <!-- 累加走势图 -->
       <div class="my_chart1">
         <div id="my_chart2"></div>
@@ -94,7 +94,7 @@ export default {
     return {
       tax: 0,
       player: "",
-      radio1: "1"
+      radio1: "1",
     };
   },
 
@@ -103,13 +103,13 @@ export default {
       api.GameList(),
       api.memberList(),
       api.dataAnalysisEdit({
-        page: "国粹"
-      })
+        page: "国粹",
+      }),
     ])
-      .then(arr => {
+      .then((arr) => {
         return {
           tableData: arr[0].data,
-          tableDataMembers: arr[1].data
+          tableDataMembers: arr[1].data,
         };
       })
       .catch(error);
@@ -124,11 +124,11 @@ export default {
           this.chartsLineSumInit(this.tableDataMembers);
         });
       }
-    }
+    },
   },
 
   mounted() {
-    this.tableData.map(item => {
+    this.tableData.map((item) => {
       this.tax += Number(item.tax);
       item.game_name = item.game_name || `第 ${item.id} 轮`;
     });
@@ -141,86 +141,100 @@ export default {
 
     chartsLineInit(val) {
       let my_chart = echarts.init(document.getElementById("my_chart1"));
-      let legend = [];
+      let legend = {
+        data: [],
+        selected: {}
+      };
       let x_data = [];
       let y_data = [];
 
-      val.map(item => {
-        legend.push(item.name);
-        y_data.push(
-          {
-            name: item.name,
-            type: "line",
-            data: item.game_history.split(",")
-          },
-        )
+      val.map((item, index) => {
+        legend.data.push(item.name);
+        if(index === 0){
+          legend.selected[item.name] = true
+        } else {
+          legend.selected[item.name] = false
+        }
+        y_data.push({
+          name: item.name,
+          type: "line",
+          data: item.game_history.split(","),
+        });
       });
 
       for (let i = 0; i < this.tableData.length; i++) {
         x_data.push(`第${i + 1}次`);
       }
 
+      console.log(legend)
+
       my_chart.setOption({
         title: {
-          text: "单次走势图"
+          text: "单次走势图",
         },
         tooltip: {
-          trigger: "axis"
+          trigger: "axis",
         },
-        legend: {
-          data: legend
-        },
+        legend: legend,
         grid: {
           left: "3%",
           right: "4%",
           bottom: "3%",
-          containLabel: true
+          containLabel: true,
         },
         toolbox: {
           feature: {
-            saveAsImage: {}
-          }
+            saveAsImage: {},
+          },
         },
         xAxis: {
           type: "category",
           boundaryGap: false,
-          data: x_data
+          data: x_data,
         },
         yAxis: {
-          type: "value"
+          type: "value",
         },
-        series: y_data
+        series: y_data,
       });
+
+      my_chart.on("legendselectchanged", function(pamars){
+        console.log(pamars)
+      })
     },
 
-    chartsLineSumInit(val){
+    chartsLineSumInit(val) {
       let my_chart = echarts.init(document.getElementById("my_chart2"));
-      let legend = [];
+      let legend = {
+        data: [],
+        selected: {}
+      };
       let x_data = [];
       let y_data = [];
 
-      val.map(item => {
-        legend.push(item.name);
-
-        let game_history = item.game_history.split(',') 
-        let sum = 0
-        let arr = []
-
-        for(let i=0; i < game_history.length; i++){
-          sum += Number(game_history[i])
-          arr.push(sum)
+      val.map((item, index) => {
+        legend.data.push(item.name);
+        if(index === 0){
+          legend.selected[item.name] = true
+        } else {
+          legend.selected[item.name] = false
         }
 
-        y_data.push(
-          {
-            name: item.name,
-            type: "line",
-            data: arr
-          },
-        )
-      });
+        let game_history = item.game_history.split(",");
+        let sum = 0;
+        let arr = [];
 
-      console.log(y_data)
+        for (let i = 0; i < game_history.length; i++) {
+          sum += Number(game_history[i]);
+          arr.push(sum);
+        }
+
+        y_data.push({
+          name: item.name,
+          type: "line",
+          data: arr,
+        });
+      });
 
       for (let i = 0; i < this.tableData.length; i++) {
         x_data.push(`第${i + 1}次`);
@@ -228,34 +242,32 @@ export default {
 
       my_chart.setOption({
         title: {
-          text: "累计走势图"
+          text: "累计走势图",
         },
         tooltip: {
-          trigger: "axis"
+          trigger: "axis",
         },
-        legend: {
-          data: legend
-        },
+        legend: legend,
         grid: {
           left: "3%",
           right: "4%",
           bottom: "3%",
-          containLabel: true
+          containLabel: true,
         },
         toolbox: {
           feature: {
-            saveAsImage: {}
-          }
+            saveAsImage: {},
+          },
         },
         xAxis: {
           type: "category",
           boundaryGap: false,
-          data: x_data
+          data: x_data,
         },
         yAxis: {
-          type: "value"
+          type: "value",
         },
-        series: y_data
+        series: y_data,
       });
     },
 
@@ -264,21 +276,21 @@ export default {
       let xAxisData = [];
       let y_data = [];
 
-      this.tableDataMembers.map(item => {
+      this.tableDataMembers.map((item) => {
         xAxisData.push(item.name);
         y_data.push(item.total_num);
       });
 
       my_chart.setOption({
         title: {
-          text: "累计收获"
+          text: "累计收获",
         },
         tooltip: {},
         xAxis: {
           data: xAxisData,
           splitLine: {
-            show: false
-          }
+            show: false,
+          },
         },
         yAxis: {},
         series: [
@@ -290,7 +302,7 @@ export default {
             barGap: "1%", //柱图间距
             itemStyle: {
               normal: {
-                color: function(params) {
+                color: function (params) {
                   const colorList = [
                     "#3398db",
                     "#434348",
@@ -306,24 +318,24 @@ export default {
                     "#f7a35c",
                     "#61a0a8",
                     "#61a0a8",
-                    "#91c7ae"
+                    "#91c7ae",
                   ];
                   return colorList[params.dataIndex];
-                }
-              }
-            }
+                },
+              },
+            },
             // animationDelay: function(idx) {
             //   return idx * 10 + 100;
             // }
-          }
+          },
         ],
-        animationEasing: "elasticOut"
+        animationEasing: "elasticOut",
         // animationDelayUpdate: function(idx) {
         //   return idx * 5;
         // }
       });
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -342,6 +354,7 @@ main {
 
 .chart {
   width: 100%;
+
   .my_chart,
   .my_chart1 {
     width: 100%;
@@ -359,7 +372,8 @@ main {
     margin-top: 10px;
   }
 
-  #my_chart1,#my_chart2 {
+  #my_chart1,
+  #my_chart2 {
     width: 100%;
     height: 450px;
   }
