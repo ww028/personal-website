@@ -6,7 +6,11 @@
         <el-radio label="2" border>韭菜</el-radio>
         <el-radio label="3" border>图表统计</el-radio>
       </el-radio-group>
-      <div>累计上税：{{tax}}</div>
+      <div>
+        <span>累计上税：{{ tax }}</span>
+        &emsp;
+        <span>剩余基金：{{ fund_total }}</span>
+      </div>
     </div>
 
     <!-- 劳动列表 -->
@@ -16,9 +20,12 @@
       <el-table-column prop="members" align="center" :width="320" label="劳动人员"></el-table-column>
       <el-table-column prop="start_time" align="center" :width="150" label="开始时间"></el-table-column>
       <el-table-column prop="end_time" align="center" :width="150" label="结束时间"></el-table-column>
-      <el-table-column prop="total_time" align="center" :width="120" label="劳动时长(分钟)"></el-table-column>
+      <el-table-column prop="total_time" align="center" :width="120" label="劳动时长"></el-table-column>
       <el-table-column prop="out_put" align="center" :width="80" label="劳动产出"></el-table-column>
-      <el-table-column prop="tax" align="center" :width="60" label="扣税"></el-table-column>
+      <el-table-column prop="tax" align="center" :width="60" label="上税"></el-table-column>
+      <el-table-column prop="money" align="center" :width="60" label="茶钱"></el-table-column>
+      <el-table-column prop="fund_consume" align="center" :width="80" label="基金消耗"></el-table-column>
+      <el-table-column prop="fund_in" align="center" :width="80" label="基金转存"></el-table-column>
       <el-table-column type="expand" label="收获明细" :width="80">
         <template slot-scope="props">
           <el-form label-position="left" inline class="demo-table-expand">
@@ -47,7 +54,8 @@
       <el-table-column prop="win_count" sortable align="center" label="收割次数"></el-table-column>
       <el-table-column prop="lose_count" sortable align="center" label="被收割次数"></el-table-column>
       <el-table-column prop="win_rate" sortable align="center" label="收割率(%)"></el-table-column>
-      <el-table-column prop="total_time" sortable align="center" label="累计劳动时长(分钟)"></el-table-column>
+      <el-table-column prop="total_time" sortable align="center" label="劳动时长(分钟)"></el-table-column>
+      <el-table-column prop="total_time_fomat" align="center" label="劳动时长"></el-table-column>
       <el-table-column prop="total_num" sortable align="center" label="个人劳动所得"></el-table-column>
       <el-table-column prop="contribution_total" sortable align="center" label="基础建设积分"></el-table-column>
     </el-table>
@@ -93,6 +101,7 @@ export default {
   data() {
     return {
       tax: 0,
+      fund_total: 0,
       player: "",
       radio1: "1",
     };
@@ -107,6 +116,23 @@ export default {
       }),
     ])
       .then((arr) => {
+        arr[0].data.map(item =>{
+          let hour = Math.floor(item.total_time / 60 )
+          let minutes = item.total_time % 60
+          item.total_time = `${hour}小时 ${minutes}分钟`
+        })
+
+        arr[1].data.map(item =>{
+          let day = Math.floor(item.total_time / 60 / 24)
+          let hour = Math.floor(item.total_time % (60*24) / 60)
+          let minutes = item.total_time % (60*24) % 60
+          
+          if(day){
+            item.total_time_fomat = `${day}天 ${hour}小时 ${minutes}分钟`
+          } else {
+            item.total_time_fomat = `${hour}小时 ${minutes}分钟`
+          }
+        })
         return {
           tableData: arr[0].data,
           tableDataMembers: arr[1].data,
@@ -130,6 +156,7 @@ export default {
   mounted() {
     this.tableData.map((item) => {
       this.tax += Number(item.tax);
+      this.fund_total += Number(item.fund_in);
       item.game_name = item.game_name || `第 ${item.id} 轮`;
     });
   },
