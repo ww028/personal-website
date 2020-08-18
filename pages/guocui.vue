@@ -15,7 +15,7 @@
 
     <!-- 劳动列表 -->
     <el-table v-show="radio1 == 1" :data="tableData" stripe style="width: 100%">
-      <el-table-column prop="id" align="center" :width="60" label="轮次"></el-table-column>
+      <el-table-column prop="index" align="center" :width="60" label="轮次"></el-table-column>
       <el-table-column prop="game_name" align="center" label="劳动名称"></el-table-column>
       <el-table-column prop="members" align="center" :width="320" label="劳动人员"></el-table-column>
       <el-table-column prop="start_time" align="center" :width="150" label="开始时间"></el-table-column>
