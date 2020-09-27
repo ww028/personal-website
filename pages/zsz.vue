@@ -12,9 +12,6 @@ export default {
       title:'生育登记'
     }
   },
-  created(){
-    this.$store.commit('hideHeader')
-  }
 }
 </script>
 

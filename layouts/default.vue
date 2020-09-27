@@ -1,9 +1,9 @@
 <template>
   <div class="__container">
     <!-- <div>default</div> -->
-    <HeaderBar v-if="this.$store.state.header_show"/>
+    <!-- <HeaderBar /> -->
     <nuxt />
-    <FooterBar v-if="this.$store.state.header_show"/>
+    <!-- <FooterBar /> -->
   </div>
 </template>
 
