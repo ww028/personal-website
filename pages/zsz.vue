@@ -8,11 +8,11 @@
 export default {
   name: 'zsz',
   head(){
-  return {
-    title:'生育登记'
-  }
-},
-  mounted(){
+    return {
+      title:'生育登记'
+    }
+  },
+  created(){
     this.$store.commit('hideHeader')
   }
 }
