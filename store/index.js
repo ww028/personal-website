@@ -1,4 +1,5 @@
 export const state = () => ({
+  header_show: true,
   dialog_login: false,
   login_status: false,
   username: '',
@@ -7,6 +8,10 @@ export const state = () => ({
 export const mutations = {
   dialogLogin(state, pamars) {
     state.dialog_login = pamars
+  },
+
+  hideHeader(state) {
+    state.header_show = false
   },
 
   loginInfo(state, pamars){

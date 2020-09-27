@@ -1,9 +1,9 @@
 <template>
   <div class="__container">
     <!-- <div>default</div> -->
-    <HeaderBar />
+    <HeaderBar v-if="this.$store.state.header_show"/>
     <nuxt />
-    <FooterBar />
+    <FooterBar v-if="this.$store.state.header_show"/>
   </div>
 </template>
 
@@ -17,6 +17,7 @@ export default {
   },
 
   mounted() {
+    console.log(this.$store.state)
     if (localStorage.getItem('login_info')) {
       this.$store.commit(
         'login/loginInfo',
