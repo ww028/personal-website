@@ -42,7 +42,6 @@ export default {
       sec = `0${sec}`
     }
     this.dete_time = `${year}-${month}-${day} ${hour}:${min}:${sec}`
-    console.log(this.date)
   }
 }
 </script>
@@ -52,6 +51,8 @@ export default {
   height: 100%;
   width: 100%;
   background-color: #fff;
+  display: flex;
+  flex-direction: column;
 
   img{
     width: 100%;
@@ -59,6 +60,8 @@ export default {
 
   .info{
     font-size: 0.13rem;
+    text-align:center;
+    color: #222
     // transform: scale(0.5);
     // margin-top: -0.3rem;
     // width: 200%;

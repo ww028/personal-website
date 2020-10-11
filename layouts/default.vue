@@ -3,7 +3,7 @@
     <!-- <div>default</div> -->
     <HeaderBar v-if="$store.state.header_show"/>
     <nuxt />
-    <FooterBar />
+    <FooterBar v-if="$store.state.header_show"/>
   </div>
 </template>
 
