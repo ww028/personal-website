@@ -58,11 +58,11 @@ export default {
   }
 
   .info{
-    font-size: 0.05rem;
-    transform: scale(0.5);
-    margin-top: -0.3rem;
-    width: 200%;
-    margin-left: -2rem;
+    font-size: 0.13rem;
+    // transform: scale(0.5);
+    // margin-top: -0.3rem;
+    // width: 200%;
+    // margin-left: -2rem;
   }
 }
 </style>
