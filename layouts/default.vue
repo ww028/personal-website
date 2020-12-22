@@ -1,3 +1,9 @@
+<!--
+ * @Author: 魏微
+ * @Date: 2020-10-18 23:55:42
+ * @LastEditTime: 2020-12-22 17:34:16
+ * @FilePath: /personal-website/layouts/default.vue
+-->
 <template>
   <div class="__container">
     <!-- <div>default</div> -->
@@ -18,7 +24,8 @@ export default {
 
   mounted() {
     console.log(this.$router.currentRoute.path)
-    if(this.$router.currentRoute.path != '/zsz'){
+    // record
+    if(this.$router.currentRoute.path != '/zsz' && this.$router.currentRoute.path != '/record'){
       this.$store.commit('headerShow',true)
     }
     

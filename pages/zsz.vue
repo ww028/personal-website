@@ -1,3 +1,9 @@
+<!--
+ * @Author: 魏微
+ * @Date: 2020-10-18 23:55:42
+ * @LastEditTime: 2020-12-22 17:22:38
+ * @FilePath: /personal-website/pages/zsz.vue
+-->
 <template>
   <div class="zsz">
     <img src="../assets/images/table.jpeg" alt="">
