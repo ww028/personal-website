@@ -1,15 +1,15 @@
 <!--
  * @Author: 魏微
  * @Date: 2020-10-18 23:55:42
- * @LastEditTime: 2020-12-22 17:34:16
+ * @LastEditTime: 2021-02-18 13:43:57
  * @FilePath: /personal-website/layouts/default.vue
 -->
 <template>
   <div class="__container">
     <!-- <div>default</div> -->
-    <HeaderBar v-if="$store.state.header_show"/>
+    <HeaderBar />
     <nuxt />
-    <FooterBar v-if="$store.state.header_show"/>
+    <FooterBar/>
   </div>
 </template>
 
@@ -24,10 +24,6 @@ export default {
 
   mounted() {
     console.log(this.$router.currentRoute.path)
-    // record
-    if(this.$router.currentRoute.path != '/zsz' && this.$router.currentRoute.path != '/record'){
-      this.$store.commit('headerShow',true)
-    }
     
     if (localStorage.getItem('login_info')) {
       this.$store.commit(
